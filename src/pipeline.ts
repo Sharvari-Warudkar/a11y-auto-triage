@@ -1,12 +1,21 @@
-require('dotenv').config();
-const fs = require('fs');
-const path = require('path');
-const { scanUrl, scanFile } = require('./scan');
-const { retrieveContext } = require('./rag/retrieve');
-const { generateBugLog } = require('./generate');
-const { deduplicate, markFiled } = require('./deduplicate');
+import 'dotenv/config';
+import * as fs from 'fs';
+import * as path from 'path';
+import { scanUrl, scanFile } from './scan';
+import { retrieveContext } from './rag/retrieve';
+import { generateBugLog } from './generate';
+import { deduplicate, markFiled } from './deduplicate';
+import { BugLog, PipelineOutput } from './types';
 
-async function runPipeline(target, options = {}) {
+interface PipelineOptions {
+  skipDedup?: boolean;
+  outputDir?: string;
+}
+
+export async function runPipeline(
+  target: string,
+  options: PipelineOptions = {}
+): Promise<PipelineOutput> {
   const { skipDedup = false, outputDir } = options;
   const resultsDir = outputDir || path.join(__dirname, '..', 'results');
   if (!fs.existsSync(resultsDir)) fs.mkdirSync(resultsDir, { recursive: true });
@@ -21,7 +30,7 @@ async function runPipeline(target, options = {}) {
 
   if (scanResults.violationCount === 0) {
     console.log('\nNo violations found. Page passes WCAG 2.1 AA checks.');
-    return { bugLogs: [], scanResults };
+    return { bugLogs: [], url: scanResults.url, scanTimestamp: scanResults.timestamp, totalViolations: 0, newBugLogs: 0 };
   }
 
   // Step 2: Deduplicate
@@ -37,7 +46,7 @@ async function runPipeline(target, options = {}) {
 
   if (violations.length === 0) {
     console.log('\nAll violations already filed. Nothing new to report.');
-    return { bugLogs: [], scanResults };
+    return { bugLogs: [], url: scanResults.url, scanTimestamp: scanResults.timestamp, totalViolations: scanResults.violationCount, newBugLogs: 0 };
   }
 
   // Step 3: Retrieve WCAG context
@@ -51,7 +60,7 @@ async function runPipeline(target, options = {}) {
 
   // Step 4: Generate bug logs
   console.log(`[4/5] Generating bug logs...`);
-  const bugLogs = [];
+  const bugLogs: BugLog[] = [];
   for (let i = 0; i < violations.length; i++) {
     const violation = violations[i];
     const context = contexts[i];
@@ -74,7 +83,7 @@ async function runPipeline(target, options = {}) {
     markFiled(violations);
   }
 
-  const output = {
+  const output: PipelineOutput = {
     url: scanResults.url,
     scanTimestamp: scanResults.timestamp,
     totalViolations: scanResults.violationCount,
@@ -92,10 +101,10 @@ async function runPipeline(target, options = {}) {
   return output;
 }
 
-async function main() {
+async function main(): Promise<void> {
   const target = process.argv[2];
   if (!target) {
-    console.error('Usage: node src/pipeline.js <url-or-file-path> [--skip-dedup]');
+    console.error('Usage: ts-node src/pipeline.ts <url-or-file-path> [--skip-dedup]');
     process.exit(1);
   }
 
@@ -109,5 +118,3 @@ if (require.main === module) {
     process.exit(1);
   });
 }
-
-module.exports = { runPipeline };

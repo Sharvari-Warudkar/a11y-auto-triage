@@ -1,31 +1,32 @@
-const puppeteer = require('puppeteer');
-const { AxePuppeteer } = require('@axe-core/puppeteer');
-const fs = require('fs');
-const path = require('path');
+import { chromium, Browser, Page } from 'playwright';
+import AxeBuilder from '@axe-core/playwright';
+import * as fs from 'fs';
+import * as path from 'path';
+import { ScanResult, Violation } from './types';
 
-async function scanUrl(url) {
-  const browser = await puppeteer.launch({ headless: 'new' });
-  const page = await browser.newPage();
+export async function scanUrl(url: string): Promise<ScanResult> {
+  const browser: Browser = await chromium.launch({ headless: true });
+  const page: Page = await browser.newPage();
 
-  await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
+  await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
 
-  const results = await new AxePuppeteer(page)
+  const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
     .analyze();
 
   await browser.close();
 
-  const violations = results.violations.map(v => ({
+  const violations: Violation[] = results.violations.map(v => ({
     id: v.id,
-    impact: v.impact,
+    impact: v.impact as Violation['impact'],
     description: v.description,
     help: v.help,
     helpUrl: v.helpUrl,
     tags: v.tags.filter(t => t.startsWith('wcag')),
     nodes: v.nodes.map(n => ({
       html: n.html,
-      target: n.target,
-      failureSummary: n.failureSummary
+      target: n.target as string[],
+      failureSummary: n.failureSummary || ''
     }))
   }));
 
@@ -37,16 +38,16 @@ async function scanUrl(url) {
   };
 }
 
-async function scanFile(filePath) {
+export async function scanFile(filePath: string): Promise<ScanResult> {
   const absolutePath = path.resolve(filePath);
   const fileUrl = `file://${absolutePath}`;
   return scanUrl(fileUrl);
 }
 
-async function main() {
+async function main(): Promise<void> {
   const target = process.argv[2];
   if (!target) {
-    console.error('Usage: node src/scan.js <url-or-file-path>');
+    console.error('Usage: ts-node src/scan.ts <url-or-file-path>');
     process.exit(1);
   }
 
@@ -62,8 +63,6 @@ async function main() {
   console.log(`Scanned: ${results.url}`);
   console.log(`Violations found: ${results.violationCount}`);
   console.log(`Results saved: ${outputFile}`);
-
-  return results;
 }
 
 if (require.main === module) {
@@ -72,5 +71,3 @@ if (require.main === module) {
     process.exit(1);
   });
 }
-
-module.exports = { scanUrl, scanFile };

@@ -1,20 +1,21 @@
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
+import { WcagChunk } from '../types';
 
 const STORE_PATH = path.join(__dirname, '..', '..', 'data', 'vector-store.json');
 
-function loadStore() {
+export function loadStore(): WcagChunk[] {
   if (!fs.existsSync(STORE_PATH)) return [];
   return JSON.parse(fs.readFileSync(STORE_PATH, 'utf-8'));
 }
 
-function saveStore(chunks) {
+export function saveStore(chunks: WcagChunk[]): void {
   const dir = path.dirname(STORE_PATH);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(STORE_PATH, JSON.stringify(chunks, null, 2));
 }
 
-function cosineSimilarity(a, b) {
+export function cosineSimilarity(a: number[], b: number[]): number {
   let dot = 0, magA = 0, magB = 0;
   for (let i = 0; i < a.length; i++) {
     dot += a[i] * b[i];
@@ -24,10 +25,14 @@ function cosineSimilarity(a, b) {
   return dot / (Math.sqrt(magA) * Math.sqrt(magB));
 }
 
-function search(queryEmbedding, topK = 3) {
+export interface SearchResult extends Omit<WcagChunk, 'embedding'> {
+  score: number;
+}
+
+export function search(queryEmbedding: number[], topK: number = 3): SearchResult[] {
   const store = loadStore();
   if (store.length === 0) {
-    throw new Error('Vector store is empty. Run ingestion first.');
+    throw new Error('Vector store is empty. Run ingestion first: npm run ingest');
   }
 
   const scored = store.map(chunk => ({
@@ -39,5 +44,3 @@ function search(queryEmbedding, topK = 3) {
 
   return scored.slice(0, topK).map(({ embedding, ...rest }) => rest);
 }
-
-module.exports = { loadStore, saveStore, search, cosineSimilarity };

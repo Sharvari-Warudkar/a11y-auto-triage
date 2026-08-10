@@ -1,3 +1,5 @@
+import { Violation, RetrievedContext, BugLog } from './types';
+
 const PORTKEY_API_KEY = process.env.PORTKEY_API_KEY;
 const PORTKEY_VIRTUAL_KEY = process.env.PORTKEY_VIRTUAL_KEY;
 const PORTKEY_GATEWAY = 'https://api.portkey.ai/v1';
@@ -25,9 +27,18 @@ Severity mapping:
 
 Always cite the specific WCAG criterion from the provided context. If the context doesn't contain the exact criterion, use the violation's helpUrl to identify it.
 
-Output ONLY valid JSON array. No markdown, no explanation outside the JSON.`;
+Output ONLY valid JSON. No markdown, no explanation outside the JSON.`;
 
-async function generateBugLog(violation, wcagContext) {
+interface ChatCompletionResponse {
+  choices: Array<{
+    message: { content: string };
+  }>;
+}
+
+export async function generateBugLog(
+  violation: Violation,
+  wcagContext: RetrievedContext[]
+): Promise<BugLog> {
   const contextText = wcagContext
     .map(c => `--- ${c.title} ---\n${c.content}`)
     .join('\n\n');
@@ -53,8 +64,8 @@ Generate a JSON bug report for this violation. Return a single JSON object (not 
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-portkey-api-key': PORTKEY_API_KEY,
-      'x-portkey-virtual-key': PORTKEY_VIRTUAL_KEY
+      'x-portkey-api-key': PORTKEY_API_KEY || '',
+      'x-portkey-virtual-key': PORTKEY_VIRTUAL_KEY || ''
     },
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514',
@@ -72,13 +83,13 @@ Generate a JSON bug report for this violation. Return a single JSON object (not 
     throw new Error(`LLM request failed: ${response.status} - ${err}`);
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as ChatCompletionResponse;
   const content = data.choices[0].message.content.trim();
 
   try {
     const cleaned = content.replace(/```json\n?/g, '').replace(/```\n?/g, '');
-    return JSON.parse(cleaned);
-  } catch (e) {
+    return JSON.parse(cleaned) as BugLog;
+  } catch {
     console.error('Failed to parse LLM output:', content.slice(0, 200));
     return {
       title: violation.help,
@@ -89,12 +100,10 @@ Generate a JSON bug report for this violation. Return a single JSON object (not 
       steps_to_reproduce: '1. Navigate to the page\n2. Observe the violation',
       expected_behavior: 'Element should meet WCAG 2.1 AA requirements',
       actual_behavior: violation.help,
-      suggested_fix: 'See ' + violation.helpUrl,
+      suggested_fix: `See ${violation.helpUrl}`,
       element_selector: violation.nodes[0]?.target?.join(' > ') || 'unknown',
       impact: violation.impact,
       _parse_error: true
     };
   }
 }
-
-module.exports = { generateBugLog };

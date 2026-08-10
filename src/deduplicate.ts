@@ -1,28 +1,29 @@
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
+import { Violation, FiledViolation, DeduplicateResult } from './types';
 
 const HISTORY_PATH = path.join(__dirname, '..', 'data', 'filed-violations.json');
 
-function loadHistory() {
+function loadHistory(): FiledViolation[] {
   if (!fs.existsSync(HISTORY_PATH)) return [];
   return JSON.parse(fs.readFileSync(HISTORY_PATH, 'utf-8'));
 }
 
-function saveHistory(history) {
+function saveHistory(history: FiledViolation[]): void {
   const dir = path.dirname(HISTORY_PATH);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(HISTORY_PATH, JSON.stringify(history, null, 2));
 }
 
-function violationKey(violation, node) {
+function violationKey(violation: Violation, node: { target: string[] }): string {
   return `${violation.id}::${node.target.join(' > ')}`;
 }
 
-function deduplicate(violations) {
+export function deduplicate(violations: Violation[]): DeduplicateResult {
   const history = loadHistory();
   const filedKeys = new Set(history.map(h => h.key));
-  const newViolations = [];
-  const duplicates = [];
+  const newViolations: Violation[] = [];
+  const duplicates: Array<{ key: string; violation: string }> = [];
 
   for (const violation of violations) {
     const newNodes = [];
@@ -42,7 +43,7 @@ function deduplicate(violations) {
   return { newViolations, duplicates };
 }
 
-function markFiled(violations) {
+export function markFiled(violations: Violation[]): void {
   const history = loadHistory();
   for (const violation of violations) {
     for (const node of violation.nodes) {
@@ -55,5 +56,3 @@ function markFiled(violations) {
   }
   saveHistory(history);
 }
-
-module.exports = { deduplicate, markFiled, loadHistory };

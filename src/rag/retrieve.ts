@@ -1,7 +1,8 @@
-const { getEmbedding } = require('./embeddings');
-const { search } = require('./store');
+import { getEmbedding } from './embeddings';
+import { search } from './store';
+import { Violation, RetrievedContext } from '../types';
 
-async function retrieveContext(violation) {
+export async function retrieveContext(violation: Violation): Promise<RetrievedContext[]> {
   const query = `${violation.id}: ${violation.help}. ${violation.description}`;
   const queryEmbedding = await getEmbedding(query);
   const results = search(queryEmbedding, 3);
@@ -13,5 +14,3 @@ async function retrieveContext(violation) {
     score: r.score
   }));
 }
-
-module.exports = { retrieveContext };

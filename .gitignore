@@ -1,4 +1,6 @@
 node_modules/
+dist/
 .env
 results/*.json
-test-*.js
+data/vector-store.json
+data/filed-violations.json

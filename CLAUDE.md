@@ -4,15 +4,16 @@
 WCAG 2.1 AA violation auto-triage tool for e-commerce QA. Scans pages with axe-core, retrieves relevant WCAG criteria via RAG, and generates structured bug reports ready for Jira.
 
 ## Architecture
-- Scanner: axe-core + Puppeteer (src/scan.js)
+- Scanner: axe-core + Playwright (src/scan.ts)
 - RAG: embed WCAG docs → local vector store → cosine similarity retrieval
 - Generator: LLM via Portkey gateway → structured JSON bug logs
-- Pipeline: src/pipeline.js orchestrates scan → dedup → retrieve → generate → output
+- Pipeline: src/pipeline.ts orchestrates scan → dedup → retrieve → generate → output
 
 ## Code Conventions
-- CommonJS modules (require/module.exports)
+- TypeScript with strict mode
+- Playwright for browser automation (not Puppeteer)
 - Async/await for all async operations
-- No TypeScript — plain Node.js
+- Types defined in src/types.ts
 - Results go to results/ (gitignored)
 - WCAG data in data/wcag/ as markdown files
 

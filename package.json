@@ -2,20 +2,27 @@
   "name": "a11y-auto-triage",
   "version": "1.0.0",
   "description": "WCAG 2.1 Violation Auto-Triage & Bug Logger - AI-augmented accessibility QA pipeline",
-  "main": "src/pipeline.js",
+  "main": "dist/pipeline.js",
   "scripts": {
-    "scan": "node src/scan.js",
-    "ingest": "node src/rag/ingest.js",
-    "pipeline": "node src/pipeline.js",
-    "pipeline:fresh": "node src/pipeline.js --skip-dedup"
+    "build": "tsc",
+    "scan": "ts-node src/scan.ts",
+    "ingest": "ts-node src/rag/ingest.ts",
+    "pipeline": "ts-node src/pipeline.ts",
+    "pipeline:fresh": "ts-node src/pipeline.ts -- --skip-dedup",
+    "test": "playwright test"
   },
-  "keywords": ["accessibility", "wcag", "a11y", "automation", "rag", "qa"],
+  "keywords": ["accessibility", "wcag", "a11y", "automation", "playwright", "qa", "typescript"],
   "author": "Sharvari Warudkar",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "@axe-core/puppeteer": "^4.9.0",
-    "puppeteer": "^22.0.0",
+    "@axe-core/playwright": "^4.9.0",
+    "playwright": "^1.44.0",
     "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.0",
+    "ts-node": "^10.9.0",
+    "@playwright/test": "^1.44.0"
   }
 }
