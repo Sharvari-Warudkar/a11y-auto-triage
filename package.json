@@ -1,0 +1,21 @@
+{
+  "name": "a11y-auto-triage",
+  "version": "1.0.0",
+  "description": "WCAG 2.1 Violation Auto-Triage & Bug Logger - AI-augmented accessibility QA pipeline",
+  "main": "src/pipeline.js",
+  "scripts": {
+    "scan": "node src/scan.js",
+    "ingest": "node src/rag/ingest.js",
+    "pipeline": "node src/pipeline.js",
+    "pipeline:fresh": "node src/pipeline.js --skip-dedup"
+  },
+  "keywords": ["accessibility", "wcag", "a11y", "automation", "rag", "qa"],
+  "author": "Sharvari Warudkar",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@axe-core/puppeteer": "^4.9.0",
+    "puppeteer": "^22.0.0",
+    "dotenv": "^16.4.0"
+  }
+}

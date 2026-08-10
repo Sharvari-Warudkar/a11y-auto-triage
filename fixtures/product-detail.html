@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Detail - Running Shoe</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    .breadcrumb { font-size: 12px; margin-bottom: 20px; }
+    .product-image { max-width: 400px; }
+    /* VIOLATION: color-contrast - low contrast on important info */
+    .stock-status { color: #cccccc; background: #ffffff; padding: 4px 8px; }
+    .size-selector { margin: 16px 0; }
+    /* VIOLATION: focus-visible - outline removed */
+    .size-btn { padding: 8px 16px; margin: 4px; border: 1px solid #ccc; background: white; cursor: pointer; }
+    .size-btn:focus { outline: none; }
+    .add-to-cart { background: #ff6600; color: white; padding: 12px 24px; border: none; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="breadcrumb">Home > Shoes > Running</div>
+    <!-- VIOLATION: heading hierarchy - starts at h3 instead of h1 -->
+    <h3>Running Shoe - Red Edition</h3>
+    <!-- VIOLATION: image-alt - decorative content marked incorrectly -->
+    <img src="shoe-detail-red.jpg" class="product-image" width="400" height="400">
+    <p class="stock-status">In Stock - Ships in 2 days</p>
+    <div class="size-selector">
+      <!-- VIOLATION: label - no associated label for form control group -->
+      <span>Select Size:</span>
+      <button class="size-btn">7</button>
+      <button class="size-btn">8</button>
+      <button class="size-btn">9</button>
+      <button class="size-btn">10</button>
+      <button class="size-btn">11</button>
+    </div>
+    <!-- VIOLATION: label - input without label -->
+    <div>
+      <span>Quantity:</span>
+      <input type="number" value="1" min="1" max="10" style="width: 50px;">
+    </div>
+    <br>
+    <button class="add-to-cart">Add to Cart</button>
+  </main>
+</body>
+</html>

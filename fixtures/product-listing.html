@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop All Products</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .product-card { border: 1px solid #eee; padding: 16px; }
+    /* VIOLATION: color-contrast - light gray text on white background */
+    .product-price { color: #aaaaaa; font-size: 14px; }
+    .product-name { font-size: 16px; font-weight: bold; }
+    /* VIOLATION: link-name - generic "click here" links */
+    .btn-add { background: #0066cc; color: white; padding: 8px 16px; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <!-- VIOLATION: missing landmark - no <main> wrapping content -->
+  <!-- VIOLATION: heading hierarchy - jumps from no h1 to h3 -->
+  <div class="product-grid">
+    <div class="product-card">
+      <!-- VIOLATION: image-alt - missing alt text -->
+      <img src="shoe-red.jpg" width="200" height="200">
+      <h3 class="product-name">Running Shoe - Red</h3>
+      <p class="product-price">$89.99</p>
+      <!-- VIOLATION: link-name - non-descriptive link text -->
+      <a href="/product/123"><button class="btn-add">Click here</button></a>
+    </div>
+    <div class="product-card">
+      <!-- VIOLATION: image-alt - empty alt on informative image -->
+      <img src="shoe-blue.jpg" alt="" width="200" height="200">
+      <h3 class="product-name">Running Shoe - Blue</h3>
+      <p class="product-price">$89.99</p>
+      <a href="/product/124"><button class="btn-add">Click here</button></a>
+    </div>
+    <div class="product-card">
+      <img src="shoe-green.jpg" width="200" height="200">
+      <h3 class="product-name">Trail Shoe - Green</h3>
+      <p class="product-price">$109.99</p>
+      <a href="/product/125"><button class="btn-add">Click here</button></a>
+    </div>
+  </div>
+</body>
+</html>
