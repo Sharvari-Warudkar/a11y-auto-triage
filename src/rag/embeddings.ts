@@ -1,30 +1,33 @@
-const PORTKEY_API_KEY = process.env.PORTKEY_API_KEY;
-const PORTKEY_VIRTUAL_KEY = process.env.PORTKEY_VIRTUAL_KEY;
-const PORTKEY_GATEWAY = 'https://api.portkey.ai/v1';
+// Keyword-based matching for small corpus (9 WCAG docs)
+// No external API needed - uses TF-IDF style word matching
 
-interface EmbeddingResponse {
-  data: Array<{ embedding: number[] }>;
+export function getKeywords(text: string): Map<string, number> {
+  const words = text.toLowerCase()
+    .replace(/[^a-z0-9\s.-]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length > 2);
+
+  const freq = new Map<string, number>();
+  for (const word of words) {
+    freq.set(word, (freq.get(word) || 0) + 1);
+  }
+  return freq;
 }
 
-export async function getEmbedding(text: string): Promise<number[]> {
-  const response = await fetch(`${PORTKEY_GATEWAY}/embeddings`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-portkey-api-key': PORTKEY_API_KEY || '',
-      'x-portkey-virtual-key': PORTKEY_VIRTUAL_KEY || ''
-    },
-    body: JSON.stringify({
-      model: 'text-embedding-3-small',
-      input: text.slice(0, 8000)
-    })
-  });
+export function similarity(textA: string, textB: string): number {
+  const kwA = getKeywords(textA);
+  const kwB = getKeywords(textB);
 
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`Embedding request failed: ${response.status} - ${err}`);
+  let dot = 0, magA = 0, magB = 0;
+  for (const [word, count] of kwA) {
+    const countB = kwB.get(word) || 0;
+    dot += count * countB;
+    magA += count * count;
+  }
+  for (const [, count] of kwB) {
+    magB += count * count;
   }
 
-  const data = (await response.json()) as EmbeddingResponse;
-  return data.data[0].embedding;
+  if (magA === 0 || magB === 0) return 0;
+  return dot / (Math.sqrt(magA) * Math.sqrt(magB));
 }

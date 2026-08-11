@@ -6,7 +6,8 @@ import { ScanResult, Violation } from './types';
 
 export async function scanUrl(url: string): Promise<ScanResult> {
   const browser: Browser = await chromium.launch({ headless: true });
-  const page: Page = await browser.newPage();
+  const context = await browser.newContext();
+  const page: Page = await context.newPage();
 
   await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
 

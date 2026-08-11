@@ -1,8 +1,7 @@
 import { Violation, RetrievedContext, BugLog } from './types';
 
-const PORTKEY_API_KEY = process.env.PORTKEY_API_KEY;
-const PORTKEY_VIRTUAL_KEY = process.env.PORTKEY_VIRTUAL_KEY;
-const PORTKEY_GATEWAY = 'https://api.portkey.ai/v1';
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 const SYSTEM_PROMPT = `You are an accessibility QA engineer generating bug reports for WCAG 2.1 AA violations found on e-commerce websites.
 
@@ -60,15 +59,14 @@ ${contextText}
 
 Generate a JSON bug report for this violation. Return a single JSON object (not an array).`;
 
-  const response = await fetch(`${PORTKEY_GATEWAY}/chat/completions`, {
+  const response = await fetch(GROQ_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-portkey-api-key': PORTKEY_API_KEY || '',
-      'x-portkey-virtual-key': PORTKEY_VIRTUAL_KEY || ''
+      'Authorization': `Bearer ${GROQ_API_KEY}`
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
+      model: 'llama-3.3-70b-versatile',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: userPrompt }
@@ -77,6 +75,12 @@ Generate a JSON bug report for this violation. Return a single JSON object (not 
       temperature: 0.2
     })
   });
+
+  if (response.status === 429) {
+    console.log(`      Rate limited. Waiting 10s...`);
+    await new Promise(r => setTimeout(r, 10000));
+    return generateBugLog(violation, wcagContext);
+  }
 
   if (!response.ok) {
     const err = await response.text();

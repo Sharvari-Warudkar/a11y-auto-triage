@@ -49,13 +49,12 @@ export async function runPipeline(
     return { bugLogs: [], url: scanResults.url, scanTimestamp: scanResults.timestamp, totalViolations: scanResults.violationCount, newBugLogs: 0 };
   }
 
-  // Step 3: Retrieve WCAG context
+  // Step 3: Retrieve WCAG context (local keyword matching - no API needed)
   console.log(`[3/5] Retrieving WCAG context for ${violations.length} violations...`);
   const contexts = [];
   for (const violation of violations) {
-    const context = await retrieveContext(violation);
+    const context = retrieveContext(violation);
     contexts.push(context);
-    await new Promise(r => setTimeout(r, 300));
   }
 
   // Step 4: Generate bug logs
