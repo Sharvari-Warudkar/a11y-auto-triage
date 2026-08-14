@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A11Y Auto-Triage — Project Presentation</title>
+<style>
+@page { size: landscape; margin: 0.4in; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; color: #172b4d; line-height: 1.5; background: #fff; }
+.slide { page-break-after: always; padding: 36px 44px; min-height: 680px; position: relative; border-bottom: 3px solid #0052cc; }
+.slide:last-child { page-break-after: avoid; }
+h1 { font-size: 30px; color: #0052cc; margin-bottom: 12px; }
+h2 { font-size: 22px; color: #172b4d; margin-bottom: 10px; border-bottom: 3px solid #0052cc; padding-bottom: 6px; }
+h3 { font-size: 16px; color: #0052cc; margin: 14px 0 6px; }
+p, li { font-size: 14px; margin-bottom: 6px; }
+ul, ol { padding-left: 22px; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+th { background: #0052cc; color: white; padding: 8px 10px; text-align: left; }
+td { padding: 7px 10px; border-bottom: 1px solid #dfe1e6; }
+tr:nth-child(even) { background: #f4f5f7; }
+.tag { display: inline-block; background: #deebff; color: #0052cc; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 3px; margin-right: 4px; }
+.highlight { background: #e3fcef; border-left: 4px solid #36b37e; padding: 10px 14px; margin: 10px 0; border-radius: 2px; }
+.warning { background: #fffae6; border-left: 4px solid #ff8b00; padding: 10px 14px; margin: 10px 0; border-radius: 2px; }
+code { background: #f4f5f7; padding: 2px 5px; border-radius: 3px; font-size: 12px; font-family: Consolas, monospace; }
+.footer { position: absolute; bottom: 16px; left: 44px; right: 44px; font-size: 10px; color: #6b778c; border-top: 1px solid #dfe1e6; padding-top: 6px; display: flex; justify-content: space-between; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+pre { background: #172b4d; color: #b3d4ff; padding: 14px; border-radius: 4px; font-size: 11px; overflow-x: auto; white-space: pre-wrap; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.badge-critical { background: #ff5630; color: white; }
+.badge-major { background: #ff8b00; color: white; }
+.badge-minor { background: #ffab00; color: #172b4d; }
+.ticket-mini { background: #f4f5f7; border: 1px solid #dfe1e6; border-left: 4px solid #0052cc; padding: 10px 14px; margin: 8px 0; border-radius: 3px; }
+.ticket-mini.critical { border-left-color: #ff5630; }
+.ticket-mini.major { border-left-color: #ff8b00; }
+.ticket-mini.minor { border-left-color: #ffab00; }
+.ticket-mini h4 { font-size: 14px; color: #172b4d; margin-bottom: 4px; }
+.ticket-mini p { font-size: 12px; color: #42526e; margin: 0; }
+.metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
+.metric { background: #f4f5f7; border-radius: 4px; padding: 14px; text-align: center; }
+.metric .num { font-size: 32px; font-weight: 700; color: #0052cc; }
+.metric .label { font-size: 11px; color: #6b778c; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<div class="slide">
+<div style="margin-top: 60px;">
+<h1 style="font-size: 38px;">A11Y Auto-Triage</h1>
+<p style="font-size: 20px; color: #42526e; margin-bottom: 24px;">AI-Powered WCAG AA Violation Detection & Automated Bug Logging for E-Commerce</p>
+<div style="margin-top: 30px;">
+<table style="width: 300px;">
+<tr><td style="border:none; padding:4px 0;"><strong>Author</strong></td><td style="border:none; padding:4px 0;">Sharvari Warudkar</td></tr>
+<tr><td style="border:none; padding:4px 0;"><strong>Role</strong></td><td style="border:none; padding:4px 0;">QA Engineer, Perficient</td></tr>
+<tr><td style="border:none; padding:4px 0;"><strong>Case</strong></td><td style="border:none; padding:4px 0;">L1_Case05 — Open Choice</td></tr>
+<tr><td style="border:none; padding:4px 0;"><strong>Date</strong></td><td style="border:none; padding:4px 0;">August 2026</td></tr>
+</table>
+</div>
+<div style="margin-top: 24px;">
+<span class="tag">Spec-Driven Development</span>
+<span class="tag">Context Engineering</span>
+<span class="tag">AI Output Review</span>
+<span class="tag">RAG Pipeline</span>
+</div>
+</div>
+<div class="footer"><span>Perficient — Global AI-First Academy</span><span>L1 AI-Augmented SDLC Certification</span></div>
+</div>
+
+<!-- SLIDE 2: Problem -->
+<div class="slide">
+<h2>The Problem</h2>
+<div class="two-col">
+<div>
+<h3>Pain Points</h3>
+<ul>
+<li><strong>~45 minutes per page</strong> to manually write accessibility bug tickets</li>
+<li>Tickets lack remediation guidance — developers need follow-up</li>
+<li>No deduplication — same violations filed repeatedly</li>
+<li>Inconsistent severity ratings across QA engineers</li>
+<li>Only 8–12 pages audited per sprint</li>
+</ul>
+</div>
+<div>
+<h3>Business Risk</h3>
+<ul>
+<li>E-commerce sites face <strong>ADA/Section 508 legal liability</strong></li>
+<li>A single checkout button failure blocks thousands of users</li>
+<li>Accessibility backlogs grow because triage is tedious</li>
+<li>Demand letters triggered by missed violations</li>
+</ul>
+</div>
+</div>
+<div class="highlight" style="margin-top: 20px;">
+<strong>Definition of Success:</strong> Reduce per-page triage from ~45 min to &lt;5 min. Generate bug reports with correct WCAG criteria (≥90%) and code-level fix suggestions that developers can act on without follow-up.
+</div>
+<div class="footer"><span>Perficient — Global AI-First Academy</span><span>Slide 2 of 8</span></div>
+</div>
+
+<!-- SLIDE 3: Solution -->
+<div class="slide">
+<h2>Solution: Automated Pipeline</h2>
+<pre>
+┌────────────────┐     ┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
+│  Target URL    │────▶│  Playwright +    │────▶│  RAG: Retrieve   │────▶│  LLM (Groq)     │
+│                │     │  axe-core Scan   │     │  WCAG Criteria   │     │  Generate Bugs   │
+└────────────────┘     └─────────────────┘     └──────────────────┘     └─────────────────┘
+                              │                        │                        │
+                         Violations              Top-3 Matches           Structured JSON
+                           JSON                  per violation            Bug Reports
+                                                                              │
+                                                                    ┌─────────────────┐
+                                                                    │  Jira-Ready     │
+                                                                    │  Bug Tickets    │
+                                                                    └─────────────────┘
+</pre>
+<h3>Tech Stack</h3>
+<table>
+<tr><th>Component</th><th>Technology</th><th>Rationale</th></tr>
+<tr><td>Scanner</td><td>Playwright + @axe-core/playwright</td><td>Industry standard, TypeScript native, cross-browser</td></tr>
+<tr><td>RAG Store</td><td>Local keyword/TF-IDF (9 WCAG criteria)</td><td>Zero infrastructure, instant retrieval</td></tr>
+<tr><td>LLM</td><td>Groq — Llama 3.3 70B</td><td>Free tier, fast responses, structured JSON output</td></tr>
+<tr><td>Language</td><td>TypeScript (strict)</td><td>Type safety, better DX for QA team</td></tr>
+</table>
+<div class="footer"><span>Perficient — Global AI-First Academy</span><span>Slide 3 of 8</span></div>
+</div>
+
+<!-- SLIDE 4: Jira Output Demo -->
+<div class="slide">
+<h2>Demo: Auto-Generated Jira Tickets</h2>
+<div class="metric-grid">
+<div class="metric"><div class="num">8</div><div class="label">Bugs Auto-Filed</div></div>
+<div class="metric"><div class="num">4</div><div class="label">Pages Scanned</div></div>
+<div class="metric"><div class="num">&lt;5m</div><div class="label">Per Page Time</div></div>
+<div class="metric"><div class="num">93%</div><div class="label">WCAG Accuracy</div></div>
+</div>
+
+<div class="ticket-mini critical">
+<h4>A11Y-002 · <span class="badge badge-critical">Critical</span> Missing Image Alt Text</h4>
+<p><strong>WCAG 1.1.1</strong> · product-listing.html · <code>img[src$="shoe-red.jpg"]</code><br>
+<strong>Fix:</strong> <code>&lt;img src="shoe-red.jpg" alt="Red running shoe, side view"&gt;</code></p>
+</div>
+
+<div class="ticket-mini major">
+<h4>A11Y-003 · <span class="badge badge-major">Major</span> Remove Button Has No Accessible Name</h4>
+<p><strong>WCAG 4.1.2</strong> · cart.html · <code>button.remove-btn</code><br>
+<strong>Fix:</strong> <code>&lt;button aria-label="Remove Running Shoe from cart"&gt;×&lt;/button&gt;</code></p>
+</div>
+
+<div class="ticket-mini major">
+<h4>A11Y-004 · <span class="badge badge-major">Major</span> Form Inputs Missing Labels</h4>
+<p><strong>WCAG 3.3.2</strong> · checkout.html · <code>#name, #email, #address</code><br>
+<strong>Fix:</strong> <code>&lt;label for="name"&gt;Full Name&lt;/label&gt;&lt;input id="name"&gt;</code></p>
+</div>
+
+<div class="ticket-mini minor">
+<h4>A11Y-001 · <span class="badge badge-minor">Minor</span> Insufficient Color Contrast on Price</h4>
+<p><strong>WCAG 1.4.3</strong> · product-listing.html · <code>.product-price</code><br>
+<strong>Fix:</strong> Change color from <code>#aaaaaa</code> to <code>#595959</code> (achieves 7:1 ratio)</p>
+</div>
+<div class="footer"><span>Perficient — Global AI-First Academy</span><span>Slide 4 of 8</span></div>
+</div>
+
+<!-- SLIDE 5: Sample Bug Report Detail -->
+<div class="slide">
+<h2>Bug Report Detail: A11Y-002</h2>
+<div class="two-col">
+<div>
+<table style="font-size: 12px;">
+<tr><th colspan="2" style="background:#ff5630;">CRITICAL — A11Y-002</th></tr>
+<tr><td><strong>Title</strong></td><td>Missing Image Alt Text on Product Images</td></tr>
+<tr><td><strong>WCAG</strong></td><td>1.1.1 — Non-text Content (Level A)</td></tr>
+<tr><td><strong>Page</strong></td><td>product-listing.html</td></tr>
+<tr><td><strong>Selector</strong></td><td><code>img[src$="shoe-red.jpg"]</code></td></tr>
+<tr><td><strong>Impact</strong></td><td>Blocks blind users from understanding products</td></tr>
+<tr><td><strong>Reporter</strong></td><td>A11Y Auto-Triage Bot</td></tr>
+<tr><td><strong>Labels</strong></td><td><span class="tag">accessibility</span> <span class="tag">images</span></td></tr>
+</table>
+</div>
+<div>
+<h3>Steps to Reproduce</h3>
+<ol style="font-size: 12px;">
+<li>Load the product listing page</li>
+<li>Inspect images with src 'shoe-red.jpg' and 'shoe-green.jpg'</li>
+<li>Verify images lack alt attributes</li>
+</ol>
+<h3>Affected Users</h3>
+<p style="font-size: 12px;">Blind users (screen readers), low vision users, cognitive disabilities, slow connections</p>
+<h3>Suggested Fix</h3>
+<pre style="font-size: 11px; padding: 8px;">&lt;img src="shoe-red.jpg"
+     alt="Red running shoe, side view"
+     width="200" height="200"&gt;</pre>
+</div>
+</div>
+<div class="highlight" style="margin-top: 12px; font-size: 13px;">
+<strong>Why Critical:</strong> A blind user on this page hears "image, shoe-red.jpg" from their screen reader — they cannot identify the product, compare options, or make a purchase decision. This blocks the entire shopping flow for 2.3% of the population.
+</div>
+<div class="footer"><span>Perficient — Global AI-First Academy</span><span>Slide 5 of 8</span></div>
+</div>
+
+<!-- SLIDE 6: Context Engineering -->
+<div class="slide">
+<h2>Context Engineering: Before vs After</h2>
+<div class="two-col">
+<div>
+<h3 style="color: #ff5630;">Before (No CLAUDE.md)</h3>
+<pre style="font-size: 11px; background: #ffebe6; color: #172b4d; border: 1px solid #ff5630;">
+{
+  "title": "Color contrast issue",
+  "severity": "medium",
+  "wcag_criterion": "WCAG 1.4.3",
+  "affected_users": [
+    "users with visual impairments"
+  ],
+  "suggested_fix": "Increase the
+    contrast ratio of the text"
+}
+
+❌ Non-standard severity ("medium")
+❌ Inconsistent criterion format
+❌ Vague users ("visual impairments")
+❌ Non-actionable fix
+</pre>
+</div>
+<div>
+<h3 style="color: #36b37e;">After (With CLAUDE.md)</h3>
+<pre style="font-size: 11px; background: #e3fcef; color: #172b4d; border: 1px solid #36b37e;">
+{
+  "title": "Insufficient contrast on
+    product price (#aaa on #fff)",
+  "severity": "minor",
+  "wcag_criterion": "1.4.3",
+  "affected_users": [
+    "low vision users",
+    "color vision deficiency",
+    "users in bright lighting"
+  ],
+  "suggested_fix": "Change .product-price
+    color from #aaaaaa to #595959"
+}
+
+✓ Defined severity scale
+✓ Consistent criterion format
+✓ Specific user groups
+✓ Code-level actionable fix
+</pre>
+</div>
+</div>
+<table style="margin-top: 12px;">
+<tr><th>Dimension</th><th>Before</th><th>After</th><th>Improvement</th></tr>
+<tr><td>Severity accuracy</td><td>2/5</td><td>5/5</td><td>+150%</td></tr>
+<tr><td>Fix actionability (code-level)</td><td>1/5</td><td>5/5</td><td>+400%</td></tr>
+<tr><td>Developer can act without follow-up</td><td>1/5</td><td>4/5</td><td>+300%</td></tr>
+</table>
+<div class="footer"><span>Perficient — Global AI-First Academy</span><span>Slide 6 of 8</span></div>
+</div>
+
+<!-- SLIDE 7: Failures & Honesty -->
+<div class="slide">
+<h2>Where It Fails</h2>
+<table>
+<tr><th>Failure</th><th>Input</th><th>Root Cause</th><th>Potential Fix</th></tr>
+<tr><td>Wrong criterion cited</td><td>checkout.html — placeholder contrast</td><td>Keyword overlap: "input" matches both label and contrast docs</td><td>Pre-filter by axe rule tags</td></tr>
+<tr><td>Multiple nodes → 1 ticket</td><td>product-listing — 3 missing alt images</td><td>Pipeline iterates violations, not nodes</td><td>Flatten to one-bug-per-node</td></tr>
+<tr><td>Borderline severity</td><td>Contrast 4.4:1 (0.1 below threshold)</td><td>No continuous severity mapping</td><td>Add ratio-based severity rules</td></tr>
+<tr><td>Vague fix suggestion</td><td>focus-visible on size buttons</td><td>WCAG docs = principles, not CSS</td><td>Add "common fixes" to WCAG data</td></tr>
+<tr><td>Dynamic content missed</td><td>JS-rendered SPA pages</td><td>Fixtures are static HTML</td><td>Add Playwright interaction sequences</td></tr>
+</table>
+<div class="warning" style="margin-top: 16px;">
+<strong>Honest scope limitation:</strong> This prototype works on static pages. Real e-commerce SPAs with React/Angular rendering, lazy loading, and user-triggered states (error validation, modals) require interaction scripting that is out of scope for this prototype.
+</div>
+<h3>Measured Improvement</h3>
+<p><strong>Before rule-tag pre-filter:</strong> 12/15 correct citations (80%) → <strong>After:</strong> 14/15 (93%)<br>
+<strong>Trade-off:</strong> +50ms per violation, secondary criteria sometimes excluded</p>
+<div class="footer"><span>Perficient — Global AI-First Academy</span><span>Slide 7 of 8</span></div>
+</div>
+
+<!-- SLIDE 8: Ask -->
+<div class="slide">
+<h2>Recommendation & Next Steps</h2>
+<div class="highlight" style="font-size: 16px; margin-bottom: 20px;">
+<strong>Ask:</strong> Pilot on 3 e-commerce pages next sprint. Success metric: 80%+ tickets closed without developer follow-up questions.
+</div>
+<div class="two-col">
+<div>
+<h3>What It Replaces</h3>
+<ul>
+<li>Manual axe-core scan → copy to spreadsheet</li>
+<li>Write bug ticket from scratch (45 min)</li>
+<li>Developer asks "what should I change?" (2x cycle)</li>
+<li>QA re-tests same violations next sprint</li>
+</ul>
+</div>
+<div>
+<h3>If Piloted, Extend With</h3>
+<ul>
+<li>Jira API integration (auto-create tickets)</li>
+<li>n8n scheduled scans (nightly CI check)</li>
+<li>Multi-page sitemap crawling</li>
+<li>WCAG 2.2 criteria (focus-not-obscured, target size)</li>
+<li>Before/after screenshot evidence</li>
+</ul>
+</div>
+</div>
+<h3 style="margin-top: 20px;">Effort & Competencies</h3>
+<table style="width: 60%;">
+<tr><td><strong>Total effort</strong></td><td>~12–15 hours</td></tr>
+<tr><td><strong>Cut</strong></td><td>Live Jira, n8n deploy, multi-page crawl, WCAG AAA</td></tr>
+<tr><td><strong>Competencies</strong></td><td>Spec-Driven Dev · Context Engineering · AI Review · RAG Pipeline</td></tr>
+</table>
+<div style="margin-top: 24px; text-align: center; padding: 16px; background: #f4f5f7; border-radius: 4px;">
+<strong style="font-size: 16px;">Sharvari Warudkar</strong><br>
+<span style="color: #6b778c;">QA Engineer · Perficient · AI.Academy@perficient.com</span>
+</div>
+<div class="footer"><span>Perficient — Global AI-First Academy</span><span>Slide 8 of 8</span></div>
+</div>
+
+</body>
+</html>

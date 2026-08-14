@@ -1,0 +1,32 @@
+{
+  "sites": [
+    {
+      "name": "SauceDemo",
+      "url": "https://www.saucedemo.com",
+      "type": "e-commerce",
+      "pages": [
+        "https://www.saucedemo.com",
+        "https://www.saucedemo.com/inventory.html"
+      ]
+    },
+    {
+      "name": "Automation Exercise",
+      "url": "https://automationexercise.com",
+      "type": "e-commerce",
+      "pages": [
+        "https://automationexercise.com",
+        "https://automationexercise.com/products",
+        "https://automationexercise.com/view_cart"
+      ]
+    },
+    {
+      "name": "DemoBlaze",
+      "url": "https://www.demoblaze.com",
+      "type": "e-commerce",
+      "pages": [
+        "https://www.demoblaze.com",
+        "https://www.demoblaze.com/cart.html"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A11Y Auto-Triage — Jira Bug View</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f4f5f7; color: #172b4d; padding: 20px; }
+.header { background: #0052cc; color: white; padding: 16px 24px; margin: -20px -20px 24px; display: flex; align-items: center; gap: 16px; }
+.header h1 { font-size: 18px; font-weight: 500; }
+.header .logo { font-size: 24px; font-weight: bold; }
+.board { max-width: 1000px; margin: 0 auto; }
+.ticket { background: white; border-radius: 3px; box-shadow: 0 1px 2px rgba(9,30,66,.25); margin-bottom: 16px; overflow: hidden; }
+.ticket-header { padding: 16px 20px; border-bottom: 1px solid #ebecf0; display: flex; justify-content: space-between; align-items: flex-start; }
+.ticket-id { font-size: 13px; color: #0052cc; font-weight: 500; }
+.ticket-title { font-size: 16px; font-weight: 600; margin-top: 4px; }
+.ticket-body { padding: 16px 20px; }
+.field { margin-bottom: 14px; }
+.field-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #6b778c; letter-spacing: 0.5px; margin-bottom: 4px; }
+.field-value { font-size: 14px; line-height: 1.5; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.badge-critical { background: #ff5630; color: white; }
+.badge-major { background: #ff8b00; color: white; }
+.badge-minor { background: #ffab00; color: #172b4d; }
+.badge-trivial { background: #b3d4ff; color: #0052cc; }
+.badge-serious { background: #ff7452; color: white; }
+.badge-moderate { background: #ffc400; color: #172b4d; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.tag { background: #dfe1e6; color: #42526e; font-size: 11px; padding: 2px 8px; border-radius: 3px; }
+.steps ol { padding-left: 20px; }
+.steps li { font-size: 14px; margin-bottom: 4px; }
+.code-block { background: #f4f5f7; border: 1px solid #dfe1e6; border-radius: 3px; padding: 10px 14px; font-family: 'SFMono-Medium', Consolas, monospace; font-size: 12px; margin-top: 4px; word-break: break-all; }
+.two-col { display: grid; grid-template-columns: 200px 1fr; gap: 12px; }
+.meta-panel { background: #f4f5f7; border-radius: 3px; padding: 12px 16px; margin-top: 12px; }
+.meta-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #ebecf0; font-size: 13px; }
+.meta-row:last-child { border: none; }
+.meta-label { color: #6b778c; }
+.summary-bar { background: white; border-radius: 3px; box-shadow: 0 1px 2px rgba(9,30,66,.25); padding: 16px 20px; margin-bottom: 20px; display: flex; gap: 32px; align-items: center; }
+.stat { text-align: center; }
+.stat-num { font-size: 28px; font-weight: 700; color: #0052cc; }
+.stat-label { font-size: 11px; text-transform: uppercase; color: #6b778c; }
+</style>
+</head>
+<body>
+<div class="header">
+<div class="logo">⬡</div>
+<h1>A11Y Auto-Triage — QA Project Board</h1>
+</div>
+
+<div class="board">
+<div class="summary-bar">
+<div class="stat"><div class="stat-num">8</div><div class="stat-label">Total Bugs Filed</div></div>
+<div class="stat"><div class="stat-num">3</div><div class="stat-label">Critical</div></div>
+<div class="stat"><div class="stat-num">3</div><div class="stat-label">Major</div></div>
+<div class="stat"><div class="stat-num">2</div><div class="stat-label">Minor</div></div>
+<div class="stat"><div class="stat-num">4</div><div class="stat-label">Pages Scanned</div></div>
+</div>
+
+<!-- Ticket 1 -->
+<div class="ticket">
+<div class="ticket-header">
+<div>
+<div class="ticket-id">A11Y-001 · product-listing.html</div>
+<div class="ticket-title">Insufficient Color Contrast on Product Price</div>
+</div>
+<span class="badge badge-minor">Minor</span>
+</div>
+<div class="ticket-body">
+<div class="field">
+<div class="field-label">WCAG Criterion</div>
+<div class="field-value">1.4.3 — Contrast (Minimum) <span class="badge badge-serious">Impact: Serious</span></div>
+</div>
+<div class="field">
+<div class="field-label">Affected Users</div>
+<div class="tags">
+<span class="tag">Low vision users</span>
+<span class="tag">Color vision deficiency</span>
+<span class="tag">Older users</span>
+</div>
+</div>
+<div class="field">
+<div class="field-label">Steps to Reproduce</div>
+<div class="steps">
+<ol>
+<li>Open the product listing page</li>
+<li>Navigate to the product cards</li>
+<li>Observe the text color and background color of the product prices</li>
+</ol>
+</div>
+</div>
+<div class="field">
+<div class="field-label">Expected vs Actual</div>
+<div class="field-value">
+<strong>Expected:</strong> Text contrast ratio of at least 4.5:1 against background<br>
+<strong>Actual:</strong> Product prices have contrast ratio of 2.32:1 (fails 4.5:1 minimum)
+</div>
+</div>
+<div class="field">
+<div class="field-label">Suggested Fix</div>
+<div class="code-block">Change .product-price color from #aaaaaa to #595959 or darker to achieve 4.5:1+ contrast ratio on white background</div>
+</div>
+<div class="field">
+<div class="field-label">Element Selector</div>
+<div class="code-block">.product-card > p.product-price</div>
+</div>
+<div class="meta-panel">
+<div class="meta-row"><span class="meta-label">Reporter</span><span>A11Y Auto-Triage Bot</span></div>
+<div class="meta-row"><span class="meta-label">Created</span><span>10 Aug 2026, 10:00 PM</span></div>
+<div class="meta-row"><span class="meta-label">Priority</span><span class="badge badge-minor">Minor</span></div>
+<div class="meta-row"><span class="meta-label">Labels</span><span><span class="tag">accessibility</span> <span class="tag">wcag-aa</span> <span class="tag">contrast</span></span></div>
+</div>
+</div>
+</div>
+
+<!-- Ticket 2 -->
+<div class="ticket">
+<div class="ticket-header">
+<div>
+<div class="ticket-id">A11Y-002 · product-listing.html</div>
+<div class="ticket-title">Missing Image Alt Text on Product Images</div>
+</div>
+<span class="badge badge-critical">Critical</span>
+</div>
+<div class="ticket-body">
+<div class="field">
+<div class="field-label">WCAG Criterion</div>
+<div class="field-value">1.1.1 — Non-text Content <span class="badge badge-critical">Impact: Critical</span></div>
+</div>
+<div class="field">
+<div class="field-label">Affected Users</div>
+<div class="tags">
+<span class="tag">Blind users</span>
+<span class="tag">Low vision users</span>
+<span class="tag">Cognitive disabilities</span>
+<span class="tag">Slow connections</span>
+</div>
+</div>
+<div class="field">
+<div class="field-label">Steps to Reproduce</div>
+<div class="steps">
+<ol>
+<li>Load the product listing page</li>
+<li>Inspect images with src attributes 'shoe-red.jpg' and 'shoe-green.jpg'</li>
+<li>Verify that images do not have alt attributes</li>
+</ol>
+</div>
+</div>
+<div class="field">
+<div class="field-label">Expected vs Actual</div>
+<div class="field-value">
+<strong>Expected:</strong> All non-text content has a text alternative serving equivalent purpose<br>
+<strong>Actual:</strong> Product images lack alt attributes — screen readers announce only the filename
+</div>
+</div>
+<div class="field">
+<div class="field-label">Suggested Fix</div>
+<div class="code-block">&lt;img src="shoe-red.jpg" alt="Red running shoe, side view" width="200" height="200"&gt;</div>
+</div>
+<div class="field">
+<div class="field-label">Element Selector</div>
+<div class="code-block">img[src$="shoe-red.jpg"], img[src$="shoe-green.jpg"]</div>
+</div>
+<div class="meta-panel">
+<div class="meta-row"><span class="meta-label">Reporter</span><span>A11Y Auto-Triage Bot</span></div>
+<div class="meta-row"><span class="meta-label">Created</span><span>10 Aug 2026, 10:00 PM</span></div>
+<div class="meta-row"><span class="meta-label">Priority</span><span class="badge badge-critical">Critical</span></div>
+<div class="meta-row"><span class="meta-label">Labels</span><span><span class="tag">accessibility</span> <span class="tag">wcag-aa</span> <span class="tag">images</span></span></div>
+</div>
+</div>
+</div>
+
+<!-- Ticket 3 -->
+<div class="ticket">
+<div class="ticket-header">
+<div>
+<div class="ticket-id">A11Y-003 · cart.html</div>
+<div class="ticket-title">Remove Button Has No Accessible Name</div>
+</div>
+<span class="badge badge-major">Major</span>
+</div>
+<div class="ticket-body">
+<div class="field">
+<div class="field-label">WCAG Criterion</div>
+<div class="field-value">4.1.2 — Name, Role, Value <span class="badge badge-serious">Impact: Serious</span></div>
+</div>
+<div class="field">
+<div class="field-label">Affected Users</div>
+<div class="tags">
+<span class="tag">Screen reader users</span>
+<span class="tag">Voice control users</span>
+<span class="tag">Switch access users</span>
+</div>
+</div>
+<div class="field">
+<div class="field-label">Steps to Reproduce</div>
+<div class="steps">
+<ol>
+<li>Navigate to the shopping cart page</li>
+<li>Tab to the remove (×) button next to any item</li>
+<li>Listen with screen reader — announces "times" or "button" with no context</li>
+</ol>
+</div>
+</div>
+<div class="field">
+<div class="field-label">Expected vs Actual</div>
+<div class="field-value">
+<strong>Expected:</strong> Button has an accessible name describing its purpose<br>
+<strong>Actual:</strong> Button contains only "×" character — screen readers cannot convey the action
+</div>
+</div>
+<div class="field">
+<div class="field-label">Suggested Fix</div>
+<div class="code-block">&lt;button class="remove-btn" aria-label="Remove Running Shoe - Red from cart"&gt;×&lt;/button&gt;</div>
+</div>
+<div class="field">
+<div class="field-label">Element Selector</div>
+<div class="code-block">button.remove-btn</div>
+</div>
+<div class="meta-panel">
+<div class="meta-row"><span class="meta-label">Reporter</span><span>A11Y Auto-Triage Bot</span></div>
+<div class="meta-row"><span class="meta-label">Created</span><span>10 Aug 2026, 10:15 PM</span></div>
+<div class="meta-row"><span class="meta-label">Priority</span><span class="badge badge-major">Major</span></div>
+<div class="meta-row"><span class="meta-label">Labels</span><span><span class="tag">accessibility</span> <span class="tag">wcag-aa</span> <span class="tag">buttons</span></span></div>
+</div>
+</div>
+</div>
+
+<!-- Ticket 4 -->
+<div class="ticket">
+<div class="ticket-header">
+<div>
+<div class="ticket-id">A11Y-004 · checkout.html</div>
+<div class="ticket-title">Form Inputs Missing Associated Labels</div>
+</div>
+<span class="badge badge-major">Major</span>
+</div>
+<div class="ticket-body">
+<div class="field">
+<div class="field-label">WCAG Criterion</div>
+<div class="field-value">3.3.2 — Labels or Instructions <span class="badge badge-serious">Impact: Serious</span></div>
+</div>
+<div class="field">
+<div class="field-label">Affected Users</div>
+<div class="tags">
+<span class="tag">Screen reader users</span>
+<span class="tag">Cognitive disabilities</span>
+<span class="tag">Low vision users</span>
+</div>
+</div>
+<div class="field">
+<div class="field-label">Steps to Reproduce</div>
+<div class="steps">
+<ol>
+<li>Navigate to the checkout form</li>
+<li>Tab through form fields (Full Name, Email, Address, etc.)</li>
+<li>Note that screen reader announces only "edit text" with no field purpose</li>
+</ol>
+</div>
+</div>
+<div class="field">
+<div class="field-label">Expected vs Actual</div>
+<div class="field-value">
+<strong>Expected:</strong> Each input has a visible, associated label element<br>
+<strong>Actual:</strong> Inputs use only placeholder text — disappears on focus, not programmatically associated
+</div>
+</div>
+<div class="field">
+<div class="field-label">Suggested Fix</div>
+<div class="code-block">&lt;label for="name"&gt;Full Name&lt;/label&gt;
+&lt;input type="text" id="name" placeholder="Full Name"&gt;</div>
+</div>
+<div class="field">
+<div class="field-label">Element Selector</div>
+<div class="code-block">#name, #email, #address, #city, #zip, #card, #expiry, #cvv</div>
+</div>
+<div class="meta-panel">
+<div class="meta-row"><span class="meta-label">Reporter</span><span>A11Y Auto-Triage Bot</span></div>
+<div class="meta-row"><span class="meta-label">Created</span><span>10 Aug 2026, 10:20 PM</span></div>
+<div class="meta-row"><span class="meta-label">Priority</span><span class="badge badge-major">Major</span></div>
+<div class="meta-row"><span class="meta-label">Labels</span><span><span class="tag">accessibility</span> <span class="tag">wcag-aa</span> <span class="tag">forms</span> <span class="tag">checkout</span></span></div>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

@@ -9,7 +9,8 @@ export async function scanUrl(url: string): Promise<ScanResult> {
   const context = await browser.newContext();
   const page: Page = await context.newPage();
 
-  await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await page.waitForTimeout(3000);
 
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])

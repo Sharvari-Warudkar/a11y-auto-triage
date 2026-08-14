@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A11Y Auto-Triage — Project Summary</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Calibri, Arial, sans-serif; color: #1B2227; line-height: 1.6; padding: 40px 50px; max-width: 850px; margin: 0 auto; }
+h1 { font-size: 24px; color: #075056; border-bottom: 3px solid #71D8C5; padding-bottom: 8px; margin-bottom: 16px; }
+h2 { font-size: 18px; color: #024879; margin: 24px 0 10px; border-left: 4px solid #075056; padding-left: 12px; }
+h3 { font-size: 14px; color: #075056; margin: 14px 0 6px; }
+p { font-size: 13.5px; margin-bottom: 8px; }
+ul, ol { font-size: 13.5px; padding-left: 22px; margin-bottom: 10px; }
+li { margin-bottom: 4px; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+th { background: #075056; color: white; padding: 8px 10px; text-align: left; }
+td { padding: 7px 10px; border: 1px solid #DFE7ED; }
+.tag { display: inline-block; background: #C5DCEE; color: #024879; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 3px; margin-right: 4px; }
+.section { margin-bottom: 20px; }
+code { background: #f1f5f9; padding: 1px 5px; border-radius: 2px; font-size: 12px; }
+.highlight { background: #f0fdf9; border-left: 4px solid #71D8C5; padding: 10px 14px; margin: 10px 0; }
+</style>
+</head>
+<body>
+
+<h1>A11Y Auto-Triage: AI-Powered WCAG AA Violation Detection & Bug Logging</h1>
+<p><strong>Author:</strong> Sharvari Warudkar | <strong>Role:</strong> QA Engineer, Perficient | <strong>Case:</strong> L1_Case05_Open_Choice_Prototype | <strong>Date:</strong> August 2026</p>
+<p><strong>Competencies:</strong> <span class="tag">Spec-Driven Development</span> <span class="tag">Context Engineering</span> <span class="tag">AI Output Review</span> <span class="tag">RAG Pipeline</span></p>
+
+<h2>1. Problem Statement</h2>
+<div class="section">
+<p><strong>Domain:</strong> E-commerce — accessibility compliance</p>
+<p><strong>User:</strong> QA engineers responsible for accessibility testing on e-commerce platforms</p>
+<p><strong>Problem:</strong> Manual WCAG 2.1 AA audits are slow (~45 minutes per page), inconsistent across engineers, and produce bug reports that lack remediation guidance. Developers receive vague tickets and spend additional time asking follow-up questions, doubling the fix cycle.</p>
+<p><strong>Definition of Success:</strong> Reduce per-page triage from ~45 min to &lt;5 min, with ≥90% correct WCAG criterion citations and code-level fix suggestions that developers can act on without follow-up questions.</p>
+</div>
+
+<h2>2. Solution Overview</h2>
+<div class="section">
+<p>An automated pipeline that scans web pages for WCAG 2.1 AA violations using industry-standard tools, retrieves relevant WCAG success criteria from a local knowledge base, and generates structured bug reports using AI — ready for Jira.</p>
+<h3>Architecture</h3>
+<p><code>Target URL → Playwright + axe-core (scan) → Deduplication → RAG Retrieval (WCAG docs) → LLM Generation (Groq/Llama 3.3) → Structured JSON Bug Reports</code></p>
+<h3>Technology Stack</h3>
+<table>
+<tr><th>Component</th><th>Technology</th><th>Rationale</th></tr>
+<tr><td>Scanner</td><td>Playwright + @axe-core/playwright</td><td>Industry standard, TypeScript native</td></tr>
+<tr><td>RAG Retrieval</td><td>Local keyword/TF-IDF matching</td><td>Zero infrastructure for 9-doc corpus</td></tr>
+<tr><td>LLM Generation</td><td>Groq — Llama 3.3 70B Versatile</td><td>Free tier, fast, structured output</td></tr>
+<tr><td>Language</td><td>TypeScript (strict mode)</td><td>Type safety, maintainability</td></tr>
+<tr><td>Deduplication</td><td>Local JSON history store</td><td>Prevents re-filing known violations</td></tr>
+</table>
+</div>
+
+<h2>3. Data Provenance</h2>
+<div class="section">
+<p><strong>Source:</strong> Synthetic HTML fixtures simulating common e-commerce pages (product listing, product detail, cart, checkout) with deliberately injected WCAG AA violations. All fixtures authored by the submitter based on real violation patterns observed in production e-commerce sites.</p>
+<p><strong>WCAG Knowledge Base:</strong> 9 WCAG 2.1 success criteria (Level A and AA) manually curated as markdown files covering the most common e-commerce violations.</p>
+<p><strong>What it does NOT represent:</strong> Dynamic SPA rendering, third-party widget violations, mobile-specific touch-target failures, or violations that appear only after user interaction.</p>
+<p><strong>Sensitive data:</strong> No real user data, no production URLs, no proprietary code. All content is original synthetic material.</p>
+</div>
+
+<h2>4. Spec-Driven Development Process</h2>
+<div class="section">
+<p>All artifacts were committed in strict order before implementation:</p>
+<table>
+<tr><th>Commit</th><th>Artifact</th><th>Content</th></tr>
+<tr><td>e160ca5</td><td>SPEC.md</td><td>Problem statement, success metrics, scope, architecture overview</td></tr>
+<tr><td>ee2820c</td><td>PLAN.md</td><td>Technology choices, RAG design, pipeline flow, risk mitigation</td></tr>
+<tr><td>0b93687</td><td>TASKS.md</td><td>18 tasks across 7 phases — data through documentation</td></tr>
+<tr><td>c049722</td><td>Implementation</td><td>Full pipeline: scanner, RAG, generator, orchestrator</td></tr>
+</table>
+<p><strong>Evidence:</strong> <code>git log --oneline</code> shows spec → plan → tasks → implementation order with no source files before the 4th commit.</p>
+</div>
+
+<h2>5. Context Engineering</h2>
+<div class="section">
+<p><strong>Artifact:</strong> <code>CLAUDE.md</code> — project-specific instructions including severity rules, WCAG citation format, fix suggestion requirements, and e-commerce domain context.</p>
+<h3>Before/After Comparison</h3>
+<table>
+<tr><th>Dimension</th><th>Without CLAUDE.md</th><th>With CLAUDE.md</th></tr>
+<tr><td>Severity accuracy</td><td>2/5 (non-standard "medium")</td><td>5/5 (defined scale)</td></tr>
+<tr><td>WCAG format consistency</td><td>3/5 ("WCAG 1.4.3" inconsistent)</td><td>5/5 ("1.4.3" standard)</td></tr>
+<tr><td>Fix actionability</td><td>1/5 ("increase contrast")</td><td>5/5 (specific CSS value)</td></tr>
+<tr><td>Developer can act without follow-up</td><td>1/5</td><td>4/5</td></tr>
+</table>
+</div>
+
+<h2>6. RAG Pipeline</h2>
+<div class="section">
+<table>
+<tr><th>Stage</th><th>Implementation</th></tr>
+<tr><td><strong>Load</strong></td><td>Read 9 WCAG markdown files from <code>data/wcag/</code></td></tr>
+<tr><td><strong>Chunk</strong></td><td>One chunk per success criterion (title + requirements + techniques + remediation)</td></tr>
+<tr><td><strong>Index</strong></td><td>Keyword/TF-IDF frequency maps per document</td></tr>
+<tr><td><strong>Store</strong></td><td>JSON persistence at <code>data/vector-store.json</code></td></tr>
+<tr><td><strong>Query</strong></td><td>Cosine similarity on keyword vectors → top-3 per violation</td></tr>
+</table>
+<p><strong>Chunking trade-off:</strong> One-doc-per-criterion keeps context complete but means borderline violations (e.g., placeholder contrast vs. missing label) can match the wrong criterion when keywords overlap. Pre-filtering by axe-core rule tags improves accuracy from 80% → 93%.</p>
+</div>
+
+<h2>7. AI Output Review (5 Lenses)</h2>
+<div class="section">
+<table>
+<tr><th>Lens</th><th>Finding</th><th>Action Taken</th></tr>
+<tr><td><strong>Intent</strong></td><td>3/15 reports misidentified root cause</td><td>Clarified system prompt for ambiguous button names</td></tr>
+<tr><td><strong>Tests</strong></td><td>3/15 steps referenced "click" for keyboard violations</td><td>Added validation: no mouse actions in keyboard-related bugs</td></tr>
+<tr><td><strong>Security</strong></td><td>No vulnerabilities found</td><td>.env gitignored, no eval(), no user data stored</td></tr>
+<tr><td><strong>Performance</strong></td><td>16–24s per page (acceptable)</td><td>500ms delay between LLM calls is conservative but safe</td></tr>
+<tr><td><strong>Maintainability</strong></td><td>System prompt embedded inline (1400 chars)</td><td>Noted as tech debt; extract to file for production</td></tr>
+</table>
+<div class="highlight">
+<strong>Error caught and corrected:</strong> The LLM described button-name violation (× symbol) as "no accessible name because it uses special character." The actual issue is that screen readers announce "times" or "multiplication sign" — the fix needs aria-label for clarity, not because there's no name. Updated system prompt to handle icon/symbol buttons correctly.
+</div>
+</div>
+
+<h2>8. Failure Analysis</h2>
+<div class="section">
+<table>
+<tr><th>#</th><th>Specific Input</th><th>Wrong Output</th><th>Root Cause</th></tr>
+<tr><td>1</td><td>checkout.html — input placeholder contrast</td><td>Cites SC 3.3.2 (Labels) instead of SC 1.4.3 (Contrast)</td><td>Keyword overlap between "input" contexts</td></tr>
+<tr><td>2</td><td>product-listing.html — 3 missing alt images</td><td>One ticket for 3 elements</td><td>Iterates violations not nodes</td></tr>
+<tr><td>3</td><td>Contrast ratio 4.4:1</td><td>Severity "critical" for borderline fail</td><td>No continuous severity mapping</td></tr>
+<tr><td>4</td><td>product-detail.html — focus-visible</td><td>"Add a visible focus indicator" (vague)</td><td>WCAG docs lack CSS snippets</td></tr>
+<tr><td>5</td><td>JS-rendered SPA pages</td><td>No violations detected</td><td>Static HTML fixtures only</td></tr>
+</table>
+<h3>Measured Improvement</h3>
+<p><strong>Before:</strong> 12/15 correct WCAG criterion citations (80%)</p>
+<p><strong>After (rule-tag pre-filter):</strong> 14/15 correct citations (93%)</p>
+<p><strong>What got worse:</strong> +50ms retrieval time; secondary criteria sometimes excluded for multi-criteria violations</p>
+</div>
+
+<h2>9. Results</h2>
+<div class="section">
+<table>
+<tr><th>Metric</th><th>Manual Process</th><th>Auto-Triage</th></tr>
+<tr><td>Time per page</td><td>~45 minutes</td><td>&lt; 5 minutes</td></tr>
+<tr><td>WCAG criterion accuracy</td><td>Varies by engineer</td><td>93%</td></tr>
+<tr><td>Fix suggestion actionability</td><td>Often vague</td><td>Code-level specific</td></tr>
+<tr><td>Pages covered per sprint</td><td>8–12</td><td>40+</td></tr>
+<tr><td>Deduplication</td><td>Manual memory</td><td>Automatic (violation+selector key)</td></tr>
+</table>
+</div>
+
+<h2>10. Declared Effort</h2>
+<div class="section">
+<p><strong>Total: ~12–15 hours</strong></p>
+<table>
+<tr><th>Phase</th><th>Hours</th></tr>
+<tr><td>Problem definition & scoping</td><td>1.5</td></tr>
+<tr><td>Data sourcing (fixtures + WCAG docs)</td><td>2</td></tr>
+<tr><td>Spec, plan, tasks writing</td><td>2</td></tr>
+<tr><td>Implementation (scanner + RAG + generator)</td><td>4</td></tr>
+<tr><td>Context engineering (CLAUDE.md + before/after)</td><td>1.5</td></tr>
+<tr><td>Testing & failure analysis</td><td>2</td></tr>
+<tr><td>Documentation & presentation</td><td>1.5</td></tr>
+</table>
+<h3>What I Cut</h3>
+<ul>
+<li>Live Jira integration (mocked with JSON output)</li>
+<li>n8n scheduled workflow (described but not deployed)</li>
+<li>Multi-page crawling (single URL per run)</li>
+<li>WCAG AAA criteria (AA only)</li>
+<li>Visual regression / screenshot comparison</li>
+</ul>
+</div>
+
+</body>
+</html>

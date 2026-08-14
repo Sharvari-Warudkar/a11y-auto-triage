@@ -5,8 +5,8 @@ WCAG 2.1 AA violation auto-triage tool for e-commerce QA. Scans pages with axe-c
 
 ## Architecture
 - Scanner: axe-core + Playwright (src/scan.ts)
-- RAG: embed WCAG docs → local vector store → cosine similarity retrieval
-- Generator: LLM via Portkey gateway → structured JSON bug logs
+- RAG: keyword/TF-IDF matching over 9 WCAG markdown docs → local JSON store
+- Generator: Groq (Llama 3.3 70B) → structured JSON bug logs
 - Pipeline: src/pipeline.ts orchestrates scan → dedup → retrieve → generate → output
 
 ## Code Conventions

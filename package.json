@@ -9,6 +9,7 @@
     "ingest": "ts-node src/rag/ingest.ts",
     "pipeline": "ts-node src/pipeline.ts",
     "pipeline:fresh": "ts-node src/pipeline.ts -- --skip-dedup",
+    "scan:all": "ts-node src/scan-all.ts",
     "test": "playwright test"
   },
   "keywords": ["accessibility", "wcag", "a11y", "automation", "playwright", "qa", "typescript"],

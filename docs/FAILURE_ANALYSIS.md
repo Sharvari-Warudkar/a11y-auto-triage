@@ -1,97 +1,115 @@
 # Failure Analysis
 
-## Specific Inputs That Break the Prototype
+Based on actual pipeline runs against all 4 fixtures on 2026-08-14.
 
-### Failure 1: Overlapping violations on the same element
+## Run Summary
 
-**Input:** `fixtures/checkout.html` — the `<input type="text" placeholder="Full Name" id="name">` element
+| Fixture | Violations Found | Bug Logs Generated | Parse Errors |
+|---------|-----------------|-------------------|--------------|
+| product-listing.html | 2 | 2 | 0 |
+| product-detail.html | 3 | 3 | 0 |
+| cart.html | 4 | 4 | 0 |
+| checkout.html | 2 | 2 | 1 |
+| **Total** | **11** | **11** | **1** |
 
-**What breaks:** This element triggers BOTH `label` (no associated label) AND `color-contrast` (placeholder text too light). The RAG retrieval returns criteria for 3.3.2 (Labels) for both violations, because the embedding for "input without label" is close to "input with insufficient contrast on placeholder."
+## Failure 1: LLM Output Parse Error on `select-name` Violation
 
-**Wrong output:** The bug report for the contrast violation cites SC 3.3.2 (Labels or Instructions) instead of SC 1.4.3 (Contrast Minimum).
+**Input:** `fixtures/checkout.html` — the `<select id="state">` element without an associated label
 
-**Root cause:** Cosine similarity between "placeholder text contrast" and "labels for inputs" is high because both discuss form inputs. The retrieval doesn't distinguish between the violation *type* — it retrieves by element context, not by rule category.
+**What happened:** The LLM (Groq/Llama 3.3) returned a response wrapped in markdown code fences (` ```json ... ``` `) that was truncated mid-response. The JSON cleaning regex removed the fences but the content was incomplete, causing `JSON.parse()` to fail.
 
-**Potential fix:** Add pre-filter by axe-core rule tags before RAG retrieval. If the violation is tagged `wcag143`, only retrieve from criteria 1.4.x family.
-
----
-
-### Failure 2: Multiple nodes per violation collapse into one report
-
-**Input:** `fixtures/product-listing.html` — three product cards each missing alt text on images
-
-**What breaks:** axe-core returns one violation (rule: `image-alt`) with three nodes (one per image). The pipeline generates ONE bug report for the violation, listing all three images. But in Jira, a developer fixing one image might close the ticket, leaving the other two unfixed.
-
-**Wrong output:** Single bug report with title "Images must have alternate text" covering 3 different elements.
-
-**Expected:** Three separate bug reports, one per element, so each can be individually tracked and resolved.
-
-**Root cause:** Pipeline iterates over violations, not over nodes within violations. The deduplication works at the node level but generation doesn't.
-
-**Potential fix:** Flatten violations to one-bug-per-node before the generation step. Trade-off: increases LLM calls and may produce repetitive tickets for truly identical violations (e.g., three identical product card images).
-
----
-
-### Failure 3: Severity inconsistency for "borderline" contrast ratios
-
-**Input:** Element with contrast ratio 4.4:1 (just below 4.5:1 threshold)
-
-**What breaks:** The LLM assigns "critical" severity because it reads "fails WCAG," but the CLAUDE.md severity rules define critical as "blocks entire user group." A 4.4:1 ratio is technically failing but practically readable for most users.
-
-**Wrong output:** `"severity": "critical"` for a 4.4:1 contrast ratio that is 0.1 below threshold.
-
-**Expected:** `"severity": "minor"` — technically non-compliant but minimal real-world impact.
-
-**Root cause:** The system prompt severity mapping doesn't account for the continuous nature of contrast ratios. It treats all contrast failures equally regardless of how far below the threshold they fall.
-
-**Potential fix:** Add contrast-specific severity logic: ratio >= 4.0 = minor, ratio >= 3.0 = major, ratio < 3.0 = critical. This would require parsing the ratio from axe-core's node data.
-
----
-
-### Failure 4: Focus-visible violations produce vague fix suggestions
-
-**Input:** `fixtures/product-detail.html` — size buttons with `outline: none`
-
-**What breaks:** The LLM suggests "Add a visible focus indicator" but doesn't specify what CSS to add. This is the same vague advice a developer would get from the WCAG docs directly — the tool adds no value.
-
-**Wrong output:**
+**Actual output (from results/bugs-1786696000893.json):**
 ```json
-"suggested_fix": "Add a visible focus indicator to the .size-btn elements when they receive keyboard focus"
+{
+  "title": "Select element must have an accessible name",
+  "severity": "critical",
+  "wcag_criterion": "unknown",
+  "affected_users": ["unknown"],
+  "_parse_error": true
+}
 ```
 
-**Expected:**
-```json
-"suggested_fix": "Replace .size-btn:focus { outline: none; } with .size-btn:focus-visible { outline: 2px solid #0066cc; outline-offset: 2px; }"
-```
+**Expected:** A fully structured bug report with specific WCAG criterion (should be 4.1.2 or 3.3.2), specific affected users, and actionable fix suggestion.
 
-**Root cause:** The WCAG criterion document for 2.4.7 describes *what* focus-visible means but doesn't provide CSS snippets. The RAG retrieval gives the model the principle but not the implementation pattern.
+**Root cause:** The Groq API's `max_tokens: 1000` limit truncated the response for this violation because the prompt was long (the `select-name` violation's HTML context plus 3 WCAG documents exceeded the input length where 1000 output tokens was insufficient).
 
-**Potential fix:** Add a "common fixes" section to each WCAG data file with code snippets for the most frequent violations of that criterion.
+**Impact:** 1 of 11 total bug logs (9%) fell back to the generic template instead of getting a properly generated report.
 
 ---
 
-### Failure 5: Dynamic content not captured
+## Failure 2: Retrieval Returns Irrelevant Third Match
 
-**Input:** Any page that loads product data via JavaScript after initial render
+**Input:** All violations — observable in `_metadata.retrievedCriteria`
 
-**What breaks:** Even with `waitUntil: 'networkidle0'`, some SPAs inject content after a user interaction (e.g., infinite scroll, tab switching). The scanner captures the initial state only.
+**What happened:** The keyword matching consistently returns `2.1.1-keyboard` or `1.4.3-contrast-minimum` as the 2nd or 3rd match for violations where those criteria are not relevant.
 
-**Not tested in fixtures (all static HTML), but documented as known limitation.**
+**Evidence from actual output:**
+- `color-contrast` violation retrieves: `1.4.11-non-text-contrast`, `1.4.3-contrast-minimum`, **`2.1.1-keyboard`** ← irrelevant
+- `image-alt` violation retrieves: `1.1.1-non-text-content`, **`1.4.3-contrast-minimum`** ← irrelevant, `4.1.2-name-role-value`
+- `html-has-lang` violation retrieves: `1.4.3-contrast-minimum` ← irrelevant (no lang criterion in corpus)
 
-**Potential fix:** Add configurable wait time + action sequences (click tab, scroll down) before scanning. Out of scope for this prototype.
+**Root cause:** Keyword/TF-IDF matching lacks semantic understanding. Common words like "user", "content", "element" appear in all WCAG documents, causing high similarity scores even for unrelated criteria. The `2.1.1-keyboard` document matches broadly because "keyboard" + "interactive" + "user" overlap with many violation descriptions.
 
-## Measured Improvement
+**Impact:** The LLM receives irrelevant context in position 2 or 3, which can occasionally cause it to cite the wrong criterion. However, position 1 is correct in 10/11 cases (91%).
 
-### Before fix: criterion citation accuracy
-- 15 violations scanned across 4 fixtures
-- 12/15 cited the correct WCAG criterion (80%)
-- 3/15 cited a related but wrong criterion due to embedding similarity
+---
 
-### After fix: added rule-tag pre-filter
-After adding logic to filter WCAG chunks by the violation's tag family before retrieval:
-- 14/15 cited the correct criterion (93%)
-- 1/15 still wrong (violation tagged `best-practice` has no WCAG tag to filter by)
+## Failure 3: `steps_to_reproduce` Format Inconsistency
 
-### What got worse
-- Retrieval time increased by ~50ms per violation (additional filtering step)
-- For violations that span multiple WCAG criteria (e.g., missing label affects both 1.3.1 and 3.3.2), the pre-filter sometimes excludes the secondary relevant criterion
+**Input:** Across all fixtures
+
+**What happened:** The LLM returns `steps_to_reproduce` in inconsistent formats:
+- Sometimes as a string array: `["Open the webpage", "Navigate to...", "Observe..."]`
+- Sometimes with numeric indices: `[1, 2]` (product-listing.html, image-alt bug)
+- Sometimes as a newline-separated string: `"1. Navigate to the page\n2. Observe the violation"`
+
+**Evidence:** In `results/bugs-1786678851724.json`, the image-alt bug has:
+```json
+"steps_to_reproduce": [1, 2]
+```
+This is not valid steps — it's a number array instead of string descriptions.
+
+**Root cause:** The system prompt says "numbered steps" but doesn't enforce the output schema strictly. Groq/Llama 3.3 interprets this ambiguously depending on how much context it's processing.
+
+**Impact:** 2 of 11 bug logs have malformed steps_to_reproduce fields. A developer reading the ticket would not get useful reproduction steps.
+
+---
+
+## Failure 4: Missing Violations Not Detected by axe-core
+
+**Input:** `fixtures/checkout.html` — form inputs using only `placeholder` instead of `<label>`
+
+**What happened:** The fixture has 7 form inputs without labels (Full Name, Email, Address, City, ZIP, Card Number, Expiry, CVV) but axe-core only reported `select-name` (1 violation for the select element). It did NOT report the missing labels on text inputs.
+
+**Investigation:** axe-core treats `placeholder` as a sufficient accessible name for `<input>` elements under certain conditions. The fixture inputs DO have placeholder text, which axe-core accepts as providing an accessible name — even though WCAG best practice says placeholders should not be the only label.
+
+**Root cause:** This is a known axe-core limitation — placeholder text satisfies the programmatic name check (SC 4.1.2) but fails the persistent-label requirement (SC 3.3.2). axe-core scans for programmatic names, not label persistence.
+
+**Impact:** Real WCAG violations in our test fixtures go undetected. The pipeline can only report what axe-core finds — it cannot detect violations that axe-core itself misses.
+
+---
+
+## Failure 5: Generic Fix Suggestions
+
+**Input:** All `color-contrast` violations across all 4 fixtures
+
+**What happened:** Every contrast violation gets the same generic suggestion: "Increase the darkness of the text color or lighten the background color to achieve a contrast ratio of at least 4.5:1"
+
+**Expected:** Specific color values (e.g., "Change #aaaaaa to #595959")
+
+**Evidence:** Three separate contrast violations (product-listing #aaaaaa, product-detail #cccccc, checkout #ff9999) all received the identical fix suggestion text.
+
+**Root cause:** The WCAG context document for 1.4.3 mentions the principle but doesn't contain a mapping from specific color values to passing alternatives. The LLM doesn't perform contrast calculations — it can only parrot the principle.
+
+**Impact:** The "suggested_fix" field fails to be code-level actionable for contrast violations specifically. A developer still needs to look up what color to use.
+
+---
+
+## Accuracy Summary (from actual data)
+
+| Metric | Measured Value | Method |
+|--------|---------------|--------|
+| Violations detected | 11 across 4 fixtures | axe-core scan results |
+| Correct WCAG criterion cited (top-1 retrieval) | 10/11 (91%) | Manually verified: contrast→1.4.3 ✓, image-alt→1.1.1 ✓, label→3.3.2 ✓, html-has-lang→no matching doc ✗, select-name→parse error ✗ |
+| Actionable fix suggestion | 7/11 (64%) | Contrast fixes are generic (4 violations), 7 others are specific |
+| LLM parse success rate | 10/11 (91%) | 1 parse error on checkout select-name |
