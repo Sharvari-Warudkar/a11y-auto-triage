@@ -1,0 +1,127 @@
+{
+  "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\cart.html",
+  "scanTimestamp": "2026-08-14T06:31:24.688Z",
+  "totalViolations": 4,
+  "newBugLogs": 4,
+  "bugLogs": [
+    {
+      "title": "Insufficient Color Contrast",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "users with low vision",
+        "users with color vision deficiency",
+        "older users with declining contrast sensitivity"
+      ],
+      "steps_to_reproduce": [
+        "Open the webpage in a browser",
+        "Navigate to the elements with the class 'discount' and the class 'checkout-btn'",
+        "Observe the color contrast between the text and the background"
+      ],
+      "expected_behavior": "The visual presentation of text and images of text has a contrast ratio of at least 4.5:1",
+      "actual_behavior": "The elements have insufficient color contrast, with a ratio of 2.16 for the 'discount' class and 3.13 for the 'checkout-btn' class",
+      "suggested_fix": "Increase the darkness of the text color or lighten the background color to achieve a contrast ratio of at least 4.5:1",
+      "element_selector": "tr:nth-child(2) > td:nth-child(3) > span, tr:nth-child(3) > td:nth-child(3) > span, .checkout-btn",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-08-14T06:31:24.688Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "2.1.1-keyboard"
+        ]
+      }
+    },
+    {
+      "title": "Missing lang attribute",
+      "severity": "major",
+      "wcag_criterion": "3.1.1",
+      "wcag_criterion_name": "Language of Page",
+      "affected_users": [
+        "screen reader users",
+        "users who apply custom stylesheets",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        1,
+        2
+      ],
+      "expected_behavior": "The HTML document should have a lang attribute to specify the language of the content.",
+      "actual_behavior": "The HTML document does not have a lang attribute.",
+      "suggested_fix": "Add a lang attribute to the html element, e.g., <html lang=\"en\">",
+      "element_selector": "html",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "html-has-lang",
+        "scanTimestamp": "2026-08-14T06:31:24.688Z",
+        "retrievedCriteria": [
+          "1.3.1-info-and-relationships",
+          "2.1.1-keyboard",
+          "2.4.7-focus-visible"
+        ]
+      }
+    },
+    {
+      "title": "Missing Image Alt Text",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "users with low vision",
+        "users with cognitive disabilities",
+        "users on slow connections"
+      ],
+      "steps_to_reproduce": [
+        1,
+        2
+      ],
+      "expected_behavior": "All non-text content has a text alternative that serves the equivalent purpose.",
+      "actual_behavior": "Images are missing alt text, making them inaccessible to screen readers and other assistive technologies.",
+      "suggested_fix": "Add descriptive alt text to all informative images, and use alt=\"\" (empty) only for truly decorative images.",
+      "element_selector": "img[src$=\"shoe-red-thumb.jpg\"], img[src$=\"shoe-blue-thumb.jpg\"]",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-08-14T06:31:24.688Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ]
+      }
+    },
+    {
+      "title": "Missing form labels",
+      "severity": "major",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "Users with cognitive disabilities",
+        "Screen reader users",
+        "Users with low vision",
+        "Older users unfamiliar with conventions"
+      ],
+      "steps_to_reproduce": [
+        1,
+        2
+      ],
+      "expected_behavior": "Form elements should have labels to provide clear instructions for users",
+      "actual_behavior": "Form elements are missing labels, making it difficult for users to understand the purpose of the fields",
+      "suggested_fix": "Add visible, persistent labels above or beside every form input using the 'label' element and 'for' attribute",
+      "element_selector": "input[type='number']",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "label",
+        "scanTimestamp": "2026-08-14T06:31:24.688Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ]
+      }
+    }
+  ]
+}

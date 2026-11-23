@@ -40,6 +40,6 @@
 
 - [x] T7.1 — Write AI output review (intent, tests, security, performance, maintainability)
 - [x] T7.2 — Write failure analysis (specific inputs that break the prototype)
-- [x] T7.3 — Record measured results (10/11 = 91% correct citation, from manual verification of real run)
+- [x] T7.3 — Record measured results (9/11 = 82% correct citation (target 85% not met), recounted from results/*.json)
 - [x] T7.4 — Create one-slide pitch for client stakeholders
 - [x] T7.5 — Write declared-effort statement

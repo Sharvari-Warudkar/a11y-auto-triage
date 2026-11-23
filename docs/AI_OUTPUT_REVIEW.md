@@ -11,7 +11,7 @@ Based on actual pipeline output from runs on 2026-08-14 against all 4 fixtures (
 **Findings (11 bug logs reviewed):**
 - 9/11 correctly describe the violation and its impact
 - 1/11 has a parse error (select-name on checkout.html) — fell back to generic template
-- 1/11 has partially wrong content: the `image-alt` bug on product-listing.html has `steps_to_reproduce: [1, 2]` which is nonsensical
+- 1/11 cites a criterion outside the corpus: cart.html `html-has-lang` cites 3.1.1 (correct in the real WCAG, but not in `data/wcag/`, breaking the cite-only-corpus-IDs rule)
 
 **Error caught and corrected:**
 - **Violation:** `color-contrast` on `checkout.html` — the error message element `#card-error`
@@ -24,10 +24,8 @@ Based on actual pipeline output from runs on 2026-08-14 against all 4 fixtures (
 **Question:** Are the steps_to_reproduce accurate and reproducible?
 
 **Findings:**
-- 7/11 have sensible, reproducible steps
-- 2/11 have the format issue (numeric array `[1, 2]` instead of string descriptions)
-- 1/11 has generic fallback steps from the parse-error template
-- 1/11 starts with a bare `1` instead of a description ("1", "Navigate to the page...")
+- 6/11 contain readable step text (2 clean arrays, 3 mixed with stray numbers, 1 generic fallback string)
+- 5/11 are numeric-only arrays such as `[1, 2]` (listing image-alt, detail contrast, cart lang/alt/labels): not reproducible
 
 **Specific example of bad output (product-listing.html, image-alt violation):**
 ```json
@@ -49,7 +47,7 @@ This is not reproducible by a developer. The LLM produced numeric indices instea
 
 ## 4. Performance Review
 
-**Measured (actual run on 2026-08-14):**
+**Approximate timings observed during the 2026-08-14 runs (not recorded in the results files, which only store scan timestamps):**
 
 | Fixture | Violations | Total Time | Avg per violation |
 |---------|-----------|------------|-------------------|
@@ -81,8 +79,8 @@ This is not reproducible by a developer. The LLM produced numeric indices instea
 
 | Lens | Result | Evidence |
 |------|--------|----------|
-| Intent | 9/11 correct | 1 parse error, 1 malformed steps |
-| Tests (reproducibility) | 7/11 reproducible | 2 numeric arrays, 1 generic template, 1 starts with bare number |
+| Intent | 9/11 correct | 1 parse error, 1 criterion outside corpus (3.1.1) |
+| Tests (reproducibility) | 6/11 readable | 5 numeric-only, 3 mixed, 2 clean, 1 generic string |
 | Security | Pass | Key exposure caught and mitigated |
 | Performance | 15-30s per page | 90x faster than manual |
 | Maintainability | Pass with note | System prompt should be extracted to config |

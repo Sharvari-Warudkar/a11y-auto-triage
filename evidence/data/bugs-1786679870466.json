@@ -1,0 +1,108 @@
+{
+  "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\product-detail.html",
+  "scanTimestamp": "2026-08-14T03:57:43.220Z",
+  "totalViolations": 3,
+  "newBugLogs": 3,
+  "bugLogs": [
+    {
+      "title": "Insufficient Color Contrast",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "users with low vision",
+        "users with color vision deficiency",
+        "older users with declining contrast sensitivity"
+      ],
+      "steps_to_reproduce": [
+        1,
+        2,
+        3
+      ],
+      "expected_behavior": "The visual presentation of text and images of text has a contrast ratio of at least 4.5:1",
+      "actual_behavior": "Elements have insufficient color contrast (1.6 and 2.93) against their backgrounds",
+      "suggested_fix": "Increase text darkness or lighten background to achieve 4.5:1 ratio",
+      "element_selector": "p.stock-status, button.add-to-cart",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-08-14T03:57:43.220Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "2.1.1-keyboard"
+        ]
+      }
+    },
+    {
+      "title": "Missing Image Alt Text",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users who use screen readers",
+        "users with low vision who use text enlargement",
+        "users with cognitive disabilities who benefit from text descriptions",
+        "users on slow connections who disable images"
+      ],
+      "steps_to_reproduce": [
+        1,
+        "Navigate to the product page",
+        2,
+        "Inspect the product image element",
+        3,
+        "Verify the absence of an alt attribute or alternative text"
+      ],
+      "expected_behavior": "The image should have alternative text that serves the equivalent purpose, such as a descriptive alt attribute.",
+      "actual_behavior": "The image is missing an alt attribute, aria-label, and aria-labelledby, and does not have a title attribute or role=\"none\" or role=\"presentation\" to indicate it is decorative.",
+      "suggested_fix": "Add a descriptive alt attribute to the img element, such as alt=\"Red shoe detail\". Alternatively, use aria-label or aria-labelledby to provide a text alternative.",
+      "element_selector": "img.product-image",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-08-14T03:57:43.220Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ]
+      }
+    },
+    {
+      "title": "Missing Label on Form Input",
+      "severity": "major",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "Users with cognitive disabilities",
+        "Screen reader users",
+        "Users with low vision",
+        "Older users unfamiliar with conventions"
+      ],
+      "steps_to_reproduce": [
+        1,
+        "Navigate to the form input element",
+        2,
+        "Verify that the input element does not have a visible label",
+        3,
+        "Verify that the input element does not have an explicit or implicit label",
+        4,
+        "Verify that the input element does not have an aria-label or aria-labelledby attribute"
+      ],
+      "expected_behavior": "The form input element should have a visible, persistent label or an explicit/implicit label associated with it",
+      "actual_behavior": "The form input element does not have a visible, persistent label or an explicit/implicit label associated with it",
+      "suggested_fix": "Add a visible, persistent label above or beside the form input element, or use the 'for' attribute to associate a label with the input element",
+      "element_selector": "input",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "label",
+        "scanTimestamp": "2026-08-14T03:57:43.220Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ]
+      }
+    }
+  ]
+}

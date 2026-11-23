@@ -46,11 +46,11 @@ Based on actual pipeline runs against all 4 fixtures on 2026-08-14.
 **Evidence from actual output:**
 - `color-contrast` violation retrieves: `1.4.11-non-text-contrast`, `1.4.3-contrast-minimum`, **`2.1.1-keyboard`** ← irrelevant
 - `image-alt` violation retrieves: `1.1.1-non-text-content`, **`1.4.3-contrast-minimum`** ← irrelevant, `4.1.2-name-role-value`
-- `html-has-lang` violation retrieves: `1.4.3-contrast-minimum` ← irrelevant (no lang criterion in corpus)
+- `html-has-lang` violation retrieves: `1.3.1-info-and-relationships`, `2.1.1-keyboard`, `2.4.7-focus-visible` ← all irrelevant (no language criterion in corpus); the LLM then cited 3.1.1 from its own knowledge
 
 **Root cause:** Keyword/TF-IDF matching lacks semantic understanding. Common words like "user", "content", "element" appear in all WCAG documents, causing high similarity scores even for unrelated criteria. The `2.1.1-keyboard` document matches broadly because "keyboard" + "interactive" + "user" overlap with many violation descriptions.
 
-**Impact:** The LLM receives irrelevant context in position 2 or 3, which can occasionally cause it to cite the wrong criterion. However, position 1 is correct in 10/11 cases (91%).
+**Impact:** The LLM receives irrelevant context in position 2 or 3, which can occasionally cause it to cite the wrong criterion. Measured from `_metadata.retrievedCriteria`: the correct criterion is in position 1 for only 6/11 (image-alt x3, label x2, select-name x1); for all 4 `color-contrast` violations position 1 is `1.4.11-non-text-contrast` and the correct `1.4.3` is position 2. The correct criterion appears somewhere in the top 3 for 10/11 (html-has-lang is the miss).
 
 ---
 
@@ -60,7 +60,8 @@ Based on actual pipeline runs against all 4 fixtures on 2026-08-14.
 
 **What happened:** The LLM returns `steps_to_reproduce` in inconsistent formats:
 - Sometimes as a string array: `["Open the webpage", "Navigate to...", "Observe..."]`
-- Sometimes with numeric indices: `[1, 2]` (product-listing.html, image-alt bug)
+- Sometimes numeric-only: `[1, 2]` (5 of 11 bug logs: listing image-alt, detail contrast, cart lang/alt/labels)
+- Sometimes mixed, with stray numbers between readable steps (3 of 11: detail image-alt, detail label, checkout contrast)
 - Sometimes as a newline-separated string: `"1. Navigate to the page\n2. Observe the violation"`
 
 **Evidence:** In `results/bugs-1786678851724.json`, the image-alt bug has:
@@ -71,7 +72,7 @@ This is not valid steps — it's a number array instead of string descriptions.
 
 **Root cause:** The system prompt says "numbered steps" but doesn't enforce the output schema strictly. Groq/Llama 3.3 interprets this ambiguously depending on how much context it's processing.
 
-**Impact:** 2 of 11 bug logs have malformed steps_to_reproduce fields. A developer reading the ticket would not get useful reproduction steps.
+**Impact:** 5 of 11 bug logs have numeric-only steps (unusable) and 3 more have stray numbers mixed in. Only 2 are clean string arrays, plus 1 generic fallback string. 6/11 contain readable step text.
 
 ---
 
@@ -79,7 +80,7 @@ This is not valid steps — it's a number array instead of string descriptions.
 
 **Input:** `fixtures/checkout.html` — form inputs using only `placeholder` instead of `<label>`
 
-**What happened:** The fixture has 7 form inputs without labels (Full Name, Email, Address, City, ZIP, Card Number, Expiry, CVV) but axe-core only reported `select-name` (1 violation for the select element). It did NOT report the missing labels on text inputs.
+**What happened:** The fixture has 8 text inputs without labels (Full Name, Email, Address, City, ZIP, Card Number, Expiry, CVV) but axe-core only reported `select-name` (1 violation for the select element). It did NOT report the missing labels on text inputs.
 
 **Investigation:** axe-core treats `placeholder` as a sufficient accessible name for `<input>` elements under certain conditions. The fixture inputs DO have placeholder text, which axe-core accepts as providing an accessible name — even though WCAG best practice says placeholders should not be the only label.
 
@@ -93,11 +94,11 @@ This is not valid steps — it's a number array instead of string descriptions.
 
 **Input:** All `color-contrast` violations across all 4 fixtures
 
-**What happened:** Every contrast violation gets the same generic suggestion: "Increase the darkness of the text color or lighten the background color to achieve a contrast ratio of at least 4.5:1"
+**What happened:** Every contrast violation gets a near-identical generic suggestion: "Increase the darkness of the text color or lighten the background color to achieve a contrast ratio of at least 4.5:1"
 
 **Expected:** Specific color values (e.g., "Change #aaaaaa to #595959")
 
-**Evidence:** Three separate contrast violations (product-listing #aaaaaa, product-detail #cccccc, checkout #ff9999) all received the identical fix suggestion text.
+**Evidence:** All four contrast violations (product-listing, product-detail, cart, checkout) received the same generic advice (ratio target 4.5:1, no colour values). In addition the checkout `select-name` fallback fix is only a dequeuniversity link.
 
 **Root cause:** The WCAG context document for 1.4.3 mentions the principle but doesn't contain a mapping from specific color values to passing alternatives. The LLM doesn't perform contrast calculations — it can only parrot the principle.
 
@@ -110,6 +111,11 @@ This is not valid steps — it's a number array instead of string descriptions.
 | Metric | Measured Value | Method |
 |--------|---------------|--------|
 | Violations detected | 11 across 4 fixtures | axe-core scan results |
-| Correct WCAG criterion cited (top-1 retrieval) | 10/11 (91%) | Manually verified: contrast→1.4.3 ✓, image-alt→1.1.1 ✓, label→3.3.2 ✓, html-has-lang→no matching doc ✗, select-name→parse error ✗ |
-| Actionable fix suggestion | 7/11 (64%) | Contrast fixes are generic (4 violations), 7 others are specific |
+| Correct WCAG criterion in the bug log | 9/11 (82%) | contrast→1.4.3 ✓ x4, image-alt→1.1.1 ✓ x3, label→3.3.2 ✓ x2, html-has-lang→3.1.1 ✗ (not in corpus), select-name→parse error ✗. Target was 85%: not met |
+| Retrieval top-1 correct | 6/11 (55%) | from `_metadata.retrievedCriteria`; contrast top-1 is 1.4.11 in all 4 cases |
+| Correct criterion within retrieved top-3 | 10/11 (91%) | miss: html-has-lang |
+| Actionable fix suggestion | 6/11 (55%) | Names a concrete attribute/element: image-alt x3, label x2, lang x1. Not actionable: contrast x4 (generic), select-name fallback (link only). Target was 75%: not met |
 | LLM parse success rate | 10/11 (91%) | 1 parse error on checkout select-name |
+| Readable steps_to_reproduce | 6/11 (55%) | 5 numeric-only, 3 mixed with stray numbers, 2 clean arrays, 1 generic string |
+
+Raw data: `evidence/data/` (the four `bugs-*.json` files) and `evidence/data/METRICS.md` (per-bug table).

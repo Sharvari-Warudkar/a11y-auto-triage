@@ -57,28 +57,28 @@ code { background: #f1f5f9; padding: 1px 4px; border-radius: 2px; font-size: 11p
 <tr><td>product-detail.html</td><td>3</td><td>3</td><td>0</td><td>3/3 (100%)</td></tr>
 <tr><td>cart.html</td><td>4</td><td>4</td><td>0</td><td>3/4 (75%)</td></tr>
 <tr><td>checkout.html</td><td>2</td><td>2</td><td>1</td><td>1/2 (50%)</td></tr>
-<tr><td><strong>Total</strong></td><td><strong>11</strong></td><td><strong>11</strong></td><td><strong>1</strong></td><td><strong>10/11 (91%)</strong></td></tr>
+<tr><td><strong>Total</strong></td><td><strong>11</strong></td><td><strong>11</strong></td><td><strong>1</strong></td><td><strong>9/11 (82%)</strong></td></tr>
 </table>
-<p><strong>Method:</strong> Each bug log's <code>wcag_criterion</code> field manually verified against the violation type. cart.html's html-has-lang violation has no matching document in the 9-doc corpus (expected miss). checkout.html's select-name hit a parse error due to max_tokens truncation.</p>
+<p><strong>Method:</strong> Each bug log's <code>wcag_criterion</code> field manually verified against the violation type. cart.html's html-has-lang bug cites 3.1.1, the correct real-world criterion but not in data/wcag/, so it breaks the cite-only-corpus-IDs rule and is counted as a miss.</p>
 
 <h2>5. Failure Analysis (from actual output)</h2>
 <table>
 <tr><th>#</th><th>Failure</th><th>Input</th><th>Root Cause</th></tr>
 <tr><td>1</td><td>LLM parse error → falls back to template</td><td>checkout.html, select-name</td><td>max_tokens: 1000 insufficient for long prompt; response truncated mid-JSON</td></tr>
 <tr><td>2</td><td>Irrelevant 3rd retrieval match</td><td>All violations</td><td>Common words ("user", "element") cause high keyword overlap with unrelated docs (e.g., 2.1.1-keyboard appears for contrast)</td></tr>
-<tr><td>3</td><td>steps_to_reproduce = [1, 2]</td><td>product-listing, image-alt</td><td>LLM interprets "numbered steps" as numeric array; schema not strictly enforced</td></tr>
-<tr><td>4</td><td>axe-core misses placeholder-as-label</td><td>checkout.html (7 inputs)</td><td>axe-core accepts placeholder as sufficient name for SC 4.1.2; doesn't check SC 3.3.2 label persistence</td></tr>
+<tr><td>3</td><td>steps_to_reproduce = [1, 2]</td><td>5 of 11 bug logs numeric-only, 3 mixed</td><td>LLM interprets "numbered steps" as numeric array; schema not strictly enforced</td></tr>
+<tr><td>4</td><td>axe-core misses placeholder-as-label</td><td>checkout.html (8 inputs)</td><td>axe-core accepts placeholder as sufficient name for SC 4.1.2; doesn't check SC 3.3.2 label persistence</td></tr>
 <tr><td>5</td><td>Identical generic contrast fix across all pages</td><td>4 contrast violations</td><td>LLM cannot calculate passing color values without a contrast-calculation tool</td></tr>
 </table>
 <div class="warning">
-<strong>Accuracy summary:</strong> Correct WCAG criterion: 10/11 (91%). Actionable fix suggestion: 7/11 (64%). LLM parse success: 10/11 (91%). Usable steps_to_reproduce: 7/11 (64%).
+<strong>Accuracy summary:</strong> Correct WCAG criterion in the bug log: 9/11 (82%, target 85% not met). Retrieval top-1 correct: 6/11; correct criterion within top-3: 10/11. Actionable fix suggestion: 6/11 (55%, target 75% not met). LLM parse success: 10/11 (91%). Readable steps_to_reproduce: 6/11 (55%). Raw data: evidence/data/ and evidence/data/METRICS.md.
 </div>
 
 <h2>6. AI Output Review (5 lenses, from actual output)</h2>
 <table>
 <tr><th>Lens</th><th>Finding</th><th>Evidence</th></tr>
-<tr><td>Intent</td><td>9/11 correctly describe the violation</td><td>1 parse error, 1 malformed steps field</td></tr>
-<tr><td>Tests (reproducibility)</td><td>7/11 have usable reproduction steps</td><td>2 numeric arrays, 1 generic template, 1 starts with bare number</td></tr>
+<tr><td>Intent</td><td>9/11 correctly describe the violation</td><td>1 parse error (generic fallback), 1 criterion (3.1.1) outside the corpus</td></tr>
+<tr><td>Tests (reproducibility)</td><td>6/11 have readable reproduction steps</td><td>5 numeric-only arrays (unusable), 3 mixed with stray numbers, 2 clean arrays, 1 generic fallback string</td></tr>
 <tr><td>Security</td><td>Pass</td><td>.env gitignored; no eval(); key exposure caught by GitHub push protection</td></tr>
 <tr><td>Performance</td><td>15-30s per page</td><td>~3s scan + ~2-3s per violation (LLM) + 500ms delays</td></tr>
 <tr><td>Maintainability</td><td>Pass with note</td><td>System prompt should be extracted to config file for production</td></tr>
@@ -119,7 +119,7 @@ code { background: #f1f5f9; padding: 1px 4px; border-radius: 2px; font-size: 11p
 <tr><th>Review Finding</th><th>Fix Applied</th></tr>
 <tr><td>SPEC/PLAN/CLAUDE.md describe wrong toolchain</td><td>Rewritten to match actual: Playwright, Groq, keyword/TF-IDF</td></tr>
 <tr><td>Narrative docs written before code existed</td><td>Completely rewritten from actual 2026-08-14 runs; all examples cite real JSON output</td></tr>
-<tr><td>80%→93% claim with no backing data</td><td>Replaced with measured 10/11 (91%); methodology stated</td></tr>
+<tr><td>80%→93% claim with no backing data</td><td>Replaced with measured 9/11 (82%), recounted from results/*.json; below the 85% target</td></tr>
 <tr><td>npm test finds nothing</td><td>16 Playwright tests added and passing</td></tr>
 </table>
 

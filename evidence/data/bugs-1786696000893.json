@@ -1,0 +1,63 @@
+{
+  "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\checkout.html",
+  "scanTimestamp": "2026-08-14T08:26:38.036Z",
+  "totalViolations": 2,
+  "newBugLogs": 2,
+  "bugLogs": [
+    {
+      "title": "Insufficient Color Contrast",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "users with low vision",
+        "users with color vision deficiency",
+        "older users with declining contrast sensitivity"
+      ],
+      "steps_to_reproduce": [
+        1,
+        "Navigate to the page with the error message",
+        "Observe the color contrast between the foreground text color (#ff9999) and the background color (#ffffff)"
+      ],
+      "expected_behavior": "The visual presentation of text and images of text has a contrast ratio of at least 4.5:1",
+      "actual_behavior": "The element has insufficient color contrast of 2.04",
+      "suggested_fix": "Increase the darkness of the text color or lighten the background color to achieve a contrast ratio of at least 4.5:1",
+      "element_selector": "#card-error",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-08-14T08:26:38.036Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "2.1.1-keyboard"
+        ]
+      }
+    },
+    {
+      "title": "Select element must have an accessible name",
+      "severity": "critical",
+      "wcag_criterion": "unknown",
+      "wcag_criterion_name": "Ensure select element has an accessible name",
+      "affected_users": [
+        "unknown"
+      ],
+      "steps_to_reproduce": "1. Navigate to the page\n2. Observe the violation",
+      "expected_behavior": "Element should meet WCAG 2.1 AA requirements",
+      "actual_behavior": "Select element must have an accessible name",
+      "suggested_fix": "See https://dequeuniversity.com/rules/axe/4.12/select-name?application=playwright",
+      "element_selector": "#state",
+      "impact": "critical",
+      "_parse_error": true,
+      "_metadata": {
+        "violationId": "select-name",
+        "scanTimestamp": "2026-08-14T08:26:38.036Z",
+        "retrievedCriteria": [
+          "4.1.2-name-role-value",
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum"
+        ]
+      }
+    }
+  ]
+}

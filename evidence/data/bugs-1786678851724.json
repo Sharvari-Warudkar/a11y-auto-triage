@@ -1,0 +1,68 @@
+{
+  "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\product-listing.html",
+  "scanTimestamp": "2026-08-14T03:40:49.054Z",
+  "totalViolations": 2,
+  "newBugLogs": 2,
+  "bugLogs": [
+    {
+      "title": "Insufficient Color Contrast",
+      "severity": "minor",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "users with low vision",
+        "users with color vision deficiency",
+        "older users with declining contrast sensitivity"
+      ],
+      "steps_to_reproduce": [
+        "Open the webpage",
+        "Navigate to the product cards",
+        "Observe the text color of the product prices"
+      ],
+      "expected_behavior": "The visual presentation of text has a contrast ratio of at least 4.5:1 against the background",
+      "actual_behavior": "The product price text has a contrast ratio of 2.32, which is below the minimum required ratio of 4.5:1",
+      "suggested_fix": "Increase the darkness of the text color or lighten the background color to achieve a contrast ratio of at least 4.5:1",
+      "element_selector": ".product-card > p",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-08-14T03:40:49.054Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "2.1.1-keyboard"
+        ]
+      }
+    },
+    {
+      "title": "Missing Image Alt Text",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "users with low vision",
+        "users with cognitive disabilities",
+        "users on slow connections"
+      ],
+      "steps_to_reproduce": [
+        1,
+        2
+      ],
+      "expected_behavior": "All non-text content has a text alternative that serves the equivalent purpose.",
+      "actual_behavior": "Images are missing alt attributes, aria-label, or other text alternatives.",
+      "suggested_fix": "Add descriptive alt text to all informative images, or use alt=\"\" for decorative images.",
+      "element_selector": "img[src$=\"shoe-red.jpg\"], img[src$=\"shoe-green.jpg\"]",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-08-14T03:40:49.054Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ]
+      }
+    }
+  ]
+}

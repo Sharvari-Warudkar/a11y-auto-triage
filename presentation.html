@@ -130,7 +130,7 @@ pre { background: #172b4d; color: #b3d4ff; padding: 14px; border-radius: 4px; fo
 <div class="metric-grid">
 <div class="metric"><div class="num">11</div><div class="label">Violations Detected</div></div>
 <div class="metric"><div class="num">4</div><div class="label">Pages Scanned</div></div>
-<div class="metric"><div class="num">91%</div><div class="label">Correct WCAG Citation</div></div>
+<div class="metric"><div class="num">82%</div><div class="label">Correct WCAG Citation</div></div>
 <div class="metric"><div class="num">16</div><div class="label">Tests Passing</div></div>
 </div>
 
@@ -141,9 +141,9 @@ pre { background: #172b4d; color: #b3d4ff; padding: 14px; border-radius: 4px; fo
 <tr><td>product-detail.html</td><td>3</td><td>3</td><td>0</td><td>3/3 (100%)</td></tr>
 <tr><td>cart.html</td><td>4</td><td>4</td><td>0</td><td>3/4 (75%)*</td></tr>
 <tr><td>checkout.html</td><td>2</td><td>2</td><td>1</td><td>1/2 (50%)**</td></tr>
-<tr><td><strong>Total</strong></td><td><strong>11</strong></td><td><strong>11</strong></td><td><strong>1</strong></td><td><strong>10/11 (91%)</strong></td></tr>
+<tr><td><strong>Total</strong></td><td><strong>11</strong></td><td><strong>11</strong></td><td><strong>1</strong></td><td><strong>9/11 (82%)</strong></td></tr>
 </table>
-<p style="font-size: 11px; color: #6b778c;">* html-has-lang has no matching doc in corpus (correctly unmatched)<br>** select-name hit max_tokens causing parse error (fell back to template)</p>
+<p style="font-size: 11px; color: #6b778c;">* html-has-lang cited 3.1.1, which is not in the 9-doc corpus (counted as a miss)<br>** select-name hit max_tokens causing parse error (fell back to template)</p>
 <div class="footer"><span>Perficient — Global AI-First Academy</span><span>Slide 4 of 8</span></div>
 </div>
 
@@ -178,8 +178,8 @@ pre { background: #172b4d; color: #b3d4ff; padding: 14px; border-radius: 4px; fo
 <tr><td>Violation ID</td><td>✓ color-contrast</td><td>—</td></tr>
 <tr><td>Severity (business context)</td><td>✗ (only "serious/critical")</td><td>✓ minor/major/critical with reasoning</td></tr>
 <tr><td>Affected user groups</td><td>✗</td><td>✓ specific populations listed</td></tr>
-<tr><td>Steps to reproduce</td><td>✗</td><td>✓ (7/11 usable, 2/11 malformed)</td></tr>
-<tr><td>Suggested fix</td><td>✗ (only helpUrl link)</td><td>✓ (7/11 actionable, 4/11 generic for contrast)</td></tr>
+<tr><td>Steps to reproduce</td><td>✗</td><td>~ (6/11 readable, 5/11 numeric-only)</td></tr>
+<tr><td>Suggested fix</td><td>✗ (only helpUrl link)</td><td>~ (6/11 actionable; 4 contrast fixes generic, 1 fallback link)</td></tr>
 </table>
 <div class="footer"><span>Perficient — Global AI-First Academy</span><span>Slide 5 of 8</span></div>
 </div>
@@ -191,19 +191,19 @@ pre { background: #172b4d; color: #b3d4ff; padding: 14px; border-radius: 4px; fo
 <tr><th>#</th><th>Failure</th><th>Input</th><th>Evidence</th></tr>
 <tr><td>1</td><td>LLM output truncated → parse error</td><td>checkout.html, select-name violation</td><td><code>_parse_error: true</code> in results JSON; max_tokens hit</td></tr>
 <tr><td>2</td><td>Irrelevant 3rd retrieval match</td><td>All violations</td><td><code>2.1.1-keyboard</code> appears in retrievedCriteria for color-contrast</td></tr>
-<tr><td>3</td><td>steps_to_reproduce = <code>[1, 2]</code></td><td>product-listing, image-alt bug</td><td>Numeric array instead of string descriptions</td></tr>
-<tr><td>4</td><td>axe-core misses placeholder-as-label</td><td>checkout.html, 7 inputs with placeholder only</td><td>Only select-name reported; text inputs pass axe's name check</td></tr>
+<tr><td>3</td><td>steps_to_reproduce = <code>[1, 2]</code> (numeric)</td><td>5 of 11 bug logs (+3 mixed)</td><td>Numeric-only arrays instead of string descriptions</td></tr>
+<tr><td>4</td><td>axe-core misses placeholder-as-label</td><td>checkout.html, 8 inputs with placeholder only</td><td>Only select-name reported; text inputs pass axe's name check</td></tr>
 <tr><td>5</td><td>Generic contrast fix suggestions</td><td>All 4 contrast violations</td><td>Identical text: "Increase darkness or lighten background"</td></tr>
 </table>
 <div class="warning">
-<strong>Key finding:</strong> The pipeline can only report what axe-core detects. Our checkout form has 7 inputs without proper labels, but axe-core accepts placeholder text as a sufficient name. This is a real limitation — we report 2 violations on checkout.html when a manual audit would find 8+.
+<strong>Key finding:</strong> The pipeline can only report what axe-core detects. Our checkout form has 8 inputs without proper labels, but axe-core accepts placeholder text as a sufficient name. This is a real limitation — we report 2 violations on checkout.html when a manual audit would find 8+.
 </div>
 <h3>Accuracy Summary</h3>
 <table style="width: 60%;">
-<tr><td>Correct WCAG criterion (top-1 match)</td><td><strong>10/11 (91%)</strong></td></tr>
-<tr><td>Actionable fix suggestion</td><td><strong>7/11 (64%)</strong></td></tr>
+<tr><td>Correct WCAG criterion in bug log</td><td><strong>9/11 (82%)</strong></td></tr>
+<tr><td>Actionable fix suggestion</td><td><strong>6/11 (55%)</strong></td></tr>
 <tr><td>LLM parse success</td><td><strong>10/11 (91%)</strong></td></tr>
-<tr><td>Usable steps_to_reproduce</td><td><strong>7/11 (64%)</strong></td></tr>
+<tr><td>Readable steps_to_reproduce</td><td><strong>6/11 (55%)</strong></td></tr>
 </table>
 <div class="footer"><span>Perficient — Global AI-First Academy</span><span>Slide 6 of 8</span></div>
 </div>
@@ -258,11 +258,11 @@ Running 16 tests using 3 workers
 <tr><th>Review Finding</th><th>Fix Applied</th></tr>
 <tr><td>Docs describe Puppeteer/Portkey/OpenAI/Claude</td><td>SPEC.md, PLAN.md, CLAUDE.md rewritten to match actual stack (Playwright/Groq/keyword-matching)</td></tr>
 <tr><td>Failure analysis written before code existed</td><td>Completely rewritten from actual 2026-08-14 pipeline runs — all examples cite real output files</td></tr>
-<tr><td>80%→93% claim with no backing data</td><td>Replaced with measured 10/11 (91%) from real run; methodology stated (manual verification of each bug log)</td></tr>
+<tr><td>80%→93% claim with no backing data</td><td>Replaced with measured 9/11 (82%) recounted from results/*.json; methodology stated (manual verification of each bug log)</td></tr>
 <tr><td>npm test finds nothing</td><td>16 Playwright tests added and passing (scan, RAG, deduplication)</td></tr>
 </table>
 <div class="highlight">
-<strong>Recommendation for client pilot:</strong> Run on 3 real e-commerce pages next sprint. Measure: tickets closed without developer follow-up (target: 70%+). Current measured rate on fixtures: 64% actionable without follow-up.
+<strong>Recommendation for client pilot:</strong> Run on 3 real e-commerce pages next sprint. Measure: tickets closed without developer follow-up (target: 70%+). Current measured rate on fixtures: 55% actionable (6/11).
 </div>
 <h3>Declared Effort</h3>
 <p>~15 hours total (including resubmission fixes). Cut: live Jira integration, n8n automation, multi-page crawling, WCAG AAA.</p>
