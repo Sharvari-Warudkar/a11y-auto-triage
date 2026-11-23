@@ -1,4 +1,4 @@
-# A11Y Auto-Triage: AI-Powered Accessibility Bug Logging
+# L1-A11y-auto-traige-updated: AI-Powered Accessibility Bug Logging
 
 ## The Problem
 Your QA team spends **45 minutes per page** manually writing accessibility bug tickets.
@@ -12,16 +12,16 @@ Tickets lack remediation guidance → developers ask follow-up questions → fix
 │  axe-core │────▶│  RAG over  │────▶│  AI generates │────▶│  Jira-ready    │
 │  Scanner  │     │  WCAG docs │     │  bug reports  │     │  tickets       │
 └─────────┘     └──────────┘     └─────────────┘     └───────────────┘
-     3s              0.4s/item         2s/item              Instant
+     ~3s             <1s               ~2-3s/violation      Instant
 ```
 
 ## Results
 | Metric | Manual | Auto-Triage |
 |--------|--------|-------------|
-| Time per page | ~45 min | < 5 min |
-| WCAG criterion accuracy | Varies by engineer | 93% |
+| Time per page | ~45 min | 15-30 s pipeline run (measured), plus human review |
+| WCAG criterion accuracy | Varies by engineer | 91% (10/11, measured on 4 fixtures) |
 | Fix suggestion actionability | Often vague | Code-level specific |
-| Pages covered per sprint | 8–12 | 40+ |
+| Pages covered per sprint | 8–12 | Not measured |
 
 ## What It Does NOT Do
 - Replace human judgment on severity edge cases
@@ -30,7 +30,7 @@ Tickets lack remediation guidance → developers ask follow-up questions → fix
 - Work as a substitute for manual testing by users with disabilities
 
 ## Ask
-Pilot on 3 pages in the next sprint. Measure: tickets closed without developer follow-up questions (target: 80%+).
+Pilot on 3 pages in the next sprint. Measure: tickets closed without developer follow-up questions (target: 70%+; measured 64% actionable on fixtures).
 
 ---
 *Sharvari Warudkar | QA Engineer | Perficient*

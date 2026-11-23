@@ -1,4 +1,4 @@
-# CLAUDE.md — A11Y Auto-Triage Context
+# CLAUDE.md — L1-A11y-auto-traige-updated Context
 
 ## Project Purpose
 WCAG 2.1 AA violation auto-triage tool for e-commerce QA. Scans pages with axe-core, retrieves relevant WCAG criteria via RAG, and generates structured bug reports ready for Jira.

@@ -1,4 +1,4 @@
-# Plan: WCAG AA Violation Auto-Triage & Bug Logger
+# Plan: L1-A11y-auto-traige-updated (WCAG AA Violation Auto-Triage & Bug Logger)
 
 ## Approach
 

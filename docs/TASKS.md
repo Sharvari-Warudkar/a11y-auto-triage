@@ -1,4 +1,4 @@
-# Tasks: WCAG AA Violation Auto-Triage & Bug Logger
+# Tasks: L1-A11y-auto-traige-updated (WCAG AA Violation Auto-Triage & Bug Logger)
 
 ## Phase 1: Data & Fixtures
 
@@ -8,13 +8,13 @@
 
 ## Phase 2: Scanner
 
-- [x] T2.1 — Implement axe-core + Puppeteer scanner (input: URL, output: violations JSON)
+- [x] T2.1 — Implement axe-core + Playwright scanner (input: URL, output: violations JSON)
 - [x] T2.2 — Test scanner against fixtures, verify all injected violations detected
 
 ## Phase 3: RAG Pipeline
 
-- [x] T3.1 — Implement chunker/ingest script to embed WCAG markdown files
-- [x] T3.2 — Implement local vector store (cosine similarity search over embeddings)
+- [x] T3.1 — Implement chunker/ingest script to index WCAG markdown files (keyword/TF-IDF)
+- [x] T3.2 — Implement local JSON store (cosine similarity over TF-IDF keyword maps; no vector embeddings)
 - [x] T3.3 — Implement retrieval interface (query by violation → top-3 WCAG chunks)
 - [x] T3.4 — Test retrieval: verify correct criteria returned for known violations
 
@@ -27,19 +27,19 @@
 ## Phase 5: Pipeline Orchestration
 
 - [x] T5.1 — Wire scan → deduplicate → retrieve → generate → output pipeline
-- [x] T5.2 — End-to-end test: scan fixture URL → verify bug logs generated correctly
+- [x] T5.2 — End-to-end run on fixtures; 16 Playwright tests (tests/) cover scan, RAG and dedup
 
 ## Phase 6: Context Engineering & Review
 
 - [x] T6.1 — Write CLAUDE.md with project-specific instructions
-- [x] T6.2 — Run pipeline WITHOUT CLAUDE.md context, save output (before)
-- [x] T6.3 — Run pipeline WITH CLAUDE.md context, save output (after)
-- [x] T6.4 — Document before/after comparison in review
+- [ ] T6.2 — Run pipeline WITHOUT CLAUDE.md context (NOT DONE: no controlled before/after run exists; docs/CONTEXT_ENGINEERING.md reports only observed effects of CLAUDE.md on the 11 real reports)
+- [x] T6.3 — Run pipeline WITH CLAUDE.md context (results/bugs-*.json, 2026-08-14)
+- [x] T6.4 — Document observed CLAUDE.md effects in docs/CONTEXT_ENGINEERING.md
 
 ## Phase 7: Documentation & Submission
 
-- [ ] T7.1 — Write AI output review (intent, tests, security, performance, maintainability)
-- [ ] T7.2 — Write failure analysis (specific inputs that break the prototype)
-- [ ] T7.3 — Record one measured improvement (before/after with numbers)
-- [ ] T7.4 — Create one-slide pitch for client stakeholders
-- [ ] T7.5 — Write declared-effort statement
+- [x] T7.1 — Write AI output review (intent, tests, security, performance, maintainability)
+- [x] T7.2 — Write failure analysis (specific inputs that break the prototype)
+- [x] T7.3 — Record measured results (10/11 = 91% correct citation, from manual verification of real run)
+- [x] T7.4 — Create one-slide pitch for client stakeholders
+- [x] T7.5 — Write declared-effort statement

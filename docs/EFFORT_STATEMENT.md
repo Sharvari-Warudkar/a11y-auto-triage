@@ -1,6 +1,6 @@
 # Declared Effort Statement
 
-## Approximate Hours: 12–15 hours total
+## Approximate Hours: About 15 hours total (including resubmission fixes)
 
 | Phase | Hours | Notes |
 |-------|-------|-------|
@@ -23,6 +23,6 @@
 
 ## AI Tools Used
 
-- **Claude (via Portkey)** — bug report generation in the pipeline
+- **Groq (Llama 3.3 70B Versatile)** — bug report generation in the pipeline (Portkey was rejected: org restrictions)
 - **Claude Code** — development assistance for scaffolding, documentation, and pipeline logic
 - All AI output was reviewed for correctness (see AI_OUTPUT_REVIEW.md)

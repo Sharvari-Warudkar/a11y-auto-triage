@@ -1,4 +1,4 @@
-# Specification: WCAG AA Violation Auto-Triage & Bug Logger
+# Specification: L1-A11y-auto-traige-updated (WCAG AA Violation Auto-Triage & Bug Logger)
 
 ## Problem Statement
 
