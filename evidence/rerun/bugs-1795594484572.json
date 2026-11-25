@@ -1,0 +1,132 @@
+{
+  "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\cart.html",
+  "scanTimestamp": "2026-11-25T08:13:33.487Z",
+  "totalViolations": 4,
+  "newBugLogs": 4,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast on Checkout button text",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "low vision users",
+        "color vision deficient users",
+        "older adults"
+      ],
+      "steps_to_reproduce": [
+        "1. Open the product listing page in a web browser.",
+        "2. Locate the \"Proceed to Checkout\" button (selector: .checkout-btn).",
+        "3. Use a contrast‑checking tool (e.g., WebAIM Contrast Checker) to inspect the button's text color (#ffffff) against its background color (#28a745).",
+        "4. Observe that the reported contrast ratio is 3.13:1, which is below the required 4.5:1 for normal text."
+      ],
+      "expected_behavior": "The button text must have a contrast ratio of at least 4.5:1 against its background, per WCAG 2.1 Success Criterion 1.4.3.",
+      "actual_behavior": "The button text has a contrast ratio of 3.13:1 (foreground #ffffff, background #28a745), failing the minimum contrast requirement.",
+      "suggested_fix": "Adjust the color values to meet the 4.5:1 ratio. For example, change the button background to a darker shade such as #1e7e34, or change the text color to a darker gray like #212529. Verify the new colors achieve at least 4.5:1 contrast using a contrast checker.",
+      "element_selector": ".checkout-btn",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-25T08:13:33.487Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "2.1.1-keyboard"
+        ]
+      }
+    },
+    {
+      "title": "Missing lang attribute on <html> element",
+      "severity": "major",
+      "wcag_criterion": "3.1.1",
+      "wcag_criterion_name": "Language of Page",
+      "affected_users": [
+        "screen reader users",
+        "users who rely on language detection",
+        "cognitive disability users"
+      ],
+      "steps_to_reproduce": [
+        "1. Open the affected e‑commerce page in a browser.",
+        "2. Open the developer tools and inspect the <html> element.",
+        "3. Observe that the <html> tag does not contain a lang attribute."
+      ],
+      "expected_behavior": "The <html> element must include a lang attribute that correctly identifies the primary language of the page (e.g., <html lang=\"en\">).",
+      "actual_behavior": "The <html> element is rendered without any lang attribute.",
+      "suggested_fix": "Add a lang attribute to the <html> tag with the appropriate language code, e.g.,\nhtml\n<html lang=\"en\">\n\nIf the site supports multiple languages, ensure the attribute reflects the current language context and consider adding xml:lang for XHTML compatibility.",
+      "element_selector": "html",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "html-has-lang",
+        "scanTimestamp": "2026-11-25T08:13:33.487Z",
+        "retrievedCriteria": [
+          "1.3.1-info-and-relationships",
+          "2.1.1-keyboard",
+          "2.4.7-focus-visible"
+        ]
+      }
+    },
+    {
+      "title": "Thumbnail images missing alternative text",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "low vision users"
+      ],
+      "steps_to_reproduce": [
+        "1. Navigate to the product listing page where the shoe thumbnails are displayed.",
+        "2. Observe the two thumbnail images: shoe-red-thumb.jpg and shoe-blue-thumb.jpg.",
+        "3. Use a screen reader (e.g., NVDA, VoiceOver) to navigate the page.",
+        "4. Notice that the screen reader announces \"image\" with no description for each thumbnail."
+      ],
+      "expected_behavior": "Each <img> element must have a text alternative that conveys its purpose (e.g., alt=\"Red shoe thumbnail\") or be marked as decorative with alt=\"\" and role=\"presentation\".",
+      "actual_behavior": "The <img> elements are coded as <img src=\"shoe-red-thumb.jpg\" width=\"60\" height=\"60\"> and <img src=\"shoe-blue-thumb.jpg\" width=\"60\" height=\"60\"> with no alt, aria-label, aria-labelledby, title, or role attributes.",
+      "suggested_fix": "Add descriptive alt attributes to the images, for example:\nhtml\n<img src=\"shoe-red-thumb.jpg\" width=\"60\" height=\"60\" alt=\"Red running shoe thumbnail\">\n<img src=\"shoe-blue-thumb.jpg\" width=\"60\" height=\"60\" alt=\"Blue running shoe thumbnail\">\n\nIf the images are purely decorative, use an empty alt and role=\"presentation\":\nhtml\n<img src=\"shoe-red-thumb.jpg\" width=\"60\" height=\"60\" alt=\"\" role=\"presentation\">\n",
+      "element_selector": "img[src$='shoe-red-thumb.jpg'], img[src$='shoe-blue-thumb.jpg']",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-25T08:13:33.487Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ]
+      }
+    },
+    {
+      "title": "Numeric inputs lack associated labels",
+      "severity": "critical",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "screen reader users",
+        "blind users",
+        "users with low vision",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        "1. Open the product page containing the quantity selector.",
+        "2. Locate the numeric input element with value=\"1\" (e.g., <input type=\"number\" value=\"1\" ...>).",
+        "3. Observe that no <label>, aria-label, aria-labelledby, title, or placeholder is associated with the input.",
+        "4. Repeat steps 2‑3 for the numeric input with value=\"2\"."
+      ],
+      "expected_behavior": "Each form control must have a programmatically determinable name via a visible <label> element (or an explicit aria-label/aria-labelledby) so that assistive technologies can announce the purpose of the input.",
+      "actual_behavior": "The <input type=\"number\" value=\"1\"> and <input type=\"number\" value=\"2\"> elements have no associated <label>, no aria-label, no aria-labelledby, no title, and no placeholder, violating WCAG 3.3.2.",
+      "suggested_fix": "Add a visible label for each input and associate it using the for/id pattern, e.g.,\nhtml\n<label for=\"qty-1\">Quantity</label>\n<input id=\"qty-1\" type=\"number\" value=\"1\" min=\"1\" max=\"10\" style=\"width:50px;\" aria-required=\"true\">\n\nIf a visible label cannot be used, provide an accessible name with aria-label or aria-labelledby. Ensure the label text clearly describes the purpose (e.g., \"Quantity\").",
+      "element_selector": "input[value='1'], input[value='2']",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "label",
+        "scanTimestamp": "2026-11-25T08:13:33.487Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ]
+      }
+    }
+  ]
+}

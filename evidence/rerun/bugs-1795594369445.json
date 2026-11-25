@@ -1,0 +1,64 @@
+{
+  "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\product-listing.html",
+  "scanTimestamp": "2026-11-25T08:12:42.834Z",
+  "totalViolations": 2,
+  "newBugLogs": 2,
+  "bugLogs": [
+    {
+      "title": "Elements must meet minimum color contrast ratio thresholds",
+      "severity": "major",
+      "wcag_criterion": "unknown",
+      "wcag_criterion_name": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "affected_users": [
+        "unknown"
+      ],
+      "steps_to_reproduce": "1. Navigate to the page\n2. Observe the violation",
+      "expected_behavior": "Element should meet WCAG 2.1 AA requirements",
+      "actual_behavior": "Elements must meet minimum color contrast ratio thresholds",
+      "suggested_fix": "See https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=playwright",
+      "element_selector": ".product-card:nth-child(1) > p",
+      "impact": "serious",
+      "_parse_error": true,
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-25T08:12:42.834Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "2.1.1-keyboard"
+        ]
+      }
+    },
+    {
+      "title": "Missing alternative text on product images (shoe-red.jpg, shoe-green.jpg)",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "low vision users"
+      ],
+      "steps_to_reproduce": [
+        "1. Open the product listing page in a browser.",
+        "2. Locate the images with filenames \"shoe-red.jpg\" and \"shoe-green.jpg\".",
+        "3. Navigate the page with a screen reader (e.g., NVDA, VoiceOver).",
+        "4. Observe that the screen reader announces \"image\" with no description for each image."
+      ],
+      "expected_behavior": "Each <img> element must provide a text alternative via a non‑empty alt attribute, an aria-label, an aria-labelledby reference, a title, or be explicitly marked as decorative with alt=\"\" and role=\"presentation\".",
+      "actual_behavior": "The <img> elements are rendered as <img src=\"shoe-red.jpg\" width=\"200\" height=\"200\"> and <img src=\"shoe-green.jpg\" width=\"200\" height=\"200\"> with no alt, aria-label, aria-labelledby, title, or role attributes.",
+      "suggested_fix": "Add descriptive alt text to each image, or mark them as decorative if they convey no information. Example:\nhtml\n<img src=\"shoe-red.jpg\" alt=\"Red running shoe\" width=\"200\" height=\"200\">\n<img src=\"shoe-green.jpg\" alt=\"Green running shoe\" width=\"200\" height=\"200\">\n\nIf the images are purely decorative, use:\nhtml\n<img src=\"shoe-red.jpg\" alt=\"\" role=\"presentation\" width=\"200\" height=\"200\">\n",
+      "element_selector": "img[src$='shoe-red.jpg'], img[src$='shoe-green.jpg']",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-25T08:12:42.834Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\product-detail.html",
+  "scanTimestamp": "2026-11-25T08:12:56.419Z",
+  "totalViolations": 3,
+  "newBugLogs": 3,
+  "bugLogs": [
+    {
+      "title": "Elements must meet minimum color contrast ratio thresholds",
+      "severity": "major",
+      "wcag_criterion": "unknown",
+      "wcag_criterion_name": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "affected_users": [
+        "unknown"
+      ],
+      "steps_to_reproduce": "1. Navigate to the page\n2. Observe the violation",
+      "expected_behavior": "Element should meet WCAG 2.1 AA requirements",
+      "actual_behavior": "Elements must meet minimum color contrast ratio thresholds",
+      "suggested_fix": "See https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=playwright",
+      "element_selector": "p",
+      "impact": "serious",
+      "_parse_error": true,
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-25T08:12:56.419Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "2.1.1-keyboard"
+        ]
+      }
+    },
+    {
+      "title": "Product image missing alternative text",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "low vision users"
+      ],
+      "steps_to_reproduce": [
+        "1. Open a product detail page on the e‑commerce site.",
+        "2. Locate the main product image displayed.",
+        "3. Use browser developer tools to inspect the <img> element.",
+        "4. Observe that the <img> has no alt attribute, no aria-label, no aria-labelledby, no title, and no role=\"presentation\"."
+      ],
+      "expected_behavior": "All <img> elements must provide a text alternative via a descriptive alt attribute, or be marked as decorative with alt=\"\" and role=\"presentation\" (or equivalent).",
+      "actual_behavior": "The <img src=\"shoe-detail-red.jpg\" class=\"product-image\" width=\"400\" height=\"400\"> element lacks an alt attribute, aria-label, aria-labelledby, title, and role overrides.",
+      "suggested_fix": "Add a meaningful alt attribute, e.g., <img src=\"shoe-detail-red.jpg\" class=\"product-image\" alt=\"Red running shoe\" width=\"400\" height=\"400\">. If the image is purely decorative, use alt=\"\" and role=\"presentation\" instead.",
+      "element_selector": "img.product-image",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-25T08:12:56.419Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ]
+      }
+    },
+    {
+      "title": "Numeric input missing an accessible label",
+      "severity": "critical",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "screen reader users",
+        "blind users",
+        "users with cognitive disabilities",
+        "low vision users"
+      ],
+      "steps_to_reproduce": [
+        "1. Navigate to the page containing the quantity selector.",
+        "2. Locate the <input type=\"number\" value=\"1\" min=\"1\" max=\"10\"> element.",
+        "3. Use a screen reader or accessibility inspection tool to check for an associated label.",
+        "4. Observe that the input has no <label>, aria-label, aria-labelledby, title, or placeholder."
+      ],
+      "expected_behavior": "Every form control must have a programmatically determinable label (via a visible <label>, aria-label, aria-labelledby, title, or placeholder) so that its purpose is announced by assistive technologies.",
+      "actual_behavior": "The numeric input lacks any associated label, aria-label, aria-labelledby, title, or placeholder, violating WCAG 3.3.2.",
+      "suggested_fix": "Add an explicit label element and associate it with the input using the for/id attributes, e.g.,\n<label for=\"quantity\">Quantity</label>\n<input id=\"quantity\" type=\"number\" value=\"1\" min=\"1\" max=\"10\" style=\"width:50px;\">.\nIf a visible label cannot be used, provide an appropriate aria-label or aria-labelledby attribute.",
+      "element_selector": "input",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "label",
+        "scanTimestamp": "2026-11-25T08:12:56.419Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ]
+      }
+    }
+  ]
+}

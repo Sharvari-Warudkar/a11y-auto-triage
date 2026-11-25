@@ -1,0 +1,71 @@
+{
+  "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\checkout.html",
+  "scanTimestamp": "2026-11-25T08:14:53.022Z",
+  "totalViolations": 2,
+  "newBugLogs": 2,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast for error message text",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "users with low vision",
+        "users with color vision deficiency",
+        "older adults"
+      ],
+      "steps_to_reproduce": [
+        "1. Navigate to the checkout page where the credit‑card input is located.",
+        "2. Submit the form with an invalid card number to trigger the error message.",
+        "3. Observe the paragraph with id=\"card-error\" displaying the text \"Please enter a valid card number\".",
+        "4. Use a contrast‑checking tool (e.g., WebAIM Contrast Checker) to measure the contrast between the text color #ff9999 and the page background #ffffff."
+      ],
+      "expected_behavior": "The error message text must have a contrast ratio of at least 4.5:1 against its background, as required by WCAG 2.1 Success Criterion 1.4.3 (Contrast Minimum).",
+      "actual_behavior": "The text color #ff9999 on a white background #ffffff yields a contrast ratio of 2.04:1, which is below the required 4.5:1 threshold for normal-sized text.",
+      "suggested_fix": "Update the CSS for the error message to use a darker color that meets the required contrast. For example:\ncss\n#error-msg, #card-error {\n  color: #cc0000; /* dark red with ~4.6:1 contrast on white */\n}\n\nAlternatively, change the background to a slightly off‑white (e.g., #f5f5f5) while keeping the original text color, ensuring the resulting ratio is ≥4.5:1. Verify the change with an automated contrast checker.",
+      "element_selector": "#card-error",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-25T08:14:53.022Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "2.1.1-keyboard"
+        ]
+      }
+    },
+    {
+      "title": "Select element missing accessible name",
+      "severity": "critical",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "voice control users",
+        "switch access users"
+      ],
+      "steps_to_reproduce": [
+        "1. Open the page containing the <select id=\"state\"> element.",
+        "2. Navigate to the select control using only the keyboard (Tab key).",
+        "3. Activate a screen reader (e.g., NVDA, VoiceOver) and listen for the announced label of the control.",
+        "4. Observe that the control is announced without a name (e.g., \"select, collapsed\"), providing no context."
+      ],
+      "expected_behavior": "The select control must have an accessible name that can be programmatically determined, such as a visible <label> associated via for/id, an aria-label, aria-labelledby, or a title attribute, so screen readers announce a meaningful name (e.g., \"State\").",
+      "actual_behavior": "The <select id=\"state\"> element has no associated <label>, no aria-label, no aria-labelledby, and no title attribute, resulting in no accessible name being announced.",
+      "suggested_fix": "Add a visible label linked to the select, or provide an ARIA label. Example fix:\nhtml\n<label for=\"state\">State</label>\n<select id=\"state\" name=\"state\" aria-label=\"State\">\n  <option value=\"\">Select State</option>\n  <option value=\"CA\">California</option>\n  <option value=\"NY\">New York</option>\n  <option value=\"TX\">Texas</option>\n</select>\n",
+      "element_selector": "#state",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "select-name",
+        "scanTimestamp": "2026-11-25T08:14:53.022Z",
+        "retrievedCriteria": [
+          "4.1.2-name-role-value",
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum"
+        ]
+      }
+    }
+  ]
+}

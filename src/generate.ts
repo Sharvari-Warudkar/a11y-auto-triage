@@ -66,12 +66,12 @@ Generate a JSON bug report for this violation. Return a single JSON object (not 
       'Authorization': `Bearer ${GROQ_API_KEY}`
     },
     body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
+      model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: userPrompt }
       ],
-      max_tokens: 1000,
+      max_tokens: Number(process.env.GROQ_MAX_TOKENS) || 1000,
       temperature: 0.2
     })
   });
