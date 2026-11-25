@@ -8,9 +8,9 @@ test.describe('RAG Pipeline', () => {
     ingestDocuments();
   });
 
-  test('ingests 9 WCAG documents', () => {
+  test('ingests 10 WCAG documents', () => {
     const store = loadStore();
-    expect(store.length).toBe(9);
+    expect(store.length).toBe(10);
   });
 
   test('each document has required fields', () => {

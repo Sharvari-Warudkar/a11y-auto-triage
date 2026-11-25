@@ -28,7 +28,8 @@ export async function scanUrl(url: string): Promise<ScanResult> {
     nodes: v.nodes.map(n => ({
       html: n.html,
       target: n.target as string[],
-      failureSummary: n.failureSummary || ''
+      failureSummary: n.failureSummary || '',
+      checks: [...(n.any || []), ...(n.all || []), ...(n.none || [])].map(c => ({ id: c.id, data: c.data }))
     }))
   }));
 

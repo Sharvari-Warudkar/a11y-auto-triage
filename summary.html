@@ -39,14 +39,14 @@ code { background: #f1f5f9; padding: 1px 4px; border-radius: 2px; font-size: 11p
 <table>
 <tr><th>Component</th><th>Technology</th><th>Rationale</th></tr>
 <tr><td>Scanner</td><td>Playwright + @axe-core/playwright</td><td>Industry standard, TypeScript native</td></tr>
-<tr><td>RAG Retrieval</td><td>Keyword/TF-IDF matching</td><td>Zero infrastructure for 9-doc corpus</td></tr>
+<tr><td>RAG Retrieval</td><td>Keyword/TF-IDF matching</td><td>Zero infrastructure for 10-doc corpus</td></tr>
 <tr><td>LLM Generation</td><td>Groq (Llama 3.3 70B Versatile)</td><td>Free tier, fast, structured output</td></tr>
 <tr><td>Language</td><td>TypeScript (strict mode)</td><td>Type safety, maintainability</td></tr>
 </table>
 
 <h2>3. Data Provenance</h2>
 <p><strong>Source:</strong> 4 synthetic HTML fixtures (product-listing, product-detail, cart, checkout) with deliberately injected WCAG AA violations. Authored by the submitter based on real violation patterns in production e-commerce sites.</p>
-<p><strong>WCAG Knowledge Base:</strong> 9 WCAG 2.1 success criteria (Level A and AA) manually curated as markdown.</p>
+<p><strong>WCAG Knowledge Base:</strong> 10 WCAG 2.1 success criteria (Level A and AA; 3.1.1 added 2026-11-25) manually curated as markdown.</p>
 <p><strong>What it does NOT represent:</strong> Dynamic SPA rendering, third-party widgets, mobile touch-targets, violations requiring user interaction.</p>
 <p><strong>Sensitive data:</strong> None. All fixtures are original synthetic content.</p>
 
@@ -91,14 +91,14 @@ code { background: #f1f5f9; padding: 1px 4px; border-radius: 2px; font-size: 11p
 <tr><th>CLAUDE.md Rule</th><th>Observed Effect</th></tr>
 <tr><td>Severity mapping (critical/major/minor/trivial)</td><td>All 11 reports use defined scale consistently</td></tr>
 <tr><td>Citation format ("1.4.3" not "WCAG 1.4.3")</td><td>10/10 parsed reports use correct format</td></tr>
-<tr><td>Checkout = critical priority</td><td>checkout contrast = "major" vs. listing contrast = "minor"</td></tr>
+<tr><td>Checkout = critical priority</td><td>Not followed for contrast: "major" with and without CLAUDE.md (controlled run, docs/CONTEXT_ENGINEERING.md)</td></tr>
 <tr><td>Fix must be "specific attribute/property"</td><td>Works for alt/label fixes; fails for contrast (no calculation tool)</td></tr>
 </table>
 
 <h2>8. RAG Pipeline</h2>
 <table>
 <tr><th>Stage</th><th>Implementation</th></tr>
-<tr><td>Load</td><td>Read 9 WCAG markdown files from <code>data/wcag/</code></td></tr>
+<tr><td>Load</td><td>Read 10 WCAG markdown files from <code>data/wcag/</code></td></tr>
 <tr><td>Chunk</td><td>One chunk per success criterion (title + requirements + techniques + remediation)</td></tr>
 <tr><td>Index</td><td>Keyword/TF-IDF frequency maps per document (cosine similarity)</td></tr>
 <tr><td>Store</td><td>JSON persistence at <code>data/vector-store.json</code></td></tr>
@@ -107,7 +107,7 @@ code { background: #f1f5f9; padding: 1px 4px; border-radius: 2px; font-size: 11p
 <p><strong>Trade-off:</strong> Keyword matching is fast and free but semantically shallow — common words cause irrelevant matches in position 2-3. A vector embedding approach would improve precision but adds API cost and infrastructure.</p>
 
 <h2>9. Test Suite</h2>
-<p><strong>16 tests passing</strong> via <code>npx playwright test</code> (46.2s):</p>
+<p><strong>21 tests passing</strong> via <code>npx playwright test</code>:</p>
 <ul>
 <li><strong>scan.test.ts (5 tests):</strong> Verifies axe-core detects expected violations in each fixture</li>
 <li><strong>rag.test.ts (8 tests):</strong> Verifies ingestion, search relevance, similarity math, keyword extraction</li>
@@ -120,7 +120,8 @@ code { background: #f1f5f9; padding: 1px 4px; border-radius: 2px; font-size: 11p
 <tr><td>SPEC/PLAN/CLAUDE.md describe wrong toolchain</td><td>Rewritten to match actual: Playwright, Groq, keyword/TF-IDF</td></tr>
 <tr><td>Narrative docs written before code existed</td><td>Completely rewritten from actual 2026-08-14 runs; all examples cite real JSON output</td></tr>
 <tr><td>80%→93% claim with no backing data</td><td>Replaced with measured 9/11 (82%), recounted from results/*.json; below the 85% target</td></tr>
-<tr><td>npm test finds nothing</td><td>16 Playwright tests added and passing</td></tr>
+<tr><td>npm test finds nothing</td><td>21 Playwright tests added and passing</td></tr>
+<tr><td>Targets missed; no CLAUDE.md comparison; Llama 3.3 retired</td><td>Fixed 2026-11-25 (evidence/runs/RUNS.md): citation 11/11, actionable fix 11/11 on gpt-oss-120b after code fixes; controlled CLAUDE.md on/off run done (only severity differs: 3 vs 6 critical); results tuned on the same 4 fixtures, n = 11</td></tr>
 </table>
 
 <h2>11. Declared Effort</h2>

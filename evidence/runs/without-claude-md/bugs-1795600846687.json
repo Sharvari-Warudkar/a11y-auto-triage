@@ -1,0 +1,105 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\product-detail.html",
+  "scanTimestamp": "2026-11-25T10:00:30.642Z",
+  "totalViolations": 3,
+  "newBugLogs": 3,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast for stock status text and Add to Cart button",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum) (Level AA)",
+      "affected_users": [
+        "users with low vision",
+        "users with color vision deficiency",
+        "older adults with declining contrast sensitivity"
+      ],
+      "steps_to_reproduce": [
+        "Open product-detail.html in a browser",
+        "Observe the stock status paragraph and the Add to Cart button",
+        "Use a contrast checker or axe-core to evaluate color contrast"
+      ],
+      "expected_behavior": "Text and button label colors must have a contrast ratio of at least 4.5:1 against their background (or 3:1 for large text).",
+      "actual_behavior": "Stock status paragraph has a contrast ratio of 1.6:1 (foreground #cccccc on #ffffff). Add to Cart button label has a contrast ratio of 2.93:1 (foreground #ffffff on #ff6600). Both fall below the required 4.5:1 ratio.",
+      "suggested_fix": "In the CSS rule for p, change color from #cccccc to #767676 (4.54:1 on #ffffff; measured 1.6:1, required 4.5:1).",
+      "element_selector": "p.stock-status, .add-to-cart",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-25T10:00:30.642Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": false
+      }
+    },
+    {
+      "title": "Product image missing alternative text",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "low vision users",
+        "users with cognitive disabilities",
+        "users on slow connections who disable images"
+      ],
+      "steps_to_reproduce": [
+        "Open the product detail page (product-detail.html)",
+        "Locate the main product image displayed",
+        "Inspect the <img> element in the DOM"
+      ],
+      "expected_behavior": "The <img> element must have a descriptive alt attribute (or be marked as decorative with alt=\"\" or role=\"presentation\") so that screen readers can convey its purpose.",
+      "actual_behavior": "The <img> element has no alt attribute, no aria-label, no aria-labelledby, no title, and no role override, leaving it without a text alternative.",
+      "suggested_fix": "Add a meaningful alt attribute describing the product, e.g., <img src=\"shoe-detail-red.jpg\" class=\"product-image\" width=\"400\" height=\"400\" alt=\"Red running shoe with white sole\">. If the image is purely decorative, use alt=\"\" or role=\"presentation\".",
+      "element_selector": "img.product-image",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-25T10:00:30.642Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": false
+      }
+    },
+    {
+      "title": "Missing label for quantity input field",
+      "severity": "critical",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "screen reader users",
+        "keyboard-only users",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        "Open product-detail.html",
+        "Locate the quantity input element (type=\"number\")",
+        "Attempt to focus the input using a screen reader or keyboard"
+      ],
+      "expected_behavior": "Each form control must have an associated label that is programmatically determinable, either via a <label> element, aria-label, aria-labelledby, title, or placeholder that serves as a persistent label.",
+      "actual_behavior": "The <input type=\"number\" ...> element has no associated <label>, no aria-label, no aria-labelledby, no title attribute, and no placeholder, resulting in no accessible name.",
+      "suggested_fix": "Add a visible <label> element linked to the input via the 'for' attribute and give the input a matching 'id'. Example:\n\n<label for=\"quantity\">Quantity</label>\n<input id=\"quantity\" type=\"number\" value=\"1\" min=\"1\" max=\"10\" style=\"width: 50px;\" aria-required=\"true\">",
+      "element_selector": "input[type=\"number\"]",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "label",
+        "scanTimestamp": "2026-11-25T10:00:30.642Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": false
+      }
+    }
+  ]
+}

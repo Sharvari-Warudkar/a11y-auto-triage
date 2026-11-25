@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { scanUrl, scanFile } from './scan';
 import { retrieveContext } from './rag/retrieve';
-import { generateBugLog } from './generate';
+import { generateBugLog, currentModel, useClaudeMd } from './generate';
 import { deduplicate, markFiled } from './deduplicate';
 import { BugLog, PipelineOutput } from './types';
 
@@ -64,13 +64,15 @@ export async function runPipeline(
     const violation = violations[i];
     const context = contexts[i];
     console.log(`      Processing: ${violation.id} (${violation.impact})`);
-    const bugLog = await generateBugLog(violation, context);
+    const bugLog = await generateBugLog(violation, context, target);
     bugLogs.push({
       ...bugLog,
       _metadata: {
         violationId: violation.id,
         scanTimestamp: scanResults.timestamp,
-        retrievedCriteria: context.map(c => c.criterionId)
+        retrievedCriteria: context.map(c => c.criterionId),
+        model: currentModel(),
+        claudeMd: useClaudeMd()
       }
     });
     await new Promise(r => setTimeout(r, 500));

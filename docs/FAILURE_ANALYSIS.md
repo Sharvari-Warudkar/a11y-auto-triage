@@ -119,3 +119,19 @@ This is not valid steps — it's a number array instead of string descriptions.
 | Readable steps_to_reproduce | 6/11 (55%) | 5 numeric-only, 3 mixed with stray numbers, 2 clean arrays, 1 generic string |
 
 Raw data: `evidence/data/` (the four `bugs-*.json` files) and `evidence/data/METRICS.md` (per-bug table).
+
+---
+
+## Follow-up (2026-11-25): fixes applied and remeasured
+
+Each failure above was addressed or consciously left open. Full table and caveats: `evidence/runs/RUNS.md`.
+
+| Failure | Fix | Result (gpt-oss-120b, 11 bugs) |
+|---|---|---|
+| 1. Parse error / truncation | `max_tokens` 4000, one retry with double budget, tolerant JSON extraction | 11/11 parsed |
+| 2. Irrelevant retrieval matches | Ranking not changed; added the missing 3.1.1 document | Expected criterion top-1 7/11 (was 6/11), top-3 11/11 |
+| 3. Numeric `steps_to_reproduce` | Schema asks for plain strings; `normalizeSteps()` drops bare numbers; fallback steps if fewer than 2 | 0 numeric-only, 11/11 clean |
+| 4. Placeholder-only inputs missed by axe-core | **Not fixed.** axe-core limitation; would need a custom check | Still 2 reported on checkout |
+| 5. Generic contrast fix | Fix computed in code from axe-core's measured colours | 4/4 contrast fixes name a passing hex value |
+
+Citation accuracy is now 11/11 and actionable fixes 11/11, above the 85% and 75% targets. Treat this as optimistic: the fixes were tuned on these same four fixtures, there is no held-out set, n = 11 and it is one run on a different model than the original results.

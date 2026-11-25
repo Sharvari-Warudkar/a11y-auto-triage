@@ -63,7 +63,7 @@ An automated triage pipeline with AI-generated remediation guidance means:
 | Component | Technology | Rationale |
 |-----------|-----------|-----------|
 | Scanner | Playwright + @axe-core/playwright | Industry standard, TypeScript native, cross-browser |
-| RAG Retrieval | Local keyword/TF-IDF matching | Zero infrastructure needed for 9-document corpus |
+| RAG Retrieval | Local keyword/TF-IDF matching | Zero infrastructure needed for 10-document corpus |
 | LLM Generation | Groq (Llama 3.3 70B Versatile) | Free tier, fast responses, structured JSON output |
 | Language | TypeScript (strict mode) | Type safety, maintainability |
 | Deduplication | Local JSON file store | Simple, no external dependencies |

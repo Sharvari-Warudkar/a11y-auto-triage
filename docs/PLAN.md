@@ -2,14 +2,14 @@
 
 ## Approach
 
-Build a TypeScript pipeline with three stages: scan, enrich (RAG), and log. Each stage is independently testable. Use local keyword matching for retrieval (sufficient for a 9-document corpus) and Groq's free API for LLM generation.
+Build a TypeScript pipeline with three stages: scan, enrich (RAG), and log. Each stage is independently testable. Use local keyword matching for retrieval (sufficient for a 10-document corpus) and Groq's free API for LLM generation.
 
 ## Technology Choices
 
 | Component | Choice | Why (and rejected alternative) |
 |-----------|--------|-------------------------------|
 | Scanner | Playwright + @axe-core/playwright | Cross-browser support, TypeScript native; rejected Puppeteer (deprecated warnings, less maintained) |
-| RAG Retrieval | Keyword/TF-IDF matching | Zero infrastructure, instant retrieval for small corpus; rejected vector embeddings (API cost/complexity overkill for 9 docs) |
+| RAG Retrieval | Keyword/TF-IDF matching | Zero infrastructure, instant retrieval for small corpus; rejected vector embeddings (API cost/complexity overkill for 10 docs) |
 | LLM | Groq (Llama 3.3 70B) | Free tier with 30 req/min, fast; rejected Gemini (quota issues), rejected Portkey (org restrictions on virtual keys) |
 | Output | Structured JSON (Jira-compatible) | Can POST to Jira API or export as CSV; rejected direct Jira integration (requires live instance) |
 | Language | TypeScript (strict mode) | Type safety, better maintainability than plain JS |
@@ -83,6 +83,6 @@ a11y-auto-triage/
 - No n8n scheduled workflow
 - No multi-page crawling (single URL per run; scan-all for batch)
 - No WCAG AAA (AA only, matching scope)
-- No vector embeddings (keyword matching sufficient for 9 docs)
+- No vector embeddings (keyword matching sufficient for 10 docs)
 - No Portkey gateway (org restrictions prevented setup; using Groq directly)
 - Model note: the 2026-08-14 results used llama-3.3-70b-versatile, since retired on this Groq account (404). The model is configurable via `GROQ_MODEL` (default unchanged); the 2026-11-25 re-run used openai/gpt-oss-120b (see evidence/rerun/RERUN.md)

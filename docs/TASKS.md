@@ -32,7 +32,7 @@
 ## Phase 6: Context Engineering & Review
 
 - [x] T6.1 — Write CLAUDE.md with project-specific instructions
-- [ ] T6.2 — Run pipeline WITHOUT CLAUDE.md context (NOT DONE: no controlled before/after run exists; docs/CONTEXT_ENGINEERING.md reports only observed effects of CLAUDE.md on the 11 real reports)
+- [x] T6.2 — Run pipeline WITHOUT CLAUDE.md context (done 2026-11-25 with USE_CLAUDE_MD=0; evidence/runs/without-claude-md, compared in docs/CONTEXT_ENGINEERING.md)
 - [x] T6.3 — Run pipeline WITH CLAUDE.md context (results/bugs-*.json, 2026-08-14)
 - [x] T6.4 — Document observed CLAUDE.md effects in docs/CONTEXT_ENGINEERING.md
 

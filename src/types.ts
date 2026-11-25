@@ -2,6 +2,7 @@ export interface ViolationNode {
   html: string;
   target: string[];
   failureSummary: string;
+  checks?: Array<{ id: string; data?: unknown }>;
 }
 
 export interface Violation {
@@ -46,7 +47,7 @@ export interface BugLog {
   wcag_criterion: string;
   wcag_criterion_name: string;
   affected_users: string[];
-  steps_to_reproduce: string;
+  steps_to_reproduce: string | string[];
   expected_behavior: string;
   actual_behavior: string;
   suggested_fix: string;
@@ -57,6 +58,8 @@ export interface BugLog {
     violationId: string;
     scanTimestamp: string;
     retrievedCriteria: string[];
+    model?: string;
+    claudeMd?: boolean;
   };
 }
 

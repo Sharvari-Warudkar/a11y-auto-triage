@@ -1,60 +1,38 @@
 # Context Engineering Evidence
 
-## The Context Artifact: CLAUDE.md
+## The context artifact: CLAUDE.md
 
-`CLAUDE.md` provides project-specific instructions that shape the system prompt used in `src/generate.ts`. The key sections that affect output quality:
+`CLAUDE.md` holds the project rules. Since 2026-11-25 `src/generate.ts` loads these sections of `CLAUDE.md` at runtime and appends them to the system prompt (`loadProjectContext()` / `buildSystemPrompt()`):
 
-1. **Severity Rules** — defines critical/major/minor/trivial with specific criteria
-2. **Fix Suggestion Rules** — requires "specific attribute/property to add or change"
-3. **E-commerce Domain Context** — maps violation types to business impact
+- Bug Report Output Schema
+- Severity Rules
+- WCAG Criterion Citation Rules (most specific criterion, only IDs from `data/wcag/`)
+- Fix Suggestion Rules (actionable, specific attribute, reference the selector)
+- E-commerce Domain Context (checkout violations are always critical)
 
-## How Context Engineering Is Used in This Project
+The base prompt keeps only the role and the JSON field list. Setting `USE_CLAUDE_MD=0` removes the CLAUDE.md block, which makes a controlled with/without comparison possible.
 
-The CLAUDE.md file informed the system prompt in `generate.ts`. The prompt includes:
-- Severity mapping rules (directly from CLAUDE.md)
-- Output format requirements (from CLAUDE.md schema section)
-- Domain-specific prioritization (checkout = critical, from CLAUDE.md)
+**Correction to earlier versions of this document:** the 2026-08-14 runs used a prompt with an inline severity table and no checkout rule, so the earlier claim that "checkout = critical" came from CLAUDE.md was not supported. There was no controlled comparison at that time. This document replaces it.
 
-## Evidence of Effect: Severity Assignment
+## Controlled comparison (2026-11-25)
 
-**Observation from actual runs (2026-08-14):**
+Setup: same code, same model (`openai/gpt-oss-120b`), same prompts, same 4 fixtures (11 violations), `temperature` 0.2, one run per arm. The only difference is `USE_CLAUDE_MD=1` vs `0`. Raw output: `evidence/runs/with-claude-md/` and `evidence/runs/without-claude-md/`. Metrics: `node scripts/measure.js <dir>`.
 
-The system prompt includes the severity mapping from CLAUDE.md:
-```
-- critical: blocks access entirely for a user group
-- major: significantly impairs access
-- minor: causes difficulty but workaround exists
-- trivial: best-practice improvement with minimal user impact
-```
+| Metric | With CLAUDE.md | Without CLAUDE.md |
+|---|---|---|
+| Parse success | 11/11 | 11/11 |
+| Correct criterion (from corpus) | 11/11 | 11/11 |
+| Actionable fix | 11/11 | 11/11 |
+| Fix names the element selector | 4/11 | 3/11 |
+| Severity distribution | 8 major, 3 critical | 5 major, 6 critical |
+| Checkout `color-contrast` severity | major | major |
+| Checkout `select-name` severity | critical | critical |
 
-**Result:** In the actual output across 11 violations:
-- `image-alt` violations → correctly assigned `"critical"` (blocks blind users entirely)
-- `color-contrast` on product price → `"minor"` (readable with effort)
-- `color-contrast` on checkout error → `"major"` (blocks form completion feedback)
-- `label` violations → `"critical"` (blocks screen reader users from interacting)
+### What the evidence shows
+- **Severity is the one clear effect.** Without the rules the model rates 6/11 bugs critical, including missing alt text on the product-listing and cart images and the cart/detail label bugs. With the rules it rates 3/11 critical, in line with the "blocks an entire user group from completing a task" definition. This shows the rules change behaviour; it does not prove either distribution is the correct one, since there is no ground-truth severity.
+- **Citation, parse success and fix quality did not depend on CLAUDE.md** in this run. The citation and fix gains come from code (see FAILURE_ANALYSIS.md, follow-up section), not from the context file.
+- **The checkout rule was not followed.** CLAUDE.md says checkout violations are always critical, yet the checkout `color-contrast` bug is "major" in both arms. The context did not constrain the output here.
+- **Selector citation barely changed (4/11 vs 3/11)**, which is within run-to-run noise.
 
-The severity assignments follow the CLAUDE.md rules consistently across all 11 generated reports. Without these rules, the LLM would default to axe-core's `impact` field directly (serious/critical/moderate/minor) rather than mapping to business-context severity.
-
-## Evidence of Effect: WCAG Citation Format
-
-**CLAUDE.md rule:** "Always cite the MOST SPECIFIC criterion (e.g., 1.4.3 not just 1.4)"
-
-**Result in actual output:** All successfully parsed bug logs (10/11) use the specific criterion ID format:
-- `"wcag_criterion": "1.4.3"` (not "WCAG 1.4.3" or "1.4" or "Contrast")
-- `"wcag_criterion": "1.1.1"` (not "Non-text Content" alone)
-
-## Where Context Engineering Did NOT Help
-
-**Fix suggestion specificity:** Despite CLAUDE.md requiring "specific attribute/property to add or change", all 4 color-contrast violations received the same generic suggestion: "Increase the darkness of the text color or lighten the background color to achieve a contrast ratio of at least 4.5:1"
-
-The context artifact can instruct the LLM to be specific, but it cannot give the LLM knowledge it doesn't have (specific passing color values for a given background). This would require adding a contrast-calculation tool rather than more context.
-
-## What CLAUDE.md Does vs. Does Not Do
-
-| Aspect | CLAUDE.md effect | Evidence |
-|--------|-----------------|----------|
-| Severity mapping | Consistent, business-context severity | All 11 violations correctly mapped |
-| Citation format | Consistent "X.Y.Z" format | 10/10 parsed reports use specific IDs |
-| Fix specificity (contrast) | No effect — still generic | 4/4 contrast violations have same suggestion |
-| Fix specificity (alt text) | Works — specific element referenced | "Add descriptive alt text to all informative images" |
-| Domain priority | Checkout violations rated higher | checkout contrast = "major" vs. listing contrast = "minor" |
+### Limits
+n = 11 per arm, one run each, one model, no repeats. Differences of one item are noise. Only the severity shift (3 critical vs 6) is large enough to be worth reporting, and it should be re-checked with repeated runs before being relied on.

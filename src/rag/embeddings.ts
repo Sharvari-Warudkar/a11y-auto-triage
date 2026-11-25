@@ -1,4 +1,4 @@
-// Keyword-based matching for small corpus (9 WCAG docs)
+// Keyword-based matching for small corpus (10 WCAG docs)
 // No external API needed - uses TF-IDF style word matching
 
 export function getKeywords(text: string): Map<string, number> {

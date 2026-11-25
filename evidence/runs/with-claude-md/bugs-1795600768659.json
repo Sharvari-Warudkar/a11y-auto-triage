@@ -1,0 +1,74 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\checkout.html",
+  "scanTimestamp": "2026-11-25T09:58:54.583Z",
+  "totalViolations": 2,
+  "newBugLogs": 2,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast for card error message on checkout",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "low vision users",
+        "color blind users",
+        "users with visual impairments"
+      ],
+      "steps_to_reproduce": [
+        "Open checkout.html",
+        "Enter an invalid credit card number",
+        "Submit the payment form",
+        "Observe the error message displayed in #card-error"
+      ],
+      "expected_behavior": "Error text must have a contrast ratio of at least 4.5:1 against its background per WCAG 2.1 AA.",
+      "actual_behavior": "Error text uses color #ff9999 on a white background (#ffffff) yielding a contrast ratio of 2.04:1, which fails the required minimum.",
+      "suggested_fix": "In the CSS rule for #card-error, change color from #ff9999 to #a36262 (4.69:1 on #ffffff; measured 2.04:1, required 4.5:1).",
+      "element_selector": "#card-error",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-25T09:58:54.583Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Select element #state lacks an accessible name",
+      "severity": "critical",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "voice control users",
+        "motor-impaired keyboard-only users"
+      ],
+      "steps_to_reproduce": [
+        "Open checkout.html",
+        "Navigate to the State dropdown in the address form",
+        "Attempt to focus the dropdown using keyboard or screen reader"
+      ],
+      "expected_behavior": "The select control should have a programmatically determinable name that is announced by assistive technologies (e.g., via a visible <label>, aria-label, or aria-labelledby).",
+      "actual_behavior": "The <select id=\"state\"> element has no associated <label>, no aria-label, no aria-labelledby, and no title attribute, resulting in no accessible name.",
+      "suggested_fix": "Add a visible label and associate it with the select, e.g., <label for=\"state\">State</label> before the <select>, or add aria-label=\"State\" to the select element.",
+      "element_selector": "#state",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "select-name",
+        "scanTimestamp": "2026-11-25T09:58:54.583Z",
+        "retrievedCriteria": [
+          "4.1.2-name-role-value",
+          "3.1.1-language-of-page",
+          "1.1.1-non-text-content"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

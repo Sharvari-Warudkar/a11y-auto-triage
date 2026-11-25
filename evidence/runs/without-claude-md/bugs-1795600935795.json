@@ -1,0 +1,73 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\checkout.html",
+  "scanTimestamp": "2026-11-25T10:02:01.749Z",
+  "totalViolations": 2,
+  "newBugLogs": 2,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast for error message text",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "users with low vision",
+        "users with color vision deficiency",
+        "older adults with declining contrast sensitivity"
+      ],
+      "steps_to_reproduce": [
+        "Open checkout.html in a browser",
+        "Trigger a card number validation error",
+        "Observe the error message displayed in the element with id \"card-error\""
+      ],
+      "expected_behavior": "Error message text must have a contrast ratio of at least 4.5:1 against the background (or 3:1 if considered large text).",
+      "actual_behavior": "The text color #ff9999 on a white background #ffffff yields a contrast ratio of 2.04:1, which is below the required threshold.",
+      "suggested_fix": "In the CSS rule for #card-error, change color from #ff9999 to #a36262 (4.69:1 on #ffffff; measured 2.04:1, required 4.5:1).",
+      "element_selector": "#card-error",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-25T10:02:01.749Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": false
+      }
+    },
+    {
+      "title": "Select element #state missing accessible name",
+      "severity": "critical",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "screen reader users",
+        "voice control users",
+        "switch access users",
+        "automation tools"
+      ],
+      "steps_to_reproduce": [
+        "Open checkout.html in a browser",
+        "Navigate to the state selection dropdown",
+        "Observe that no label is announced by screen readers"
+      ],
+      "expected_behavior": "The select element must have an accessible name via an associated <label>, aria-label, aria-labelledby, title attribute, or role=\"none\"/\"presentation\" if appropriate.",
+      "actual_behavior": "The <select id=\"state\"> element has no associated label, no aria-label, no aria-labelledby, and no title attribute, resulting in no accessible name.",
+      "suggested_fix": "Add a visible label element linked with for=\"state\" or add an aria-label attribute. Example:\n<label for=\"state\">State</label>\n<select id=\"state\" aria-label=\"State\">\n  ...\n</select>",
+      "element_selector": "#state",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "select-name",
+        "scanTimestamp": "2026-11-25T10:02:01.749Z",
+        "retrievedCriteria": [
+          "4.1.2-name-role-value",
+          "3.1.1-language-of-page",
+          "1.1.1-non-text-content"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": false
+      }
+    }
+  ]
+}

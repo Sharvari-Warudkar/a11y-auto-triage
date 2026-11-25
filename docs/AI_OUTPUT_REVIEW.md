@@ -84,3 +84,19 @@ This is not reproducible by a developer. The LLM produced numeric indices instea
 | Security | Pass | Key exposure caught and mitigated |
 | Performance | 15-30s per page | 90x faster than manual |
 | Maintainability | Pass with note | System prompt should be extracted to config |
+
+---
+
+## Follow-up (2026-11-25): re-review after fixes
+
+The same five lenses were re-applied to the new runs (`evidence/runs/`):
+
+| Lens | Before (Llama 3.3, 2026-08-14) | After (gpt-oss-120b, improved code) |
+|---|---|---|
+| Intent | 9/11 correct | 11/11 cite a correct, in-corpus criterion |
+| Tests (reproducibility) | 6/11 readable steps | 11/11 clean string steps (normalised in code) |
+| Security | Pass | Pass; the new key is only in `.env` (gitignored), the old one was rotated |
+| Performance | 15-30s per page | Dominated by Groq rate limits (HTTP 429, 10s waits); same order |
+| Maintainability | System prompt was a string literal | Rules now live in CLAUDE.md and load at runtime; helpers have unit tests (21 tests) |
+
+Not resolved: severity has no ground truth (CLAUDE.md changes the distribution from 6 to 3 critical, see CONTEXT_ENGINEERING.md), the checkout always-critical rule was not followed for contrast, and axe-core still misses placeholder-only inputs.

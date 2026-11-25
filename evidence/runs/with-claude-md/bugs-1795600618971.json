@@ -1,0 +1,72 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\product-listing.html",
+  "scanTimestamp": "2026-11-25T09:56:54.591Z",
+  "totalViolations": 2,
+  "newBugLogs": 2,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast for product price text",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "low vision users",
+        "color blind users"
+      ],
+      "steps_to_reproduce": [
+        "Open product-listing.html in a browser",
+        "Locate the price paragraph inside each product card (e.g., .product-card:nth-child(1) > p)",
+        "Observe the light gray text (#aaaaaa) on a white background (#ffffff)"
+      ],
+      "expected_behavior": "Price text must have a contrast ratio of at least 4.5:1 against the background per WCAG 2.1 AA.",
+      "actual_behavior": "Price text uses #aaaaaa on #ffffff, yielding a contrast ratio of 2.32:1, which fails the required 4.5:1 ratio.",
+      "suggested_fix": "In the CSS rule for .product-card:nth-child(1) > p, change color from #aaaaaa to #747474 (4.67:1 on #ffffff; measured 2.32:1, required 4.5:1).",
+      "element_selector": ".product-card p.product-price",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-25T09:56:54.591Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Product images missing alternative text",
+      "severity": "major",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "low vision users"
+      ],
+      "steps_to_reproduce": [
+        "Open the product listing page",
+        "Locate the red shoe image",
+        "Observe that the image has no alt attribute",
+        "Locate the green shoe image",
+        "Observe that the image also has no alt attribute"
+      ],
+      "expected_behavior": "All informative <img> elements must have a descriptive alt attribute (or be marked as decorative with alt=\"\" or role=\"presentation\").",
+      "actual_behavior": "The <img src=\"shoe-red.jpg\"> and <img src=\"shoe-green.jpg\"> elements lack alt attributes, aria-label, aria-labelledby, title, and role overrides.",
+      "suggested_fix": "Add descriptive alt text to each image, e.g.,\n\nAdd alt=\"Red running shoe, side view\" to img[src$=\"shoe-red.jpg\"]\nAdd alt=\"Green running shoe, side view\" to img[src$=\"shoe-green.jpg\"]\n\nIf the images are purely decorative, set alt=\"\" and role=\"presentation\".",
+      "element_selector": "img[src$=\"shoe-red.jpg\"], img[src$=\"shoe-green.jpg\"]",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-25T09:56:54.591Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    }
+  ]
+}
