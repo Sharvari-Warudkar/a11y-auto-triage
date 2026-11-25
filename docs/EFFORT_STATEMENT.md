@@ -23,6 +23,6 @@
 
 ## AI Tools Used
 
-- **Groq (Llama 3.3 70B Versatile)** — bug report generation in the pipeline (Portkey was rejected: org restrictions)
+- **Groq (Llama 3.3 70B Versatile)** — bug report generation for the 2026-08-14 results (Portkey was rejected: org restrictions). Llama 3.3 70B was later retired on the account, so the 2026-11-25 re-runs and fix verification used **Groq openai/gpt-oss-120b** (see evidence/runs/RUNS.md). Effort for the 2026-11-25 fixes and re-runs is not included in the hours above.
 - **Claude Code** — development assistance for scaffolding, documentation, and pipeline logic
 - All AI output was reviewed for correctness (see AI_OUTPUT_REVIEW.md)

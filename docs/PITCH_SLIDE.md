@@ -19,7 +19,7 @@ Tickets lack remediation guidance → developers ask follow-up questions → fix
 | Metric | Manual | Auto-Triage |
 |--------|--------|-------------|
 | Time per page | ~45 min | 15-30 s pipeline run (measured), plus human review |
-| WCAG criterion accuracy | Varies by engineer | 82% (9/11, measured on 4 fixtures; target was 85%) |
+| WCAG criterion accuracy | Varies by engineer | 82% (9/11) on the first run; 11/11 after code fixes (2026-11-25). Measured on 4 fixtures only, tuned on the same fixtures, n = 11 |
 | Fix suggestion actionability | Often vague | Code-level specific |
 | Pages covered per sprint | 8–12 | Not measured |
 
@@ -30,7 +30,7 @@ Tickets lack remediation guidance → developers ask follow-up questions → fix
 - Work as a substitute for manual testing by users with disabilities
 
 ## Ask
-Pilot on 3 pages in the next sprint. Measure: tickets closed without developer follow-up questions (target: 70%+; measured 55% (6/11) actionable on fixtures).
+Pilot on 3 pages in the next sprint. Measure: tickets closed without developer follow-up questions (target: 70%+; measured 55% (6/11) actionable on the first run, 11/11 after fixes; same caveats).
 
 ---
 *Sharvari Warudkar | QA Engineer | Perficient*
