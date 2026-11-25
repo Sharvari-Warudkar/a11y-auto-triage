@@ -35,7 +35,7 @@ An automated triage pipeline with AI-generated remediation guidance means:
 ### In Scope
 - Automated scanning of URLs using axe-core via Playwright
 - RAG retrieval pipeline over WCAG 2.1 success criteria using keyword/TF-IDF matching
-- AI-generated bug descriptions (via Groq/Llama 3.3 70B) with severity, affected users, WCAG criterion, and fix suggestion
+- AI-generated bug descriptions (via Groq/Llama 3.3 70B; configurable with `GROQ_MODEL`, see the model note in PLAN.md) with severity, affected users, WCAG criterion, and fix suggestion
 - Structured JSON output compatible with Jira API
 - Deduplication of violations already filed
 
