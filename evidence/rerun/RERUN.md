@@ -11,3 +11,7 @@ Why: the original results (evidence/data, 2026-08-14) used `llama-3.3-70b-versat
 | Fix names a concrete attribute/code | 6/11 | 9/11 (the 2 fallbacks are link-only); contrast fixes now include example CSS on cart and checkout |
 
 Takeaways: the scan stage reproduces exactly; the numeric-steps failure (5/11 originally) did not recur on this model, so it is model-dependent; the html-has-lang citation outside the corpus and the parse-error fallback recur, so those are pipeline issues (no corpus doc for 3.1.1; fixed `max_tokens` with a reasoning model). The two parse errors have not been root-caused; a likely cause is reasoning tokens consuming the 1000-token budget (set `GROQ_MAX_TOKENS` higher to test).
+
+## Note on src/generate.ts
+
+`src/generate.ts` was edited on 2026-11-25 (commit 2c6509a) only to read `GROQ_MODEL` and `GROQ_MAX_TOKENS` from the environment. Defaults are unchanged (`llama-3.3-70b-versatile`, 1000), so its file date is newer than the narrative docs. The 2026-08-14 results in `evidence/data/` were produced by the code before this edit; see `git log src/generate.ts`.
