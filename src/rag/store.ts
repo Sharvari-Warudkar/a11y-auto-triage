@@ -30,7 +30,8 @@ export function saveStore(chunks: StoredChunk[]): void {
   fs.writeFileSync(STORE_PATH, JSON.stringify(chunks, null, 2));
 }
 
-export function search(query: string, topK: number = 3): SearchResult[] {
+/** Baseline ranking: cosine over raw term counts (no IDF, no stopwords). Kept for comparison. */
+export function searchBaseline(query: string, topK: number = 3): SearchResult[] {
   const store = loadStore();
   if (store.length === 0) {
     throw new Error('Vector store is empty. Run ingestion first: npm run ingest');
@@ -43,4 +44,9 @@ export function search(query: string, topK: number = 3): SearchResult[] {
 
   scored.sort((a, b) => b.score - a.score);
   return scored.slice(0, topK);
+}
+
+// Default ranking (replaced by TF-IDF in T9.3 of docs/specs/RETRIEVAL_EVAL.md)
+export function search(query: string, topK: number = 3): SearchResult[] {
+  return searchBaseline(query, topK);
 }

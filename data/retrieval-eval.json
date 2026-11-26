@@ -1,0 +1,547 @@
+{
+  "generated": "scripts/build-retrieval-eval.js",
+  "axeVersion": "4.12.1",
+  "corpus": [
+    "1.1.1",
+    "1.3.1",
+    "1.4.11",
+    "1.4.3",
+    "2.1.1",
+    "2.4.6",
+    "2.4.7",
+    "3.1.1",
+    "3.3.2",
+    "4.1.2"
+  ],
+  "queries": [
+    {
+      "rule": "area-alt",
+      "query": "area-alt Active <area> elements must have alternative text Ensure <area> elements of image maps have alternative text",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-allowed-attr",
+      "query": "aria-allowed-attr Elements must only use supported ARIA attributes Ensure an element's role supports its ARIA attributes",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-braille-equivalent",
+      "query": "aria-braille-equivalent aria-braille attributes must have a non-braille equivalent Ensure aria-braillelabel and aria-brailleroledescription have a non-braille equivalent",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-command-name",
+      "query": "aria-command-name ARIA commands must have an accessible name Ensure every ARIA button, link and menuitem has an accessible name",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-conditional-attr",
+      "query": "aria-conditional-attr ARIA attributes must be used as specified for the element's role Ensure ARIA attributes are used as described in the specification of the element's role",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-deprecated-role",
+      "query": "aria-deprecated-role Deprecated ARIA roles must not be used Ensure elements do not use deprecated roles",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-hidden-body",
+      "query": "aria-hidden-body aria-hidden=\"true\" must not be present on the document body Ensure aria-hidden=\"true\" is not present on the document body.",
+      "acceptable": [
+        "1.3.1",
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-hidden-focus",
+      "query": "aria-hidden-focus ARIA hidden element must not be focusable or contain focusable elements Ensure aria-hidden elements are not focusable nor contain focusable elements",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-input-field-name",
+      "query": "aria-input-field-name ARIA input fields must have an accessible name Ensure every ARIA input field has an accessible name",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-meter-name",
+      "query": "aria-meter-name ARIA meter nodes must have an accessible name Ensure every ARIA meter node has an accessible name",
+      "acceptable": [
+        "1.1.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-progressbar-name",
+      "query": "aria-progressbar-name ARIA progressbar nodes must have an accessible name Ensure every ARIA progressbar node has an accessible name",
+      "acceptable": [
+        "1.1.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-prohibited-attr",
+      "query": "aria-prohibited-attr Elements must only use permitted ARIA attributes Ensure ARIA attributes are not prohibited for an element's role",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-required-attr",
+      "query": "aria-required-attr Required ARIA attributes must be provided Ensure elements with ARIA roles have all required ARIA attributes",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-required-children",
+      "query": "aria-required-children Certain ARIA roles must contain particular children Ensure elements with an ARIA role that require child roles contain them",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-required-parent",
+      "query": "aria-required-parent Certain ARIA roles must be contained by particular parents Ensure elements with an ARIA role that require parent roles are contained by them",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-roledescription",
+      "query": "aria-roledescription aria-roledescription must be on elements with a semantic role Ensure aria-roledescription is only used on elements with an implicit or explicit role",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-roles",
+      "query": "aria-roles ARIA roles used must conform to valid values Ensure all elements with a role attribute use a valid value",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-tab-name",
+      "query": "aria-tab-name ARIA tab nodes must have an accessible name Ensure every ARIA tab node has an accessible name",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-toggle-field-name",
+      "query": "aria-toggle-field-name ARIA toggle fields must have an accessible name Ensure every ARIA toggle field has an accessible name",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-tooltip-name",
+      "query": "aria-tooltip-name ARIA tooltip nodes must have an accessible name Ensure every ARIA tooltip node has an accessible name",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-valid-attr-value",
+      "query": "aria-valid-attr-value ARIA attributes must conform to valid values Ensure all ARIA attributes have valid values",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "aria-valid-attr",
+      "query": "aria-valid-attr ARIA attributes must conform to valid names Ensure attributes that begin with aria- are valid ARIA attributes",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "button-name",
+      "query": "button-name Buttons must have discernible text Ensure buttons have discernible text",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "color-contrast",
+      "query": "color-contrast Elements must meet minimum color contrast ratio thresholds Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "acceptable": [
+        "1.4.3"
+      ],
+      "split": "tune"
+    },
+    {
+      "rule": "definition-list",
+      "query": "definition-list <dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script>, <template> or <div> elements Ensure <dl> elements are structured correctly",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "dlitem",
+      "query": "dlitem <dt> and <dd> elements must be contained by a <dl> Ensure <dt> and <dd> elements are contained by a <dl>",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "duplicate-id-aria",
+      "query": "duplicate-id-aria IDs used in ARIA and labels must be unique Ensure every id attribute value used in ARIA and in labels is unique",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "form-field-multiple-labels",
+      "query": "form-field-multiple-labels Form field must not have multiple label elements Ensure form field does not have multiple label elements",
+      "acceptable": [
+        "3.3.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "frame-focusable-content",
+      "query": "frame-focusable-content Frames with focusable content must not have tabindex=-1 Ensure <frame> and <iframe> elements with focusable content do not have tabindex=-1",
+      "acceptable": [
+        "2.1.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "frame-title-unique",
+      "query": "frame-title-unique Frames must have a unique title attribute Ensure <iframe> and <frame> elements contain a unique title attribute",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "frame-title",
+      "query": "frame-title Frames must have an accessible name Ensure <iframe> and <frame> elements have an accessible name",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "html-has-lang",
+      "query": "html-has-lang <html> element must have a lang attribute Ensure every HTML document has a lang attribute",
+      "acceptable": [
+        "3.1.1"
+      ],
+      "split": "tune"
+    },
+    {
+      "rule": "html-lang-valid",
+      "query": "html-lang-valid <html> element must have a valid value for the lang attribute Ensure the lang attribute of the <html> element has a valid value",
+      "acceptable": [
+        "3.1.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "html-xml-lang-mismatch",
+      "query": "html-xml-lang-mismatch HTML elements with lang and xml:lang must have the same base language Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page",
+      "acceptable": [
+        "3.1.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "image-alt",
+      "query": "image-alt Images must have alternative text Ensure <img> elements have alternative text or a role of none or presentation",
+      "acceptable": [
+        "1.1.1"
+      ],
+      "split": "tune"
+    },
+    {
+      "rule": "input-button-name",
+      "query": "input-button-name Input buttons must have discernible text Ensure input buttons have discernible text",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "input-image-alt",
+      "query": "input-image-alt Image buttons must have alternative text Ensure <input type=\"image\"> elements have alternative text",
+      "acceptable": [
+        "1.1.1",
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "label",
+      "query": "label Form elements must have labels Ensure every form element has a label",
+      "acceptable": [
+        "4.1.2",
+        "3.3.2"
+      ],
+      "split": "tune"
+    },
+    {
+      "rule": "link-name",
+      "query": "link-name Links must have discernible text Ensure links have discernible text",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "list",
+      "query": "list <ul> and <ol> must only directly contain <li>, <script> or <template> elements Ensure that lists are structured correctly",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "listitem",
+      "query": "listitem <li> elements must be contained in a <ul> or <ol> Ensure <li> elements are used semantically",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "nested-interactive",
+      "query": "nested-interactive Interactive controls must not be nested Ensure interactive controls are not nested as they are not always announced by screen readers or can cause focus problems for assistive technologies",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "object-alt",
+      "query": "object-alt <object> elements must have alternative text Ensure <object> elements have alternative text",
+      "acceptable": [
+        "1.1.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "p-as-heading",
+      "query": "p-as-heading Styled <p> elements must not be used as headings Ensure bold, italic text and font-size is not used to style <p> elements as a heading",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "role-img-alt",
+      "query": "role-img-alt [role=\"img\"] elements must have alternative text Ensure [role=\"img\"] elements have alternative text",
+      "acceptable": [
+        "1.1.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "scrollable-region-focusable",
+      "query": "scrollable-region-focusable Scrollable region must have keyboard access Ensure elements that have scrollable content are accessible by keyboard in Safari",
+      "acceptable": [
+        "2.1.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "select-name",
+      "query": "select-name Select element must have an accessible name Ensure select element has an accessible name",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "tune"
+    },
+    {
+      "rule": "server-side-image-map",
+      "query": "server-side-image-map Server-side image maps must not be used Ensure that server-side image maps are not used",
+      "acceptable": [
+        "2.1.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "summary-name",
+      "query": "summary-name Summary elements must have discernible text Ensure summary elements have discernible text",
+      "acceptable": [
+        "4.1.2"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "svg-img-alt",
+      "query": "svg-img-alt <svg> elements with an img role must have alternative text Ensure <svg> elements with an img, graphics-document or graphics-symbol role have accessible text",
+      "acceptable": [
+        "1.1.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "table-fake-caption",
+      "query": "table-fake-caption Data or header cells must not be used to give caption to a data table. Ensure that tables with a caption use the <caption> element.",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "td-has-header",
+      "query": "td-has-header Non-empty <td> elements in larger <table> must have an associated table header Ensure that each non-empty data cell in a <table> larger than 3 by 3  has one or more table headers",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "td-headers-attr",
+      "query": "td-headers-attr Table cell headers attributes must refer to other <th> elements in the same table Ensure that each cell in a table that uses the headers attribute refers only to other <th> elements in that table",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "th-has-data-cells",
+      "query": "th-has-data-cells Table headers in a data table must refer to data cells Ensure that <th> elements and elements with role=columnheader/rowheader have data cells they describe",
+      "acceptable": [
+        "1.3.1"
+      ],
+      "split": "test"
+    },
+    {
+      "rule": "placeholder-only-label",
+      "query": "placeholder-only-label Form inputs must have a persistent visible label, not only a placeholder Ensures form inputs have a persistent visible label and do not rely only on placeholder text (WCAG 3.3.2)",
+      "acceptable": [
+        "3.3.2"
+      ],
+      "split": "test"
+    }
+  ],
+  "outOfCoverage": [
+    {
+      "rule": "audio-caption",
+      "axeScs": [
+        "1.2.1"
+      ]
+    },
+    {
+      "rule": "autocomplete-valid",
+      "axeScs": [
+        "1.3.5"
+      ]
+    },
+    {
+      "rule": "avoid-inline-spacing",
+      "axeScs": [
+        "1.4.12"
+      ]
+    },
+    {
+      "rule": "blink",
+      "axeScs": [
+        "2.2.2"
+      ]
+    },
+    {
+      "rule": "bypass",
+      "axeScs": [
+        "2.4.1"
+      ]
+    },
+    {
+      "rule": "css-orientation-lock",
+      "axeScs": [
+        "1.3.4"
+      ]
+    },
+    {
+      "rule": "document-title",
+      "axeScs": [
+        "2.4.2"
+      ]
+    },
+    {
+      "rule": "link-in-text-block",
+      "axeScs": [
+        "1.4.1"
+      ]
+    },
+    {
+      "rule": "marquee",
+      "axeScs": [
+        "2.2.2"
+      ]
+    },
+    {
+      "rule": "meta-refresh",
+      "axeScs": [
+        "2.2.1"
+      ]
+    },
+    {
+      "rule": "meta-viewport",
+      "axeScs": [
+        "1.4.4"
+      ]
+    },
+    {
+      "rule": "no-autoplay-audio",
+      "axeScs": [
+        "1.4.2"
+      ]
+    },
+    {
+      "rule": "valid-lang",
+      "axeScs": [
+        "3.1.2"
+      ]
+    },
+    {
+      "rule": "video-caption",
+      "axeScs": [
+        "1.2.2"
+      ]
+    }
+  ]
+}

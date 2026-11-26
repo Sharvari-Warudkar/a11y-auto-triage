@@ -10,7 +10,8 @@
     "pipeline": "ts-node src/pipeline.ts",
     "pipeline:fresh": "ts-node src/pipeline.ts -- --skip-dedup",
     "scan:all": "ts-node src/scan-all.ts",
-    "test": "playwright test"
+    "test": "playwright test",
+    "eval:retrieval": "ts-node src/rag/evaluate.ts"
   },
   "keywords": ["accessibility", "wcag", "a11y", "automation", "playwright", "qa", "typescript"],
   "author": "Sharvari Warudkar",
