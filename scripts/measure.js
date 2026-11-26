@@ -7,7 +7,8 @@ const files = fs.readdirSync(dir).filter(f => /^bugs-.*\.json$/.test(f)).sort();
 const corpus = new Set(fs.readdirSync(path.join(__dirname, '..', 'data', 'wcag')).map(f => f.split('-')[0]));
 // Runs made before data/wcag/3.1.1-language-of-page.md existed were scored against the 9-document corpus.
 if (process.argv.includes('--legacy-corpus')) corpus.delete('3.1.1');
-const EXPECTED = { 'color-contrast': '1.4.3', 'image-alt': '1.1.1', label: '3.3.2', 'select-name': '4.1.2', 'html-has-lang': '3.1.1' };
+// Ground truth, fixed BEFORE the held-out run (fixtures/holdout). Expected SC per axe/custom rule.
+const EXPECTED = { 'color-contrast': ['1.4.3'], 'image-alt': ['1.1.1'], label: ['3.3.2'], 'select-name': ['4.1.2'], 'html-has-lang': ['3.1.1'], 'link-name': ['4.1.2'], 'button-name': ['4.1.2'], 'input-image-alt': ['1.1.1'], 'placeholder-only-label': ['3.3.2'] };
 const CONCRETE = /(\balt\b|aria-[a-z]+|\blang\b|'for'|\"for\"|\bfor\b\s*(attribute|=|\/)|label'? element|<label|<html|<img|<select|#[0-9a-f]{6}|\brole=)/i;
 
 const rows = [];
@@ -25,13 +26,13 @@ for (const f of files) {
     const sel = (b.element_selector || '').split(' > ').pop();
     rows.push({
       page, rule, cited, severity: b.severity, parseError: !!b._parse_error,
-      correct: cited === EXPECTED[rule] && corpus.has(cited),
+      correct: (EXPECTED[rule] || []).includes(cited) && corpus.has(cited),
       inCorpus: corpus.has(cited), steps,
       readable: steps !== 'numeric-only',
       actionable: !/^See https?:/i.test(fix) && !b._parse_error && CONCRETE.test(fix),
       fixCitesSelector: sel && sel !== 'unknown' && fix.includes(sel.replace(/^[.#]/, '')),
-      top1: b._metadata.retrievedCriteria[0].split('-')[0] === EXPECTED[rule],
-      top3: b._metadata.retrievedCriteria.some(c => c.split('-')[0] === EXPECTED[rule]),
+      top1: (EXPECTED[rule] || []).includes(b._metadata.retrievedCriteria[0].split('-')[0]),
+      top3: b._metadata.retrievedCriteria.some(c => (EXPECTED[rule] || []).includes(c.split('-')[0])),
       model: b._metadata.model || 'llama-3.3-70b-versatile (pre-dates metadata)',
       claudeMd: b._metadata.claudeMd === undefined ? 'n/a' : b._metadata.claudeMd
     });
@@ -46,7 +47,8 @@ const out = {
   readableSteps: pct(c('readable')), cleanSteps: pct(c(r => r.steps === 'clean')), numericOnlySteps: c(r => r.steps === 'numeric-only'),
   actionableFix: pct(c('actionable')), fixCitesSelector: pct(c('fixCitesSelector')),
   severity: rows.reduce((a, r) => (a[r.severity] = (a[r.severity] || 0) + 1, a), {}),
-  checkoutSeverity: rows.filter(r => r.page.startsWith('checkout')).map(r => `${r.rule}:${r.severity}`)
+  checkoutSeverity: rows.filter(r => r.page.startsWith('checkout')).map(r => `${r.rule}:${r.severity}`),
+  checkoutAllCritical: `${rows.filter(r => r.page.startsWith('checkout') && r.severity === 'critical').length}/${rows.filter(r => r.page.startsWith('checkout')).length}`
 };
 if (process.argv.includes('--table')) {
   console.log('| Page | axe rule | Cited SC | Correct | Steps | Actionable fix | Severity | Parse error |\n|---|---|---|---|---|---|---|---|');

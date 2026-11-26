@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - ShopEasy</title>
+  <style>
+    body { font-family: Trebuchet MS, sans-serif; margin: 0; padding: 24px; }
+    form { max-width: 420px; }
+    input, select { display: block; width: 100%; padding: 10px; margin-bottom: 12px; box-sizing: border-box; }
+    .hint { color: #c4c4c4; font-size: 12px; margin-top: -6px; }
+    .pay { background: #1b7f3b; color: #ffffff; padding: 12px 24px; border: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Payment</h1>
+    <form>
+      <input type="text" placeholder="Name on card" id="pay-name">
+      <input type="text" placeholder="Card number" id="pay-card">
+      <p class="hint">We never store your card details</p>
+      <select id="promo">
+        <option>No promo code</option>
+        <option>SUMMER10</option>
+      </select>
+      <input type="image" src="pay-now.png" width="120" height="40">
+      <button type="submit" class="pay">Place order</button>
+    </form>
+  </main>
+</body>
+</html>

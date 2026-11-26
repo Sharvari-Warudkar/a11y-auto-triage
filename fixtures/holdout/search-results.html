@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search results - running shoes</title>
+  <style>
+    body { font-family: Georgia, serif; margin: 0; padding: 24px; }
+    .result { display: flex; gap: 16px; border-bottom: 1px solid #dddddd; padding: 12px 0; }
+    .result img { width: 90px; height: 90px; }
+    .price { color: #bdbdbd; font-size: 18px; }
+    .next { display: inline-block; width: 28px; height: 28px; background: #12355b; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Results for "running shoes"</h1>
+    <div>
+      <select id="sort">
+        <option>Relevance</option>
+        <option>Price: low to high</option>
+        <option>Price: high to low</option>
+      </select>
+    </div>
+    <div class="result"><img src="shoe-trail.jpg"><div><h2>Trail Runner X</h2><span class="price">$89.00</span></div></div>
+    <div class="result"><img src="shoe-road.jpg"><div><h2>Road Glide</h2><span class="price">$74.00</span></div></div>
+    <div class="result"><img src="shoe-light.jpg"><div><h2>Featherlight 2</h2><span class="price">$99.00</span></div></div>
+    <a href="/search?page=2" class="next"></a>
+  </main>
+</body>
+</html>
