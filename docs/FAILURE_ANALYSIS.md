@@ -131,7 +131,7 @@ Each failure above was addressed or consciously left open. Full table and caveat
 | 1. Parse error / truncation | `max_tokens` 4000, one retry with double budget, tolerant JSON extraction | 11/11 parsed |
 | 2. Irrelevant retrieval matches | Ranking not changed; added the missing 3.1.1 document | Expected criterion top-1 7/11 (was 6/11), top-3 11/11 |
 | 3. Numeric `steps_to_reproduce` | Schema asks for plain strings; `normalizeSteps()` drops bare numbers; fallback steps if fewer than 2 | 0 numeric-only, 11/11 clean |
-| 4. Placeholder-only inputs missed by axe-core | **Not fixed.** axe-core limitation; would need a custom check | Still 2 reported on checkout |
+| 4. Placeholder-only inputs missed by axe-core | Custom check `findPlaceholderOnlyInputs()` in `src/scan.ts` (rule `placeholder-only-label`, SC 3.3.2); unit test asserts 8 nodes on `checkout.html` | Fixed 2026-11-26: checkout now reports 3 violations (was 2), the new one covering all 8 inputs |
 | 5. Generic contrast fix | Fix computed in code from axe-core's measured colours | 4/4 contrast fixes name a passing hex value |
 
-Citation accuracy is now 11/11 and actionable fixes 11/11, above the 85% and 75% targets. Treat this as optimistic: the fixes were tuned on these same four fixtures, there is no held-out set, n = 11 and it is one run on a different model than the original results.
+Citation accuracy is 11/11 and actionable fixes 11/11 on the tuned fixtures, above the 85% and 75% targets. To address the over-fitting concern the fixes were then checked on four held-out pages (`fixtures/holdout/`, ground truth fixed before the run): 16/16 correct citations on gpt-oss-120b and gpt-oss-20b, 15/16 on qwen3.8-27b, 16/16 actionable fixes on all three. See `evidence/runs/RUNS.md` for limits (same author, corpus-covered violation types, n = 16, one run per model).

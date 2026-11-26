@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import {
   normalizeSteps, parseJsonLoose, computeContrastFix, contrastRatio, passingColor,
-  loadProjectContext, buildSystemPrompt
+  loadProjectContext, buildSystemPrompt, isCheckoutPage, applyProjectSeverityRules
 } from '../src/generate';
-import { Violation } from '../src/types';
+import { Violation, BugLog } from '../src/types';
 
 test.describe('Generator helpers', () => {
   test('normalizeSteps drops bare numbers and numbering prefixes', () => {
@@ -36,6 +36,21 @@ test.describe('Generator helpers', () => {
     expect(fix).toContain('.price');
     expect(fix).toContain('#aaaaaa');
     expect(computeContrastFix({ ...v, id: 'image-alt' })).toBeNull();
+  });
+
+  test('checkout rule: checkout pages are forced to critical, other pages untouched, rule off disables it', () => {
+    expect(isCheckoutPage('file:///x/fixtures/checkout.html')).toBe(true);
+    expect(isCheckoutPage('https://shop.test/checkout/payment')).toBe(true);
+    expect(isCheckoutPage('https://shop.test/products')).toBe(false);
+    expect(isCheckoutPage('file:///C:/Users/me/checkout-demo/fixtures/cart.html')).toBe(false);
+    const mk = () => ({ severity: 'major' } as BugLog);
+    const forced = applyProjectSeverityRules(mk(), 'file:///x/fixtures/checkout.html');
+    expect(forced.severity).toBe('critical');
+    expect(forced._severity_override).toEqual({ from: 'major', rule: expect.any(String) });
+    expect(applyProjectSeverityRules(mk(), 'file:///x/fixtures/cart.html').severity).toBe('major');
+    process.env.USE_CLAUDE_MD = '0';
+    expect(applyProjectSeverityRules(mk(), 'file:///x/fixtures/checkout.html').severity).toBe('major');
+    delete process.env.USE_CLAUDE_MD;
   });
 
   test('CLAUDE.md rules are injected into the system prompt and can be switched off', () => {

@@ -1,0 +1,141 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\checkout-payment.html",
+  "scanTimestamp": "2026-11-26T10:29:15.751Z",
+  "totalViolations": 4,
+  "newBugLogs": 4,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast for hint text on checkout payment page",
+      "severity": "critical",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "low vision users",
+        "color blind users"
+      ],
+      "steps_to_reproduce": [
+        "Open checkout-payment.html in a browser",
+        "Locate the paragraph with class \"hint\" that reads \"We never store your card details\"",
+        "Inspect the computed styles for the text color and background"
+      ],
+      "expected_behavior": "Text must have a contrast ratio of at least 4.5:1 against its background per WCAG 2.1 AA.",
+      "actual_behavior": "Text color #c4c4c4 on white background #ffffff yields a contrast ratio of 1.74:1, which fails the required minimum.",
+      "suggested_fix": "In the CSS rule for p, change color from #c4c4c4 to #767676 (4.54:1 on #ffffff; measured 1.74:1, required 4.5:1).",
+      "element_selector": "p.hint",
+      "impact": "serious",
+      "_severity_override": {
+        "from": "major",
+        "rule": "CLAUDE.md: checkout flow violations are always critical"
+      },
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:29:15.751Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Image submit button missing accessible name on checkout payment page",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "keyboard-only users"
+      ],
+      "steps_to_reproduce": [
+        "Open checkout-payment.html",
+        "Locate the Pay Now button rendered as <input type=\"image\">",
+        "Attempt to navigate to the button using only the keyboard or a screen reader"
+      ],
+      "expected_behavior": "The image button must have a text alternative (alt, aria-label, aria-labelledby, title, or associated label) so assistive technologies can announce its purpose.",
+      "actual_behavior": "The <input type=\"image\" src=\"pay-now.png\" width=\"120\" height=\"40\"> element has no alt attribute, no aria-label, no aria-labelledby, no title, and no associated label, providing no accessible name.",
+      "suggested_fix": "Add an accessible name, e.g., <input type=\"image\" src=\"pay-now.png\" width=\"120\" height=\"40\" alt=\"Pay now\" aria-label=\"Pay now\"> or provide a <label for=\"payNowBtn\">Pay now</label> and id=\"payNowBtn\" on the input.",
+      "element_selector": "input[type=\"image\"]",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "input-image-alt",
+        "scanTimestamp": "2026-11-26T10:29:15.751Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Select element #promo lacks an accessible name",
+      "severity": "critical",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "voice control users",
+        "switch access users"
+      ],
+      "steps_to_reproduce": [
+        "Open the checkout payment page",
+        "Locate the promo code dropdown",
+        "Attempt to navigate to the dropdown with a screen reader"
+      ],
+      "expected_behavior": "The select control should have a programmatically determinable name that is announced by assistive technologies (e.g., via a visible label, aria-label, or aria-labelledby).",
+      "actual_behavior": "The <select id=\"promo\"> element has no associated <label>, no aria-label, no aria-labelledby, and no title attribute, resulting in no accessible name.",
+      "suggested_fix": "Add a visible label and associate it with the select, e.g., <label for=\"promo\">Promo code</label> before the <select>, or add aria-label=\"Promo code\" to the select element.",
+      "element_selector": "#promo",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "select-name",
+        "scanTimestamp": "2026-11-26T10:29:15.751Z",
+        "retrievedCriteria": [
+          "4.1.2-name-role-value",
+          "3.1.1-language-of-page",
+          "1.1.1-non-text-content"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing persistent label for payment name input",
+      "severity": "critical",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "low vision users",
+        "cognitive disability users"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the checkout payment page",
+        "Locate the \"Name on card\" field",
+        "Attempt to focus the input"
+      ],
+      "expected_behavior": "A visible, persistent label is associated with the input so screen readers announce it and the label remains visible when the user types.",
+      "actual_behavior": "The input has only a placeholder text and no <label>, aria-label, aria-labelledby, or title, causing the label to disappear on focus and providing no programmatic name.",
+      "suggested_fix": "Add a <label> element linked to the input and optionally keep the placeholder. Example: <label for=\"pay-name\">Name on card</label><input type=\"text\" id=\"pay-name\" placeholder=\"Name on card\">",
+      "element_selector": "#pay-name",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "placeholder-only-label",
+        "scanTimestamp": "2026-11-26T10:29:15.751Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

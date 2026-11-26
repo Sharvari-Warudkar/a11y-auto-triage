@@ -28,11 +28,14 @@ Setup: same code, same model (`openai/gpt-oss-120b`), same prompts, same 4 fixtu
 | Checkout `color-contrast` severity | major | major |
 | Checkout `select-name` severity | critical | critical |
 
-### What the evidence shows
-- **Severity is the one clear effect.** Without the rules the model rates 6/11 bugs critical, including missing alt text on the product-listing and cart images and the cart/detail label bugs. With the rules it rates 3/11 critical, in line with the "blocks an entire user group from completing a task" definition. This shows the rules change behaviour; it does not prove either distribution is the correct one, since there is no ground-truth severity.
-- **Citation, parse success and fix quality did not depend on CLAUDE.md** in this run. The citation and fix gains come from code (see FAILURE_ANALYSIS.md, follow-up section), not from the context file.
-- **The checkout rule was not followed.** CLAUDE.md says checkout violations are always critical, yet the checkout `color-contrast` bug is "major" in both arms. The context did not constrain the output here.
-- **Selector citation barely changed (4/11 vs 3/11)**, which is within run-to-run noise.
+### What the evidence shows (updated 2026-11-26 after repeat runs)
+- **The severity effect did not replicate.** In the first pair of runs the rules seemed to cut critical ratings from 6 to 3. A repeat run of the same pipeline with the rules on rated 5 of the same 11 bugs critical (model's own severity, before the code override described below). With-rules runs gave 3 and 5, without-rules gave 6, so the difference is within run-to-run noise. No reliable effect of CLAUDE.md on severity is established.
+- **Citation, parse success and fix quality did not depend on CLAUDE.md.** Those gains come from code (see FAILURE_ANALYSIS.md, follow-up section).
+- **The model does not reliably follow the checkout rule.** CLAUDE.md says checkout violations are always critical. The model rated the checkout `color-contrast` bug "major" in every run I examined (both arms, the repeat run and all three held-out models), and also the `placeholder-only-label` bug in 2 of 3 held-out runs.
+- **Selector citation barely changed (4/11 vs 3/11)**, which is within noise.
+
+### Enforcement in code
+Because prompting alone did not enforce the rule, `applyProjectSeverityRules()` in `src/generate.ts` sets severity to critical for checkout pages when CLAUDE.md rules are enabled. The model's own value is kept in `_severity_override.from`, so the override is visible in every result. Result: checkout bugs are critical in 3/3 (original fixtures) and 4/4 (held-out `checkout-payment.html`) for all models. This is a hard-coded rule in code, not evidence that the context file worked.
 
 ### Limits
-n = 11 per arm, one run each, one model, no repeats. Differences of one item are noise. Only the severity shift (3 critical vs 6) is large enough to be worth reporting, and it should be re-checked with repeated runs before being relied on.
+n = 11 to 16 per run, one run per configuration, so single-item differences are noise. The with/without comparison measures only the prompt; the code override is switched off together with CLAUDE.md (`USE_CLAUDE_MD=0`).

@@ -32,6 +32,14 @@ test.describe('Scanner', () => {
     expect(labelViolation!.nodes.length).toBeGreaterThan(0);
   });
 
+  test('custom check finds placeholder-only inputs that axe-core misses (checkout fixture)', async () => {
+    const result = await scanFile(path.join(__dirname, '..', 'fixtures', 'checkout.html'));
+    const v = result.violations.find(x => x.id === 'placeholder-only-label');
+    expect(v).toBeDefined();
+    expect(v!.nodes.length).toBe(8);
+    expect(result.violations.find(x => x.id === 'label')).toBeUndefined();
+  });
+
   test('returns correct structure', async () => {
     const result = await scanFile(path.join(__dirname, '..', 'fixtures', 'product-listing.html'));
     expect(result.url).toContain('product-listing.html');

@@ -1,0 +1,172 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\home.html",
+  "scanTimestamp": "2026-11-26T10:35:10.307Z",
+  "totalViolations": 5,
+  "newBugLogs": 5,
+  "bugLogs": [
+    {
+      "title": "Promo banner text has insufficient contrast ratio of 1.46:1",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "low vision users",
+        "users with color vision deficiency",
+        "older users"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the home page",
+        "Locate the promotional banner with the text 'Free shipping on orders over $50 this week only'",
+        "Inspect the computed styles of the div.promo element",
+        "Calculate the contrast ratio between the foreground color #d9c27a and background color #ffe9a8"
+      ],
+      "expected_behavior": "The text in the promotional banner must have a contrast ratio of at least 4.5:1 against its background color to meet WCAG 2.1 AA requirements for normal-sized text.",
+      "actual_behavior": "The text has a contrast ratio of only 1.46:1 (foreground #d9c27a on background #ffe9a8), which is significantly below the required 4.5:1 threshold, making it difficult to read.",
+      "suggested_fix": "In the CSS rule for div, change color from #d9c27a to #756942 (4.53:1 on #ffe9a8; measured 1.46:1, required 4.5:1).",
+      "element_selector": "div.promo",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:35:10.307Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing lang attribute on html element",
+      "severity": "major",
+      "wcag_criterion": "3.1.1",
+      "wcag_criterion_name": "Language of Page",
+      "affected_users": [
+        "blind users",
+        "users with cognitive disabilities",
+        "users of braille displays"
+      ],
+      "steps_to_reproduce": [
+        "Open the page c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\home.html in a browser",
+        "Inspect the <html> element in the DOM",
+        "Verify that the lang attribute is present and set to a valid BCP 47 language code"
+      ],
+      "expected_behavior": "The <html> element should have a lang attribute with a valid BCP 47 language code (e.g., lang=\"en\") so assistive technologies can determine the default human language of the page.",
+      "actual_behavior": "The <html> element does not have a lang attribute, preventing assistive technologies from determining the page language.",
+      "suggested_fix": "Add the lang attribute to the <html> element. Change <html> to <html lang=\"en\"> (or the appropriate language code for the page content).",
+      "element_selector": "html",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "html-has-lang",
+        "scanTimestamp": "2026-11-26T10:35:10.307Z",
+        "retrievedCriteria": [
+          "3.1.1-language-of-page",
+          "1.3.1-info-and-relationships",
+          "2.1.1-keyboard"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing alt text on hero image",
+      "severity": "major",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "users with low vision",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the home page",
+        "Locate the hero image with src='hero-summer-sale.jpg'",
+        "Inspect the element to verify the presence of an alt attribute",
+        "Observe that the alt attribute is missing"
+      ],
+      "expected_behavior": "The image should have a descriptive alt attribute that conveys the purpose of the summer sale promotion, or role='none' if it is purely decorative.",
+      "actual_behavior": "The image element has no alt attribute, aria-label, aria-labelledby, title, or role='none'/'presentation', causing screen readers to either announce the filename or skip the content entirely without context.",
+      "suggested_fix": "Add alt='Summer Sale: Up to 50% off selected items' to img[src='hero-summer-sale.jpg'] to provide a text alternative describing the promotional content.",
+      "element_selector": "img[src='hero-summer-sale.jpg']",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-26T10:35:10.307Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Cart icon link lacks accessible name",
+      "severity": "major",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "voice control users"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the home page",
+        "Focus the cart icon link using a keyboard or screen reader",
+        "Listen to the announced name of the link"
+      ],
+      "expected_behavior": "The link should have a discernible accessible name that describes its purpose, such as 'View cart'.",
+      "actual_behavior": "The link has no visible text, no aria-label, no aria-labelledby, and no title attribute, resulting in an empty or generic announcement.",
+      "suggested_fix": "Add aria-label='View cart' to the a.icon-link element",
+      "element_selector": "a.icon-link",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "link-name",
+        "scanTimestamp": "2026-11-26T10:35:10.307Z",
+        "retrievedCriteria": [
+          "1.4.3-contrast-minimum",
+          "1.1.1-non-text-content",
+          "4.1.2-name-role-value"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Email input lacks persistent label, relies on placeholder only",
+      "severity": "major",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "blind users",
+        "low vision users",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the home page",
+        "Locate the newsletter email input field with id 'news-email'",
+        "Observe that the only text associated with the field is the placeholder 'Your email address'",
+        "Focus the input field and observe that the placeholder text disappears",
+        "Attempt to use a screen reader to identify the purpose of the field"
+      ],
+      "expected_behavior": "The email input field should have a persistent, visible label that remains visible when the field is focused and filled. Screen readers should announce a clear, descriptive name for the field.",
+      "actual_behavior": "The input field only has a placeholder attribute ('Your email address') with no associated <label>, aria-label, aria-labelledby, or title. The placeholder disappears on focus, leaving no visible indication of the field's purpose. Screen readers may announce the placeholder but it is not a reliable or persistent label.",
+      "suggested_fix": "Add a visible <label> element associated with the input: <label for=\"news-email\">Email address</label> placed before or above the input. Optionally, keep the placeholder as a format hint (e.g., placeholder=\"you@example.com\") but do not rely on it as the primary label.",
+      "element_selector": "#news-email",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "placeholder-only-label",
+        "scanTimestamp": "2026-11-26T10:35:10.307Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

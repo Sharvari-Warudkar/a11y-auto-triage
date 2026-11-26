@@ -1,0 +1,135 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\search-results.html",
+  "scanTimestamp": "2026-11-26T10:28:09.799Z",
+  "totalViolations": 4,
+  "newBugLogs": 4,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast for product price text",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum) (Level AA)",
+      "affected_users": [
+        "low vision users",
+        "users with color vision deficiency",
+        "older adults"
+      ],
+      "steps_to_reproduce": [
+        "Open the search results page",
+        "Scroll to the product listings",
+        "Observe the price values displayed in gray text"
+      ],
+      "expected_behavior": "Price text must have a contrast ratio of at least 4.5:1 against the white background (or 3:1 if considered large text).",
+      "actual_behavior": "Price text uses #bdbdbd on #ffffff, yielding a contrast ratio of 1.87:1, which fails the required minimum.",
+      "suggested_fix": "In the CSS rule for .result:nth-child(3) > div > span, change color from #bdbdbd to #757575 (4.61:1 on #ffffff; measured 1.87:1, required 4.5:1).",
+      "element_selector": ".result:nth-child(3) > div > span.price",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:28:09.799Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Product images missing alternative text on search results page",
+      "severity": "major",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "low vision users"
+      ],
+      "steps_to_reproduce": [
+        "Open the search results page (search-results.html)",
+        "Locate the product images (e.g., shoe-trail.jpg, shoe-road.jpg, shoe-light.jpg)",
+        "Inspect each <img> element with the browser dev tools"
+      ],
+      "expected_behavior": "Each <img> element must have a text alternative via a descriptive alt attribute, or be marked as decorative with alt=\"\" or role=\"presentation\".",
+      "actual_behavior": "The <img> elements for shoe-trail.jpg, shoe-road.jpg, and shoe-light.jpg have no alt attribute, no aria-label, no aria-labelledby, no title, and no role override, leaving them without an accessible name.",
+      "suggested_fix": "Add descriptive alt text to each image, e.g.,\n\nhtml\n<img src=\"shoe-trail.jpg\" alt=\"Trail running shoe, side view\">\n<img src=\"shoe-road.jpg\" alt=\"Road running shoe, side view\">\n<img src=\"shoe-light.jpg\" alt=\"Lightweight running shoe, side view\">\n\nIf any image is purely decorative, use `alt=\"\"` or `role=\"presentation\"` instead.",
+      "element_selector": "img[src$=\"shoe-trail.jpg\"]",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-26T10:28:09.799Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing accessible name on pagination link",
+      "severity": "major",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "keyboard-only users"
+      ],
+      "steps_to_reproduce": [
+        "Open search-results.html",
+        "Navigate to the pagination controls",
+        "Tab to the next page link"
+      ],
+      "expected_behavior": "The link must have discernible text or an accessible name so screen readers can announce its purpose (e.g., “Next page”).",
+      "actual_behavior": "The <a> element has no visible text, no aria-label, no aria-labelledby, and no title attribute, leaving it nameless to assistive technologies.",
+      "suggested_fix": "Add an accessible name, e.g., <a href=\"/search?page=2\" class=\"next\" aria-label=\"Next page\"></a> or include visible text like <a href=\"/search?page=2\" class=\"next\">Next</a>.",
+      "element_selector": "a.next[href=\"/search?page=2\"]",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "link-name",
+        "scanTimestamp": "2026-11-26T10:28:09.799Z",
+        "retrievedCriteria": [
+          "1.4.3-contrast-minimum",
+          "1.1.1-non-text-content",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Select element #sort lacks an accessible name",
+      "severity": "major",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "voice control users",
+        "switch access users"
+      ],
+      "steps_to_reproduce": [
+        "Open the search results page",
+        "Locate the sort dropdown near the top of the page",
+        "Attempt to navigate to the dropdown using a screen reader or keyboard"
+      ],
+      "expected_behavior": "The select element should have a programmatically determinable accessible name that is announced by screen readers (e.g., via a visible label, aria-label, or aria-labelledby).",
+      "actual_behavior": "The <select id=\"sort\"> element has no associated <label>, no aria-label, no aria-labelledby, and no title attribute, resulting in no accessible name.",
+      "suggested_fix": "Add a visible label element and associate it with the select, e.g., <label for=\"sort\">Sort results by</label> before the <select id=\"sort\">, or alternatively add aria-label=\"Sort results by\" to the select element.",
+      "element_selector": "#sort",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "select-name",
+        "scanTimestamp": "2026-11-26T10:28:09.799Z",
+        "retrievedCriteria": [
+          "4.1.2-name-role-value",
+          "3.1.1-language-of-page",
+          "1.1.1-non-text-content"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

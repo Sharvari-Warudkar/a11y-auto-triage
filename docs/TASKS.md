@@ -43,3 +43,12 @@
 - [x] T7.3 — Record measured results (9/11 = 82% correct citation (target 85% not met), recounted from results/*.json)
 - [x] T7.4 — Create one-slide pitch for client stakeholders
 - [x] T7.5 — Write declared-effort statement
+
+## Phase 8: Resubmission fixes (2026-11-25/26)
+
+- [x] T8.1 — Add WCAG 3.1.1 document; fix parse errors, numeric steps and generic contrast fix (docs/FAILURE_ANALYSIS.md follow-up)
+- [x] T8.2 — Load CLAUDE.md into the system prompt; controlled with/without run (docs/CONTEXT_ENGINEERING.md)
+- [x] T8.3 — Custom placeholder-only-label check for the axe-core gap
+- [x] T8.4 — Enforce the checkout-always-critical rule in code (model alone does not follow it)
+- [x] T8.5 — Held-out fixtures (fixtures/holdout) with ground truth fixed before the run; run on three models
+- [x] T8.6 — scripts/measure.js recomputes every metric from raw results

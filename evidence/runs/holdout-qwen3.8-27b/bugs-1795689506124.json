@@ -1,0 +1,140 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\search-results.html",
+  "scanTimestamp": "2026-11-26T10:36:59.143Z",
+  "totalViolations": 4,
+  "newBugLogs": 4,
+  "bugLogs": [
+    {
+      "title": "Product prices on search results have insufficient color contrast",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "low vision users",
+        "users with color vision deficiency",
+        "older users with declining contrast sensitivity"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the search results page",
+        "Locate the product results list",
+        "Observe the price text in the 3rd, 4th, and 5th result items",
+        "Note the light gray color (#bdbdbd) of the price text against the white background",
+        "Measure the contrast ratio using a color contrast tool"
+      ],
+      "expected_behavior": "Price text should have a contrast ratio of at least 4.5:1 against the background color, per WCAG 2.1 AA Success Criterion 1.4.3",
+      "actual_behavior": "Price text has a contrast ratio of only 1.87:1 (foreground #bdbdbd on background #ffffff), which fails the 4.5:1 minimum requirement",
+      "suggested_fix": "In the CSS rule for .result:nth-child(3) > div > span, change color from #bdbdbd to #757575 (4.61:1 on #ffffff; measured 1.87:1, required 4.5:1).",
+      "element_selector": ".result:nth-child(3) > div > span, .result:nth-child(4) > div > span, .result:nth-child(5) > div > span",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:36:59.143Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Product images missing alt text on search results page",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "low vision users",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the search results page",
+        "Locate the product images for trail, road, and light shoes",
+        "Use a screen reader to inspect the images",
+        "Observe that no alternative text is announced for any of the three images"
+      ],
+      "expected_behavior": "Each product image should have a descriptive alt attribute that conveys the product name and key visual characteristics, allowing screen reader users to understand the product being displayed.",
+      "actual_behavior": "The three product images (shoe-trail.jpg, shoe-road.jpg, shoe-light.jpg) have no alt attribute, no aria-label, no aria-labelledby, and no role='none' or role='presentation', so screen readers announce them as generic 'image' with no context.",
+      "suggested_fix": "Add descriptive alt attributes to each image: alt='Trail running shoe, side view' to img[src$='shoe-trail.jpg'], alt='Road running shoe, side view' to img[src$='shoe-road.jpg'], and alt='Lightweight running shoe, side view' to img[src$='shoe-light.jpg']. Ensure alt text describes the product type and key visual features.",
+      "element_selector": "img[src$='shoe-trail.jpg'], img[src$='shoe-road.jpg'], img[src$='shoe-light.jpg']",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-26T10:36:59.143Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Next page link lacks accessible name",
+      "severity": "major",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "voice control users"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the search results page",
+        "Locate the pagination control for the next page",
+        "Focus the 'next' link using a screen reader or keyboard",
+        "Listen to the announced name of the link"
+      ],
+      "expected_behavior": "The link should have a discernible accessible name that describes its purpose, such as 'Next page' or 'Go to page 2', so assistive technologies can announce it correctly.",
+      "actual_behavior": "The link <a href=\"/search?page=2\" class=\"next\"></a> is empty and has no aria-label, aria-labelledby, or title attribute, resulting in no accessible name being announced.",
+      "suggested_fix": "Add aria-label='Next page' to the anchor element with selector 'a.next' or add visible text content inside the link.",
+      "element_selector": "a.next",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "link-name",
+        "scanTimestamp": "2026-11-26T10:36:59.143Z",
+        "retrievedCriteria": [
+          "1.4.3-contrast-minimum",
+          "1.1.1-non-text-content",
+          "4.1.2-name-role-value"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Sort dropdown missing accessible name",
+      "severity": "critical",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "voice control users"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the search results page",
+        "Focus the sort dropdown element with id 'sort'",
+        "Listen to the screen reader announcement for the element"
+      ],
+      "expected_behavior": "The select element should have a programmatically determinable accessible name, such as 'Sort by', so assistive technologies can announce its purpose.",
+      "actual_behavior": "The select element has no associated label, aria-label, or aria-labelledby, so screen readers announce it as a generic 'combobox' without context.",
+      "suggested_fix": "Add a visible label associated with the select element: <label for=\"sort\">Sort by</label> before the <select id=\"sort\"> element, or add aria-label=\"Sort by\" to the select element.",
+      "element_selector": "#sort",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "select-name",
+        "scanTimestamp": "2026-11-26T10:36:59.143Z",
+        "retrievedCriteria": [
+          "4.1.2-name-role-value",
+          "3.1.1-language-of-page",
+          "1.1.1-non-text-content"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

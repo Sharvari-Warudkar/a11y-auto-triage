@@ -1,0 +1,134 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\search-results.html",
+  "scanTimestamp": "2026-11-26T10:32:42.899Z",
+  "totalViolations": 4,
+  "newBugLogs": 4,
+  "bugLogs": [
+    {
+      "title": "Low contrast price text on search results",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "low vision users",
+        "color vision deficient users"
+      ],
+      "steps_to_reproduce": [
+        "Open search-results.html",
+        "Locate price spans in results 3, 4, and 5",
+        "Observe price text color",
+        "#bdbdbd on white background"
+      ],
+      "expected_behavior": "Price text must have a contrast ratio of at least 4.5:1 against its background",
+      "actual_behavior": "Price text has a contrast ratio of 1.87:1, failing WCAG 2.1 AA",
+      "suggested_fix": "In the CSS rule for .result:nth-child(3) > div > span, change color from #bdbdbd to #757575 (4.61:1 on #ffffff; measured 1.87:1, required 4.5:1).",
+      "element_selector": ".result:nth-child(3) > div > span, .result:nth-child(4) > div > span, .result:nth-child(5) > div > span",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:32:42.899Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing alt text on product images",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "low vision users"
+      ],
+      "steps_to_reproduce": [
+        "Open the search results page",
+        "Locate the product images",
+        "Inspect each <img> element"
+      ],
+      "expected_behavior": "Each informative image must have a descriptive alt attribute",
+      "actual_behavior": "All three product images lack alt, aria-label, aria-labelledby, title, and role attributes",
+      "suggested_fix": "Add descriptive alt text to each image, e.g., <img src=\"shoe-trail.jpg\" alt=\"Trail running shoe, black and green\">, <img src=\"shoe-road.jpg\" alt=\"Road running shoe, blue and white\">, <img src=\"shoe-light.jpg\" alt=\"Lightweight running shoe, gray and yellow\">",
+      "element_selector": "img[src$=\"shoe-trail.jpg\"]",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-26T10:32:42.899Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Next page link lacks discernible text",
+      "severity": "major",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "keyboard-only users",
+        "screen reader users"
+      ],
+      "steps_to_reproduce": [
+        "Open search-results.html",
+        "Navigate to pagination area",
+        "Tab to the next page link"
+      ],
+      "expected_behavior": "The link should have visible or accessible text that indicates its purpose, such as \"Next page\" or an aria-label.",
+      "actual_behavior": "The link element <a href=\"/search?page=2\" class=\"next\"></a> has no visible text, aria-label, aria-labelledby, or title attribute, making it inaccessible to keyboard and screen reader users.",
+      "suggested_fix": "Add an aria-label to the link: <a href=\"/search?page=2\" class=\"next\" aria-label=\"Next page\"></a>",
+      "element_selector": "a.next",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "link-name",
+        "scanTimestamp": "2026-11-26T10:32:42.899Z",
+        "retrievedCriteria": [
+          "1.4.3-contrast-minimum",
+          "1.1.1-non-text-content",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing accessible name on #sort select element",
+      "severity": "critical",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "screen reader users",
+        "voice control users",
+        "switch access users",
+        "automation tools"
+      ],
+      "steps_to_reproduce": [
+        "Open search-results.html",
+        "Locate the select element with id=\"sort\""
+      ],
+      "expected_behavior": "The select control should have an accessible name announced by assistive technology, e.g., \"Sort by\"",
+      "actual_behavior": "The select element has no associated label, aria-label, aria-labelledby, or title, so screen readers announce it as \"listbox\" with no name",
+      "suggested_fix": "Add a visible label and associate it with the select: <label for=\"sort\">Sort by</label> before the <select id=\"sort\"> element",
+      "element_selector": "#sort",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "select-name",
+        "scanTimestamp": "2026-11-26T10:32:42.899Z",
+        "retrievedCriteria": [
+          "4.1.2-name-role-value",
+          "3.1.1-language-of-page",
+          "1.1.1-non-text-content"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

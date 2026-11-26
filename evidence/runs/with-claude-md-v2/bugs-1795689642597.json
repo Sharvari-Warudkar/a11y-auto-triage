@@ -1,0 +1,106 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\product-detail.html",
+  "scanTimestamp": "2026-11-26T10:40:23.735Z",
+  "totalViolations": 3,
+  "newBugLogs": 3,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast for stock status text and Add to Cart button",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "low vision users",
+        "users with color vision deficiency",
+        "older adults"
+      ],
+      "steps_to_reproduce": [
+        "Open product-detail.html in a browser",
+        "Locate the stock status paragraph \"In Stock - Ships in 2 days\"",
+        "Observe the text color (#cccccc) on a white background (#ffffff)",
+        "Locate the \"Add to Cart\" button",
+        "Observe the button text color (#ffffff) on orange background (#ff6600)"
+      ],
+      "expected_behavior": "Text and button label must have a contrast ratio of at least 4.5:1 against their background per WCAG 2.1 Success Criterion 1.4.3.",
+      "actual_behavior": "Stock status text contrast ratio is 1.6:1 and Add to Cart button text contrast ratio is 2.93:1, both below the required 4.5:1.",
+      "suggested_fix": "In the CSS rule for p, change color from #cccccc to #767676 (4.54:1 on #ffffff; measured 1.6:1, required 4.5:1).",
+      "element_selector": "p.stock-status, .add-to-cart",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:40:23.735Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Product image missing alternative text on product detail page",
+      "severity": "major",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "low vision users"
+      ],
+      "steps_to_reproduce": [
+        "Open product-detail.html in a browser",
+        "Locate the main product image",
+        "Inspect the <img> element"
+      ],
+      "expected_behavior": "Each informative <img> must have a descriptive alt attribute that conveys the purpose of the image.",
+      "actual_behavior": "The <img src=\"shoe-detail-red.jpg\" class=\"product-image\" width=\"400\" height=\"400\"> element has no alt, aria-label, aria-labelledby, title, or role override.",
+      "suggested_fix": "Add a descriptive alt attribute, e.g., alt=\"Red running shoe, side view\", to the img element: img.product-image[src='shoe-detail-red.jpg'] { alt='Red running shoe, side view' }",
+      "element_selector": "img.product-image[src='shoe-detail-red.jpg']",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-26T10:40:23.735Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Quantity input lacks an accessible label on product detail page",
+      "severity": "critical",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "keyboard-only users",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        "Open the product-detail.html page in a browser",
+        "Navigate to the quantity selector input (type=number)",
+        "Attempt to focus the input using Tab or a screen reader"
+      ],
+      "expected_behavior": "The input should have a programmatically determinable label that is announced by screen readers and visible to all users.",
+      "actual_behavior": "The <input type=\"number\" ...> has no associated <label>, no aria-label, no aria-labelledby, no title, and no placeholder, leaving it unlabeled.",
+      "suggested_fix": "Add a visible label and associate it with the input, e.g.,\n<label for=\"qty\">Quantity</label>\n<input id=\"qty\" type=\"number\" value=\"1\" min=\"1\" max=\"10\" style=\"width: 50px;\" aria-required=\"true\">",
+      "element_selector": "input[type='number'][value='1']",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "label",
+        "scanTimestamp": "2026-11-26T10:40:23.735Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

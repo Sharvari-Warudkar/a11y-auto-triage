@@ -1,0 +1,135 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\cart.html",
+  "scanTimestamp": "2026-11-26T10:40:50.594Z",
+  "totalViolations": 4,
+  "newBugLogs": 4,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast on discount text and checkout button",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum) (Level AA)",
+      "affected_users": [
+        "low vision users",
+        "color blind users",
+        "older adults with declining contrast sensitivity"
+      ],
+      "steps_to_reproduce": [
+        "Open cart.html in a browser",
+        "Locate the discount rows in the cart table",
+        "Observe the \"Save $10.00\" and \"Save $20.00\" text",
+        "Observe the \"Proceed to Checkout\" button"
+      ],
+      "expected_behavior": "Text and button label must have a contrast ratio of at least 4.5:1 against the background (or 3:1 for large text) per WCAG 2.1 AA.",
+      "actual_behavior": "Discount spans have contrast ratio 2.16 (foreground #b0b0b0 on #ffffff). Checkout button has contrast ratio 3.13 (foreground #ffffff on #28a745). Both fall below required thresholds.",
+      "suggested_fix": "In the CSS rule for tr:nth-child(2) > td:nth-child(3) > span, change color from #b0b0b0 to #747474 (4.67:1 on #ffffff; measured 2.16:1, required 4.5:1).",
+      "element_selector": ".checkout-btn, tr:nth-child(2) > td:nth-child(3) > span.discount, tr:nth-child(3) > td:nth-child(3) > span.discount",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:40:50.594Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing language attribute on <html> element",
+      "severity": "major",
+      "wcag_criterion": "3.1.1",
+      "wcag_criterion_name": "Language of Page",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "low vision users"
+      ],
+      "steps_to_reproduce": [
+        "Open the cart page (cart.html) in a browser",
+        "Inspect the root <html> element"
+      ],
+      "expected_behavior": "The <html> element must have a valid lang attribute (e.g., <html lang=\"en\">) so assistive technologies can determine the page language.",
+      "actual_behavior": "The <html> element is present without a lang attribute.",
+      "suggested_fix": "Add a lang attribute with the appropriate BCP 47 code to the root element, e.g., change <html> to <html lang=\"en\">.",
+      "element_selector": "html",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "html-has-lang",
+        "scanTimestamp": "2026-11-26T10:40:50.594Z",
+        "retrievedCriteria": [
+          "3.1.1-language-of-page",
+          "1.3.1-info-and-relationships",
+          "2.1.1-keyboard"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Product thumbnail images missing alternative text",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "screen reader users"
+      ],
+      "steps_to_reproduce": [
+        "Open cart.html in a browser",
+        "Navigate to the cart items section",
+        "Observe the product thumbnail images for the red and blue shoes"
+      ],
+      "expected_behavior": "Each <img> element must have a text alternative that conveys the image's purpose, either via a descriptive alt attribute, an appropriate aria-label/aria-labelledby, or be marked as decorative with role=\"presentation\" or alt=\"\".",
+      "actual_behavior": "The <img> elements for shoe-red-thumb.jpg and shoe-blue-thumb.jpg have no alt attribute, no aria-label, no aria-labelledby, no title, and are not marked with role=\"none\" or role=\"presentation\".",
+      "suggested_fix": "Add descriptive alt text to each thumbnail, e.g.,\n\nhtml\n<img src=\"shoe-red-thumb.jpg\" width=\"60\" height=\"60\" alt=\"Red running shoe thumbnail\">\n<img src=\"shoe-blue-thumb.jpg\" width=\"60\" height=\"60\" alt=\"Blue running shoe thumbnail\">\n",
+      "element_selector": "img[src$=\"shoe-red-thumb.jpg\"], img[src$=\"shoe-blue-thumb.jpg\"]",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-26T10:40:50.594Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing accessible labels on quantity inputs in cart",
+      "severity": "critical",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "blind users",
+        "low vision users",
+        "screen reader users"
+      ],
+      "steps_to_reproduce": [
+        "Open cart.html in a browser",
+        "Locate the quantity input fields for items (e.g., <input type=\"number\" value=\"1\"> and <input type=\"number\" value=\"2\">)",
+        "Attempt to navigate to each input with a screen reader or keyboard"
+      ],
+      "expected_behavior": "Each form control must have a programmatically determinable label so that assistive technologies can announce its purpose.",
+      "actual_behavior": "The number inputs have no associated <label>, no aria-label, no aria-labelledby, no title, and no placeholder, leaving them unlabeled.",
+      "suggested_fix": "Add visible <label> elements and associate them via for/id attributes, e.g.,\n\n<label for=\"qty-1\">Quantity</label>\n<input id=\"qty-1\" type=\"number\" name=\"quantity-1\" value=\"1\" min=\"1\" max=\"10\" style=\"width:50px;\" aria-label=\"Quantity for item 1\">\n\n<label for=\"qty-2\">Quantity</label>\n<input id=\"qty-2\" type=\"number\" name=\"quantity-2\" value=\"2\" min=\"1\" max=\"10\" style=\"width:50px;\" aria-label=\"Quantity for item 2\">",
+      "element_selector": "input[value=\"1\"]",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "label",
+        "scanTimestamp": "2026-11-26T10:40:50.594Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

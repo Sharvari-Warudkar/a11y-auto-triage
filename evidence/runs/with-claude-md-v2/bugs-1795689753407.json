@@ -1,0 +1,112 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\checkout.html",
+  "scanTimestamp": "2026-11-26T10:41:57.940Z",
+  "totalViolations": 3,
+  "newBugLogs": 3,
+  "bugLogs": [
+    {
+      "title": "Insufficient color contrast for card error message",
+      "severity": "critical",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "low vision users",
+        "color blind users"
+      ],
+      "steps_to_reproduce": [
+        "Open checkout.html",
+        "Enter an invalid credit card number and submit the form",
+        "Observe the error message displayed in the paragraph with id \"card-error\""
+      ],
+      "expected_behavior": "The error text must have a contrast ratio of at least 4.5:1 against its background per WCAG 2.1 AA.",
+      "actual_behavior": "The error text uses color #ff9999 on a white background (#ffffff), resulting in a contrast ratio of 2.04:1, which fails the required threshold.",
+      "suggested_fix": "In the CSS rule for #card-error, change color from #ff9999 to #a36262 (4.69:1 on #ffffff; measured 2.04:1, required 4.5:1).",
+      "element_selector": "#card-error",
+      "impact": "serious",
+      "_severity_override": {
+        "from": "major",
+        "rule": "CLAUDE.md: checkout flow violations are always critical"
+      },
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:41:57.940Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Select element #state lacks an accessible name",
+      "severity": "critical",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "voice control users",
+        "switch access users"
+      ],
+      "steps_to_reproduce": [
+        "Open checkout.html",
+        "Navigate to the state selection dropdown",
+        "Attempt to focus the dropdown with keyboard or screen reader"
+      ],
+      "expected_behavior": "The select element must have an accessible name that can be programmatically determined, such as a visible label, aria-label, aria-labelledby, or title.",
+      "actual_behavior": "The <select id=\"state\"> element has no associated <label>, no aria-label, no aria-labelledby, and no title attribute, resulting in no accessible name.",
+      "suggested_fix": "Add a visible label and associate it with the select, e.g., <label for=\"state\">State</label> before the <select id=\"state\">, or add aria-label=\"State\" to the select element.",
+      "element_selector": "#state",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "select-name",
+        "scanTimestamp": "2026-11-26T10:41:57.940Z",
+        "retrievedCriteria": [
+          "4.1.2-name-role-value",
+          "3.1.1-language-of-page",
+          "1.1.1-non-text-content"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing persistent labels for checkout form inputs",
+      "severity": "critical",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "blind users",
+        "low vision users",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        "Open the checkout page",
+        "Navigate to the form fields for Name, Email, and Address",
+        "Observe that each input only shows placeholder text and has no visible label"
+      ],
+      "expected_behavior": "Each form input must have a persistent visible label (or an equivalent aria-label/aria-labelledby) that remains visible when the field receives focus.",
+      "actual_behavior": "The inputs #name, #email, and #address rely solely on placeholder text and lack associated <label>, aria-label, aria-labelledby, or title attributes.",
+      "suggested_fix": "Add a <label> element for each input and associate it via the for attribute, e.g., <label for=\"name\">Full Name</label><input type=\"text\" id=\"name\" placeholder=\"Full Name\">. Repeat for email and address. If visual design prevents visible labels, add aria-label=\"Full Name\" (and similarly for email and address) to each input.",
+      "element_selector": "#name, #email, #address",
+      "impact": "serious",
+      "_severity_override": {
+        "from": "major",
+        "rule": "CLAUDE.md: checkout flow violations are always critical"
+      },
+      "_metadata": {
+        "violationId": "placeholder-only-label",
+        "scanTimestamp": "2026-11-26T10:41:57.940Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ],
+        "model": "openai/gpt-oss-120b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

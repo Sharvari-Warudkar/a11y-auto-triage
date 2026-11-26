@@ -1,0 +1,109 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\login.html",
+  "scanTimestamp": "2026-11-26T10:35:55.903Z",
+  "totalViolations": 3,
+  "newBugLogs": 3,
+  "bugLogs": [
+    {
+      "title": "Login password visibility toggle button lacks accessible name",
+      "severity": "critical",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "voice control users"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the login page",
+        "Focus on the password input field",
+        "Tab to the adjacent eye icon button",
+        "Listen to the screen reader announcement for the focused element"
+      ],
+      "expected_behavior": "The button should have a discernible accessible name that describes its function, such as 'Show password' or 'Hide password', so screen reader users understand its purpose.",
+      "actual_behavior": "The button has no accessible name. It contains only an SVG icon with no text, aria-label, aria-labelledby, or title attribute, causing screen readers to announce it as a generic 'button' with no context.",
+      "suggested_fix": "Add aria-label='Show password' to the button element with selector .eye. Alternatively, if the button toggles state, use aria-pressed and update the aria-label dynamically to 'Hide password' when active.",
+      "element_selector": ".eye",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "button-name",
+        "scanTimestamp": "2026-11-26T10:35:55.903Z",
+        "retrievedCriteria": [
+          "1.4.3-contrast-minimum",
+          "1.1.1-non-text-content",
+          "4.1.2-name-role-value"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Error message text has insufficient contrast ratio of 2.1:1",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "low vision users",
+        "users with color vision deficiency",
+        "older users with declining contrast sensitivity"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the login page",
+        "Submit the login form with an incorrect email or password",
+        "Observe the error message 'Incorrect email or password'",
+        "Measure the contrast ratio between the text color (#e8a0a0) and the background color (#ffffff)"
+      ],
+      "expected_behavior": "The error message text should have a contrast ratio of at least 4.5:1 against its background color to meet WCAG 2.1 AA requirements for normal-sized text.",
+      "actual_behavior": "The error message text has a contrast ratio of only 2.1:1 (foreground #e8a0a0 on background #ffffff), which is significantly below the required 4.5:1 threshold.",
+      "suggested_fix": "In the CSS rule for p, change color from #e8a0a0 to #996a6a (4.54:1 on #ffffff; measured 2.1:1, required 4.5:1).",
+      "element_selector": "p.error",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:35:55.903Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Login form inputs rely on placeholder text instead of persistent labels",
+      "severity": "major",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "blind users",
+        "low vision users",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        "Navigate to the login page",
+        "Locate the email input field with id 'login-email'",
+        "Observe that the field only has a placeholder attribute and no associated label element",
+        "Focus the email input field",
+        "Observe that the placeholder text disappears, leaving no visible indication of the field's purpose",
+        "Repeat the process for the password input field with id 'login-password'"
+      ],
+      "expected_behavior": "Each form input should have a persistent, visible label that remains visible even when the field is focused or filled. The label should be programmatically associated with the input using the 'for' attribute matching the input's 'id'.",
+      "actual_behavior": "Both the email and password input fields rely solely on placeholder text for identification. The placeholder text disappears when the user focuses the field, leaving no visible label to indicate the field's purpose.",
+      "suggested_fix": "Add visible label elements associated with each input. For #login-email, add: <label for=\"login-email\">Email</label> before the input. For #login-password, add: <label for=\"login-password\">Password</label> before the input. Ensure the labels are styled to be visible and persistent.",
+      "element_selector": "#login-email, #login-password",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "placeholder-only-label",
+        "scanTimestamp": "2026-11-26T10:35:55.903Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ],
+        "model": "qwen/qwen3.8-27b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

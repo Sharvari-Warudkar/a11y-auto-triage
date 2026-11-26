@@ -17,3 +17,5 @@ Takeaways: the scan stage reproduces exactly; the numeric-steps failure (5/11 or
 `src/generate.ts` was edited on 2026-11-25 (commit 2c6509a) only to read `GROQ_MODEL` and `GROQ_MAX_TOKENS` from the environment. Defaults are unchanged (`llama-3.3-70b-versatile`, 1000), so its file date is newer than the narrative docs. The 2026-08-14 results in `evidence/data/` were produced by the code before this edit; see `git log src/generate.ts`.
 
 See also `evidence/runs/RUNS.md` for the later runs with the code fixes and the controlled with/without CLAUDE.md comparison.
+
+Update 2026-11-26: held-out pages were also run on gpt-oss-20b and qwen3.8-27b, so the results no longer rest on a single replacement model (evidence/runs/RUNS.md).

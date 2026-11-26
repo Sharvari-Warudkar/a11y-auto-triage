@@ -54,6 +54,7 @@ export interface BugLog {
   element_selector: string;
   impact: string;
   _parse_error?: boolean;
+  _severity_override?: { from: string; rule: string };
   _metadata?: {
     violationId: string;
     scanTimestamp: string;

@@ -1,0 +1,104 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\login.html",
+  "scanTimestamp": "2026-11-26T10:31:50.349Z",
+  "totalViolations": 3,
+  "newBugLogs": 3,
+  "bugLogs": [
+    {
+      "title": "Icon-only button lacks accessible name",
+      "severity": "critical",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value (Level A)",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "keyboard-only users"
+      ],
+      "steps_to_reproduce": [
+        "Open login.html",
+        "Locate the button with class 'eye'",
+        "Attempt to activate it using keyboard"
+      ],
+      "expected_behavior": "Screen reader announces a descriptive name for the button, e.g., 'Show password'",
+      "actual_behavior": "Button has no visible text, no aria-label, aria-labelledby, title, or label, so screen reader announces nothing or generic 'button'",
+      "suggested_fix": "Add aria-label=\"Show password\" to the button: .eye { aria-label: \"Show password\" }",
+      "element_selector": ".eye",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "button-name",
+        "scanTimestamp": "2026-11-26T10:31:50.349Z",
+        "retrievedCriteria": [
+          "1.4.3-contrast-minimum",
+          "1.1.1-non-text-content",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Low contrast error message text on login page",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "blind users",
+        "low vision users",
+        "color vision deficient users"
+      ],
+      "steps_to_reproduce": [
+        "Open c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\login.html",
+        "Locate the paragraph with class \"error\" that displays \"Incorrect email or password\""
+      ],
+      "expected_behavior": "The error message text must have a contrast ratio of at least 4.5:1 against its background.",
+      "actual_behavior": "The paragraph text color #e8a0a0 on a white background (#ffffff) yields a contrast ratio of 2.1:1, below the required 4.5:1.",
+      "suggested_fix": "In the CSS rule for p, change color from #e8a0a0 to #996a6a (4.54:1 on #ffffff; measured 2.1:1, required 4.5:1).",
+      "element_selector": "p.error",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:31:50.349Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Login form fields lack persistent labels",
+      "severity": "critical",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "screen reader users",
+        "keyboard-only users",
+        "users with low vision",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        "Open c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\login.html",
+        "Locate the email input field",
+        "Locate the password input field"
+      ],
+      "expected_behavior": "Each form input must have a visible, persistent label that remains when the field is focused",
+      "actual_behavior": "Both email and password inputs rely solely on placeholder text and have no <label>, aria-label, aria-labelledby, or title attributes",
+      "suggested_fix": "Add <label for=\"login-email\">Email</label> before the email input and <label for=\"login-password\">Password</label> before the password input; alternatively add aria-label=\"Email\" to the email input and aria-label=\"Password\" to the password input",
+      "element_selector": "#login-email, #login-password",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "placeholder-only-label",
+        "scanTimestamp": "2026-11-26T10:31:50.349Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

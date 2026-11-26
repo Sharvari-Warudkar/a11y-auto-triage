@@ -1,0 +1,166 @@
+{
+  "url": "file://c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\home.html",
+  "scanTimestamp": "2026-11-26T10:31:14.698Z",
+  "totalViolations": 5,
+  "newBugLogs": 5,
+  "bugLogs": [
+    {
+      "title": "Low contrast on promo text in home page",
+      "severity": "major",
+      "wcag_criterion": "1.4.3",
+      "wcag_criterion_name": "Contrast (Minimum)",
+      "affected_users": [
+        "blind users",
+        "low vision users",
+        "color vision deficient users"
+      ],
+      "steps_to_reproduce": [
+        "Open c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\home.html",
+        "Locate the div with class 'promo'",
+        "Observe the text color #d9c27a on background #ffe9a8"
+      ],
+      "expected_behavior": "Text must have a contrast ratio of at least 4.5:1 against its background for normal text",
+      "actual_behavior": "Text has a contrast ratio of 1.46:1, far below the required threshold",
+      "suggested_fix": "In the CSS rule for div, change color from #d9c27a to #756942 (4.53:1 on #ffe9a8; measured 1.46:1, required 4.5:1).",
+      "element_selector": "div.promo",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "color-contrast",
+        "scanTimestamp": "2026-11-26T10:31:14.698Z",
+        "retrievedCriteria": [
+          "1.4.11-non-text-contrast",
+          "1.4.3-contrast-minimum",
+          "3.1.1-language-of-page"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing lang attribute on <html> element",
+      "severity": "major",
+      "wcag_criterion": "3.1.1",
+      "wcag_criterion_name": "Language of Page (Level A)",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "users with cognitive disabilities",
+        "braille display users"
+      ],
+      "steps_to_reproduce": [
+        "Open c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\home.html",
+        "Inspect the <html> tag in the page source"
+      ],
+      "expected_behavior": "The <html> element must have a valid lang attribute (e.g., <html lang=\"en\">) so assistive technologies can determine the page language.",
+      "actual_behavior": "The <html> element has no lang attribute, causing assistive technologies to default to an incorrect language or fail to apply proper pronunciation rules.",
+      "suggested_fix": "Add a lang attribute to the <html> tag, e.g., <html lang=\"en\">, ensuring the value matches the primary language of the page content.",
+      "element_selector": "html",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "html-has-lang",
+        "scanTimestamp": "2026-11-26T10:31:14.698Z",
+        "retrievedCriteria": [
+          "3.1.1-language-of-page",
+          "1.3.1-info-and-relationships",
+          "2.1.1-keyboard"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing alt text on hero image",
+      "severity": "critical",
+      "wcag_criterion": "1.1.1",
+      "wcag_criterion_name": "Non-text Content",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "low vision users"
+      ],
+      "steps_to_reproduce": [
+        "Open c:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\home.html",
+        "Locate the <img> element with src=\"hero-summer-sale.jpg\""
+      ],
+      "expected_behavior": "The image should have a descriptive alt attribute that conveys its purpose to assistive technologies.",
+      "actual_behavior": "The <img> element has no alt attribute, aria-label, aria-labelledby, title, or role=\"none\"/\"presentation\".",
+      "suggested_fix": "Add a descriptive alt attribute to the image: <img src=\"hero-summer-sale.jpg\" alt=\"Summer sale banner with discounted apparel\" width=\"600\" height=\"200\">",
+      "element_selector": "img",
+      "impact": "critical",
+      "_metadata": {
+        "violationId": "image-alt",
+        "scanTimestamp": "2026-11-26T10:31:14.698Z",
+        "retrievedCriteria": [
+          "1.1.1-non-text-content",
+          "1.4.3-contrast-minimum",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Cart link has no discernible text",
+      "severity": "major",
+      "wcag_criterion": "4.1.2",
+      "wcag_criterion_name": "Name, Role, Value",
+      "affected_users": [
+        "blind users",
+        "screen reader users",
+        "keyboard-only users"
+      ],
+      "steps_to_reproduce": [
+        "Open home.html",
+        "Tab to the cart icon link",
+        "Observe that the link has no visible or accessible text"
+      ],
+      "expected_behavior": "The link should have an accessible name that describes its purpose, such as \"View cart\" or \"Go to shopping cart\", so that screen readers and keyboard users can identify it.",
+      "actual_behavior": "The <a href=\"/cart\" class=\"icon-link\"></a> element is focusable but contains no text, aria-label, aria-labelledby, or title attribute, making it invisible to assistive technologies.",
+      "suggested_fix": "Add an accessible name to the link: <a href=\"/cart\" class=\"icon-link\" aria-label=\"View cart\"></a> or include descriptive text inside the element. Ensure the selector a.icon-link is updated accordingly.",
+      "element_selector": "a.icon-link",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "link-name",
+        "scanTimestamp": "2026-11-26T10:31:14.698Z",
+        "retrievedCriteria": [
+          "1.4.3-contrast-minimum",
+          "1.1.1-non-text-content",
+          "4.1.2-name-role-value"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    },
+    {
+      "title": "Missing persistent label for email input",
+      "severity": "major",
+      "wcag_criterion": "3.3.2",
+      "wcag_criterion_name": "Labels or Instructions",
+      "affected_users": [
+        "screen reader users",
+        "low vision users",
+        "users with cognitive disabilities"
+      ],
+      "steps_to_reproduce": [
+        "Open home.html",
+        "Locate the email input field with placeholder 'Your email address'"
+      ],
+      "expected_behavior": "The input field should have a visible, persistent label that remains when the field is focused or filled.",
+      "actual_behavior": "The input field relies solely on placeholder text, which disappears on focus and provides no accessible name.",
+      "suggested_fix": "Add a visible label element associated with the input: <label for=\"news-email\">Email address</label> before the input, or add aria-label=\"Email address\" to the input. Ensure the label is visible and not hidden by CSS.",
+      "element_selector": "#news-email",
+      "impact": "serious",
+      "_metadata": {
+        "violationId": "placeholder-only-label",
+        "scanTimestamp": "2026-11-26T10:31:14.698Z",
+        "retrievedCriteria": [
+          "3.3.2-labels-or-instructions",
+          "4.1.2-name-role-value",
+          "1.3.1-info-and-relationships"
+        ],
+        "model": "openai/gpt-oss-20b",
+        "claudeMd": true
+      }
+    }
+  ]
+}

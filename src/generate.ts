@@ -136,6 +136,29 @@ export function computeContrastFix(violation: Violation): string | null {
   return `In the CSS rule for ${selector}, change color from ${d.fgColor} to ${fixed} (${contrastRatio(fixed, d.bgColor).toFixed(2)}:1 on ${d.bgColor}; measured ${d.contrastRatio}:1, required ${required}:1).`;
 }
 
+/** CLAUDE.md E-commerce Domain Context: checkout flow violations are always critical. */
+export function isCheckoutPage(pageUrl: string): boolean {
+  // http(s): look at the URL path; local files: only the file name (parent folders are irrelevant).
+  if (/^https?:/i.test(pageUrl)) {
+    try { return /checkout/i.test(new URL(pageUrl).pathname); } catch { return false; }
+  }
+  const name = pageUrl.split(String.fromCharCode(92)).join('/').split('/').pop() || '';
+  return /checkout/i.test(name);
+}
+
+/**
+ * The prompt states the checkout rule but the model does not always follow it (measured: the checkout
+ * contrast bug came back "major" in both arms), so it is enforced in code. The model's own severity is kept
+ * in _severity_override.from for transparency. Only applies when CLAUDE.md rules are enabled.
+ */
+export function applyProjectSeverityRules(log: BugLog, pageUrl: string): BugLog {
+  if (useClaudeMd() && isCheckoutPage(pageUrl) && log.severity !== 'critical') {
+    log._severity_override = { from: log.severity, rule: 'CLAUDE.md: checkout flow violations are always critical' };
+    log.severity = 'critical';
+  }
+  return log;
+}
+
 function fallbackBugLog(violation: Violation): BugLog {
   const node = violation.nodes[0];
   const selector = node?.target?.join(' > ') || 'unknown';
@@ -229,7 +252,7 @@ Generate a JSON bug report for this violation. Return a single JSON object (not 
     console.log('      Parse failed, retrying once with a larger token budget...');
     parsed = parseJsonLoose(await callLlm(system, userPrompt, baseTokens * 2));
   }
-  if (!parsed) return fallbackBugLog(violation);
+  if (!parsed) return applyProjectSeverityRules(fallbackBugLog(violation), pageUrl);
 
   const log = parsed as BugLog;
   let steps = normalizeSteps(log.steps_to_reproduce);
@@ -241,5 +264,5 @@ Generate a JSON bug report for this violation. Return a single JSON object (not 
 
   const fix = computeContrastFix(violation);
   if (fix) log.suggested_fix = fix;
-  return log;
+  return applyProjectSeverityRules(log, pageUrl);
 }

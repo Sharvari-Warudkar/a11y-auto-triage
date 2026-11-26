@@ -4,7 +4,7 @@
 WCAG 2.1 AA violation auto-triage tool for e-commerce QA. Scans pages with axe-core, retrieves relevant WCAG criteria via RAG, and generates structured bug reports ready for Jira.
 
 ## Architecture
-- Scanner: axe-core + Playwright (src/scan.ts)
+- Scanner: axe-core + Playwright (src/scan.ts) plus a custom `placeholder-only-label` check (SC 3.3.2) for inputs axe-core accepts on placeholder alone
 - RAG: keyword/TF-IDF matching over 10 WCAG markdown docs → local JSON store
 - Generator: Groq (Llama 3.3 70B) → structured JSON bug logs. Model note: the 2026-08-14 results used llama-3.3-70b-versatile, which Groq no longer serves on this account (404). Set GROQ_MODEL in .env to override (re-run on openai/gpt-oss-120b: evidence/rerun/RERUN.md)
 - Pipeline: src/pipeline.ts orchestrates scan → dedup → retrieve → generate → output
