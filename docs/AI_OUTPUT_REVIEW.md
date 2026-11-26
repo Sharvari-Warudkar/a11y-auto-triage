@@ -97,6 +97,6 @@ The same five lenses were re-applied to the new runs (`evidence/runs/`):
 | Tests (reproducibility) | 6/11 readable steps | 11/11 clean string steps (normalised in code) |
 | Security | Pass | Pass; the new key is only in `.env` (gitignored), the old one was rotated |
 | Performance | 15-30s per page | Dominated by Groq rate limits (HTTP 429, 10s waits); same order |
-| Maintainability | System prompt was a string literal | Rules now live in CLAUDE.md and load at runtime; helpers have unit tests (23 tests) |
+| Maintainability | System prompt was a string literal | Rules now live in CLAUDE.md and load at runtime; helpers have unit tests (31 tests) |
 
 Resolved since the first follow-up: axe-core's placeholder-only blind spot (custom check added) and the checkout rule (enforced in code, 3/3 and 4/4 checkout bugs critical; the model alone rated checkout contrast "major" in every run). Still open: severity has no ground truth, and the apparent effect of CLAUDE.md on severity did not replicate across repeat runs (CONTEXT_ENGINEERING.md). Generalisation was checked on four held-out pages (16/16, 16/16, 15/16 correct citations across three models).

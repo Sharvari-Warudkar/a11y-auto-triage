@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { similarity } from './embeddings';
+import { similarity, buildIdf, tfidfSimilarity } from './embeddings';
 
 const STORE_PATH = path.join(__dirname, '..', '..', 'data', 'vector-store.json');
 
@@ -46,7 +46,22 @@ export function searchBaseline(query: string, topK: number = 3): SearchResult[] 
   return scored.slice(0, topK);
 }
 
-// Default ranking (replaced by TF-IDF in T9.3 of docs/specs/RETRIEVAL_EVAL.md)
+/** TF-IDF ranking per docs/specs/RETRIEVAL_EVAL.md (IDF, stopwords, title boost). */
+export function searchTfidf(query: string, topK: number = 3): SearchResult[] {
+  const store = loadStore();
+  if (store.length === 0) {
+    throw new Error('Vector store is empty. Run ingestion first: npm run ingest');
+  }
+  const idf = buildIdf(store.map(c => c.content));
+  const scored: SearchResult[] = store.map(chunk => ({
+    ...chunk,
+    score: tfidfSimilarity(query, chunk.content, idf, chunk.title)
+  }));
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, topK);
+}
+
+// Default ranking: TF-IDF, because it met acceptance criteria A2/A3 (docs/RETRIEVAL_EVAL_RESULTS.md)
 export function search(query: string, topK: number = 3): SearchResult[] {
-  return searchBaseline(query, topK);
+  return searchTfidf(query, topK);
 }

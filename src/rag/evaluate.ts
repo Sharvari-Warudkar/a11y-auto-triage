@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { loadStore, searchBaseline } from './store';
+import { loadStore, searchBaseline, searchTfidf } from './store';
 import { ingestDocuments } from './ingest';
 
 export interface EvalQuery {
@@ -51,7 +51,8 @@ export function main(): void {
   const queries = loadQueries();
   const rankers: Array<[string, Ranker]> = [
     ['majority-class (always 4.1.2 first)', majorityRanker(queries)],
-    ['baseline: term-count cosine', q => searchBaseline(q, 100).map(r => r.id)]
+    ['baseline: term-count cosine', q => searchBaseline(q, 100).map(r => r.id)],
+    ['new: TF-IDF (IDF + stopwords + title x2)', q => searchTfidf(q, 100).map(r => r.id)]
   ];
   try {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -59,6 +60,14 @@ export function main(): void {
     if (typeof search === 'function' && process.env.EVAL_INCLUDE_DEFAULT !== '0') rankers.push(['default search()', (q: string) => search(q, 100).map((r: { id: string }) => r.id)]);
   } catch { /* ignore */ }
 
+  if (process.env.EVAL_DETAIL === '1') {
+    const tf = (q: string) => searchTfidf(q, 100).map(r => r.id.split('-')[0]);
+    for (const q of queries.filter(x => x.split === 'test')) {
+      const ids = tf(q.query);
+      if (!q.acceptable.includes(ids[0])) console.log(`MISS ${q.rule}: expected ${q.acceptable.join('/')}, got ${ids.slice(0, 3).join(', ')}`);
+    }
+    return;
+  }
   console.log(`Retrieval evaluation: ${queries.length} queries (tune ${queries.filter(q => q.split === 'tune').length}, test ${queries.filter(q => q.split === 'test').length})\n`);
   console.log('| Ranking | split | n | hit@1 | hit@3 | MRR |\n|---|---|---|---|---|---|');
   for (const [name, rank] of rankers) {

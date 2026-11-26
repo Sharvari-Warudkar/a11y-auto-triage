@@ -85,5 +85,6 @@ a11y-auto-triage/
 - No WCAG AAA (AA only, matching scope)
 - No vector embeddings (keyword matching sufficient for 10 docs)
 - No Portkey gateway (org restrictions prevented setup; using Groq directly)
+- Retrieval (2026-11-26): the ranking is now real TF-IDF (the earlier code had no IDF); evaluated in docs/RETRIEVAL_EVAL_RESULTS.md
 - Scanner extension (2026-11-26): custom `placeholder-only-label` check in src/scan.ts for the axe-core placeholder gap; checkout-always-critical rule enforced in src/generate.ts (the model does not reliably follow it)
 - Model note: the 2026-08-14 results used llama-3.3-70b-versatile, since retired on this Groq account (404). The model is configurable via `GROQ_MODEL` (default unchanged); the 2026-11-25 re-run used openai/gpt-oss-120b (see evidence/rerun/RERUN.md)

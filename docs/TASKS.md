@@ -52,3 +52,4 @@
 - [x] T8.4 — Enforce the checkout-always-critical rule in code (model alone does not follow it)
 - [x] T8.5 — Held-out fixtures (fixtures/holdout) with ground truth fixed before the run; run on three models
 - [x] T8.6 — scripts/measure.js recomputes every metric from raw results
+- [x] T9.1-T9.6 — Retrieval evaluation and TF-IDF ranking, spec first (docs/specs/RETRIEVAL_EVAL.md, docs/RETRIEVAL_EVAL_RESULTS.md)

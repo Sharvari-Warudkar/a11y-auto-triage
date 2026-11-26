@@ -49,9 +49,9 @@ Vector embeddings, new WCAG documents, changes to the LLM prompt, retrieval of m
 
 ## Tasks
 
-- [ ] T9.1 Query-set builder script and `data/retrieval-eval.json` (labels reviewed by hand, rationale in the file)
-- [ ] T9.2 Evaluation harness `src/rag/evaluate.ts` and `npm run eval:retrieval`; record the baseline
-- [ ] T9.3 TF-IDF ranking per the parameters above; keep `searchBaseline`
-- [ ] T9.4 Unit tests
-- [ ] T9.5 Run the evaluation once, record results in `docs/RETRIEVAL_EVAL_RESULTS.md`, apply A4 if needed
-- [ ] T9.6 Update SPEC/PLAN/README wording
+- [x] T9.1 Query-set builder script and `data/retrieval-eval.json` (labels derived from axe-core's own wcag tags plus one project mapping; rules with no criterion in the corpus excluded; documented in the script header)
+- [x] T9.2 Evaluation harness `src/rag/evaluate.ts` and `npm run eval:retrieval`; record the baseline
+- [x] T9.3 TF-IDF ranking per the parameters above; keep `searchBaseline`
+- [x] T9.4 Unit tests
+- [x] T9.5 Run the evaluation once, record results in `docs/RETRIEVAL_EVAL_RESULTS.md`, apply A4 if needed
+- [x] T9.6 Update SPEC/PLAN/README wording

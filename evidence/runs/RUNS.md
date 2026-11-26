@@ -49,3 +49,5 @@ The one qwen miss: `input-image-alt` on checkout-payment cited 4.1.2 instead of 
 - n = 16, one run per model, so a single item is 6 points.
 - axe-core violation counts per page were checked before the run (scan only, no LLM) to confirm the pages contain the intended violations.
 - The model alone rated the checkout contrast bug major on all three models; critical comes from the code override.
+
+Note (2026-11-26): the retrieval top-1/top-3 figures in this file were produced by the earlier term-count ranking. The default ranking is now TF-IDF; see `docs/RETRIEVAL_EVAL_RESULTS.md`. LLM runs were not repeated for the ranking change.
