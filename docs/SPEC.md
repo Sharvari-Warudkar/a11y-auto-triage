@@ -38,10 +38,11 @@ An automated triage pipeline with AI-generated remediation guidance means:
 - AI-generated bug descriptions (via Groq/Llama 3.3 70B; configurable with `GROQ_MODEL`, see the model note in PLAN.md) with severity, affected users, WCAG criterion, and fix suggestion
 - Structured JSON output compatible with Jira API
 - Deduplication of violations already filed
+- Scheduled scan workflow in n8n (schedule + manual trigger, summary, mock alert) executed locally
 
 ### Out of Scope
 - Production Jira integration (mocked with JSON output)
-- Scheduled/recurring scans
+- Hosted/production scheduling (a local n8n workflow exists: n8n/workflow.json, docs/specs/N8N_WORKFLOW.md; it was executed locally with the CLI, not deployed)
 - Multi-page crawling
 - WCAG AAA criteria
 - PDF or native app accessibility

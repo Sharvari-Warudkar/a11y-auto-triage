@@ -29,7 +29,7 @@ Live Jira, email/Slack delivery, multi-page crawling, a hosted n8n instance, cre
 
 ## Tasks
 
-- [ ] T10.1 `scripts/triage-summary.js` + unit tests
-- [ ] T10.2 `n8n/workflow.json` and `n8n/README.md`
-- [ ] T10.3 Install n8n outside the repo; import and execute the workflow twice; commit the logs
-- [ ] T10.4 Update docs (SPEC scope, EFFORT, CLAUDE.md, TRACEABILITY, README), Word summary and PowerPoint
+- [x] T10.1 `scripts/triage-summary.js` + unit tests
+- [x] T10.2 `n8n/workflow.json` and `n8n/README.md`
+- [x] T10.3 Install n8n outside the repo; import and execute the workflow twice; commit the logs
+- [x] T10.4 Update docs (SPEC scope, EFFORT, CLAUDE.md, TRACEABILITY, README), Word summary and PowerPoint

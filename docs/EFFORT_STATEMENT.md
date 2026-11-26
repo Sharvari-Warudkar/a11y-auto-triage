@@ -15,7 +15,7 @@
 ## What I Cut
 
 1. **Live Jira integration** — would have required a real Jira instance and added 3+ hours for OAuth, field mapping, and error handling. Mocked with JSON output instead.
-2. **n8n scheduled workflow** — described in plan but not deployed. The prototype demonstrates the pipeline; scheduling adds infrastructure complexity without demonstrating a new competency.
+2. **n8n scheduled workflow** — originally cut; later built and executed locally with the n8n CLI (n8n/workflow.json, evidence/n8n/). Not deployed on a server, not left running on its schedule; alert and Jira payload are mocked. Effort for it is not included in the hours above.
 3. **Multi-page crawling** — would need sitemap parsing, link extraction, and rate limiting. One URL per run is sufficient to demonstrate the pipeline.
 4. **WCAG 2.2 criteria** — focused on 2.1 AA only. Adding 2.2 would be ~10 more markdown files but same pipeline logic.
 5. **Visual regression / screenshot comparison** — considered adding screenshot diff for layout-based violations but cut for scope.

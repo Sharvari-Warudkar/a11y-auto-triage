@@ -1,0 +1,324 @@
+{
+  "name": "A11y Auto-Triage scheduled scan",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "schedule",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "manual",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// EDIT HERE: project folder and the pages to scan (paths relative to the project folder, or full URLs).\nconst projectDir = 'C:/Users/sharvari.warudkar/a11y-auto-triage';\nconst skipDedup = false; // keep false for scheduled runs so only NEW violations are reported\nconst targets = [\n  'fixtures/holdout/checkout-payment.html',\n  'fixtures/holdout/home.html'\n];\nreturn targets.map(t => ({ json: { projectDir, target: t, skipDedup } }));"
+      },
+      "id": "targets",
+      "name": "Targets",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=cd /d \"{{ $json.projectDir }}\" && npx ts-node src/pipeline.ts \"{{ $json.target }}\"{{ $json.skipDedup ? ' --skip-dedup' : '' }}"
+      },
+      "id": "run-pipeline",
+      "name": "Run pipeline",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        520,
+        100
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// One item per target. Execute Command returns { exitCode, stdout, stderr }.\nconst projectDir = $('Targets').first().json.projectDir;\nreturn $input.all().map(item => {\n  const out = String(item.json.stdout || '');\n  const file = /Output: (.+\\.json)/.exec(out);\n  const target = /Scanning: (.+)/.exec(out);\n  const count = /Bug logs generated: (\\d+)/.exec(out);\n  return { json: {\n    projectDir,\n    target: target ? target[1].trim() : 'unknown',\n    exitCode: item.json.exitCode,\n    failed: item.json.exitCode !== 0 && !file,\n    outputFile: file ? file[1].trim() : '',\n    newBugLogs: count ? Number(count[1]) : 0,\n    note: file ? 'bug logs written' : (/already filed/i.test(out) ? 'nothing new (all violations already filed)' : 'no result file (see stderr)'),\n    stderr: String(item.json.stderr || '').slice(0, 300)\n  } };\n});"
+      },
+      "id": "parse-run",
+      "name": "Parse run",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.outputFile }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "has-result-file",
+      "name": "Has result file",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=cd /d \"{{ $json.projectDir }}\" && node scripts/triage-summary.js \"{{ $json.outputFile }}\""
+      },
+      "id": "summarise-result",
+      "name": "Summarise result",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        0
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// stdout of scripts/triage-summary.js is one line of JSON.\nreturn $input.all().map(item => ({ json: JSON.parse(String(item.json.stdout).trim()) }));"
+      },
+      "id": "parse-summary",
+      "name": "Parse summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1560,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.counts.critical }}",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              },
+              "rightValue": 0
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "critical-bugs",
+      "name": "Critical bugs",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1820,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Mock alert: a real deployment would send this to Slack / email / Jira here.\nreturn $input.all().map(item => ({ json: {\n  alert: item.json.alertMessage,\n  url: item.json.url,\n  counts: item.json.counts,\n  jiraIssuesToCreate: item.json.issues.length,\n  firstIssue: item.json.issues[0]\n} }));"
+      },
+      "id": "build-alert-(mock)",
+      "name": "Build alert (mock)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2080,
+        -100
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "no-critical",
+      "name": "No critical: end",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        100
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "nothing-new",
+      "name": "Nothing new or failed: end",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        220
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Targets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Targets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Targets": {
+      "main": [
+        [
+          {
+            "node": "Run pipeline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run pipeline": {
+      "main": [
+        [
+          {
+            "node": "Parse run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse run": {
+      "main": [
+        [
+          {
+            "node": "Has result file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has result file": {
+      "main": [
+        [
+          {
+            "node": "Summarise result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Nothing new or failed: end",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarise result": {
+      "main": [
+        [
+          {
+            "node": "Parse summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse summary": {
+      "main": [
+        [
+          {
+            "node": "Critical bugs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Critical bugs": {
+      "main": [
+        [
+          {
+            "node": "Build alert (mock)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No critical: end",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "id": "a11yAutoTriage01"
+}

@@ -1,0 +1,750 @@
+n8n Task Broker ready on 127.0.0.1, port 5679
+Failed to start Python task runner in internal mode. because its virtual environment is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (J_OnHLY4hNMJFFUeLWouv) 
+Execution was successful:
+====================================
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Manual Trigger": [
+          {
+            "startTime": 1795702834440,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Targets": [
+          {
+            "startTime": 1795702834441,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 3862,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/checkout-payment.html",
+                      "skipDedup": false
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/home.html",
+                      "skipDedup": false
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Run pipeline": [
+          {
+            "startTime": 1795702838303,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Targets",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 121748,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "exitCode": 0,
+                      "stderr": "",
+                      "stdout": "=== A11Y AUTO-TRIAGE PIPELINE ===\n\n[1/5] Scanning: fixtures/holdout/checkout-payment.html\n      Found 4 violations\n[2/5] Deduplication: 0 already filed, 4 new\n[3/5] Retrieving WCAG context for 4 violations...\n[4/5] Generating bug logs...\n      Processing: color-contrast (serious)\n      Processing: input-image-alt (critical)\n      Processing: select-name (critical)\n      Processing: placeholder-only-label (serious)\n      Rate limited. Waiting 10s...\n[5/5] Writing results...\n\n=== COMPLETE ===\nBug logs generated: 4\nOutput: C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\results\\bugs-1795702869009.json"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "exitCode": 0,
+                      "stderr": "",
+                      "stdout": "=== A11Y AUTO-TRIAGE PIPELINE ===\n\n[1/5] Scanning: fixtures/holdout/home.html\n      Found 5 violations\n[2/5] Deduplication: 0 already filed, 5 new\n[3/5] Retrieving WCAG context for 5 violations...\n[4/5] Generating bug logs...\n      Processing: color-contrast (serious)\n      Rate limited. Waiting 10s...\n      Processing: html-has-lang (serious)\n      Rate limited. Waiting 10s...\n      Processing: image-alt (critical)\n      Rate limited. Waiting 10s...\n      Rate limited. Waiting 10s...\n      Processing: link-name (serious)\n      Rate limited. Waiting 10s...\n      Processing: placeholder-only-label (serious)\n      Rate limited. Waiting 10s...\n      Rate limited. Waiting 10s...\n[5/5] Writing results...\n\n=== COMPLETE ===\nBug logs generated: 5\nOutput: C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\results\\bugs-1795702959988.json"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Parse run": [
+          {
+            "startTime": 1795702960051,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Run pipeline",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 12,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/checkout-payment.html",
+                      "exitCode": 0,
+                      "failed": false,
+                      "outputFile": "C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\results\\bugs-1795702869009.json",
+                      "newBugLogs": 4,
+                      "note": "bug logs written",
+                      "stderr": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/home.html",
+                      "exitCode": 0,
+                      "failed": false,
+                      "outputFile": "C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\results\\bugs-1795702959988.json",
+                      "newBugLogs": 5,
+                      "note": "bug logs written",
+                      "stderr": ""
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Has result file": [
+          {
+            "startTime": 1795702960063,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Parse run",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 10,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/checkout-payment.html",
+                      "exitCode": 0,
+                      "failed": false,
+                      "outputFile": "C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\results\\bugs-1795702869009.json",
+                      "newBugLogs": 4,
+                      "note": "bug logs written",
+                      "stderr": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/home.html",
+                      "exitCode": 0,
+                      "failed": false,
+                      "outputFile": "C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\results\\bugs-1795702959988.json",
+                      "newBugLogs": 5,
+                      "note": "bug logs written",
+                      "stderr": ""
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Summarise result": [
+          {
+            "startTime": 1795702960073,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Has result file",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 289,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "exitCode": 0,
+                      "stderr": "",
+                      "stdout": "{\"url\":\"file://C:\\\\Users\\\\sharvari.warudkar\\\\a11y-auto-triage\\\\fixtures\\\\holdout\\\\checkout-payment.html\",\"scannedAt\":\"2026-11-26T14:20:51.649Z\",\"total\":4,\"newBugLogs\":4,\"counts\":{\"critical\":4,\"major\":0,\"minor\":0,\"trivial\":0},\"parseErrors\":0,\"issues\":[{\"summary\":\"Insufficient color contrast for hint text on checkout payment page\",\"priority\":\"Highest\",\"labels\":[\"a11y\",\"wcag-1.4.3\",\"color-contrast\"],\"description\":\"*WCAG 1.4.3* Contrast (Minimum)\\n*Element:* p.hint\\n*Affected users:* low vision users, users with color vision deficiency\\n*Steps:*\\n1. Open fixtures/holdout/checkout-payment.html\\n2. Locate the paragraph with class \\\"hint\\\" that reads \\\"We never store your card details\\\"\\n*Expected:* The text must have a contrast ratio of at least 4.5:1 against its background.\\n*Actual:* The paragraph uses color #c4c4c4 on a white background (#ffffff), resulting in a contrast ratio of 1.74:1, which fails WCAG 1.4.3.\\n*Suggested fix:* In the CSS rule for p, change color from #c4c4c4 to #767676 (4.54:1 on #ffffff; measured 1.74:1, required 4.5:1).\"},{\"summary\":\"Pay Now image button missing accessible name\",\"priority\":\"Highest\",\"labels\":[\"a11y\",\"wcag-1.1.1\",\"input-image-alt\"],\"description\":\"*WCAG 1.1.1* Non-text Content\\n*Element:* input[type=\\\"image\\\"][src=\\\"pay-now.png\\\"]\\n*Affected users:* blind users, low vision users, keyboard-only users\\n*Steps:*\\n1. Open fixtures/holdout/checkout-payment.html\\n2. Navigate to the payment section\\n3. Locate the Pay Now button rendered as <input type=\\\"image\\\" src=\\\"pay-now.png\\\">\\n*Expected:* The image button must have a text alternative that conveys its purpose (e.g., \\\"Pay now\\\") via alt, aria-label, title, or an associated label.\\n*Actual:* The <input type=\\\"image\\\"> element has no alt attribute, no aria-label, no aria-labelledby, no title, and no associated label, providing no accessible name.\\n*Suggested fix:* Add an accessible name, for example: <input type=\\\"image\\\" src=\\\"pay-now.png\\\" alt=\\\"Pay now\\\" width=\\\"120\\\" height=\\\"40\\\"> or add aria-label=\\\"Pay now\\\" if alt cannot be used.\"},{\"summary\":\"Select element #promo lacks an accessible name\",\"priority\":\"Highest\",\"labels\":[\"a11y\",\"wcag-4.1.2\",\"select-name\"],\"description\":\"*WCAG 4.1.2* Name, Role, Value\\n*Element:* #promo\\n*Affected users:* blind users, screen reader users, voice control users, motor-impaired keyboard-only users\\n*Steps:*\\n1. Open fixtures/holdout/checkout-payment.html\\n2. Navigate to the payment section\\n3. Locate the promo code dropdown\\n*Expected:* The select control must have a programmatically determinable name so that assistive technologies can announce its purpose (e.g., \\\"Promo code\\\").\\n*Actual:* The <select id=\\\"promo\\\"> element has no associated <label>, no aria-label, no aria-labelledby, and no title attribute, resulting in no accessible name.\\n*Suggested fix:* Add a visible label and associate it with the select, e.g., <label for=\\\"promo\\\">Promo code</label> before the <select>, or add aria-label=\\\"Promo code\\\" to the select element.\"},{\"summary\":\"Missing persistent labels for payment form fields\",\"priority\":\"Highest\",\"labels\":[\"a11y\",\"wcag-3.3.2\",\"placeholder-only-label\"],\"description\":\"*WCAG 3.3.2* Labels or Instructions\\n*Element:* #pay-name\\n*Affected users:* blind users, screen reader users, low vision users, cognitive disability users\\n*Steps:*\\n1. Open fixtures/holdout/checkout-payment.html\\n2. Navigate to the payment section\\n3. Focus on the input with id=\\\"pay-name\\\"\\n4. Observe that only placeholder text \\\"Name on card\\\" is announced\\n5. Repeat for the input with id=\\\"pay-card\\\"\\n*Expected:* Each form input must have a persistent visible label (or an accessible name via aria-label, aria-labelledby, or title) that is announced by screen readers and remains visible when the user types.\\n*Actual:* The inputs #pay-name and #pay-card rely solely on placeholder text for identification; no <label>, aria-label, aria-labelledby, or title is provided.\\n*Suggested fix:* Add a <label> element associated with each input and remove reliance on placeholder as the sole label. Example:\\n\\n<label for=\\\"pay-name\\\" class=\\\"sr-only\\\">Name on card</label>\\n<input type=\\\"text\\\" id=\\\"pay-name\\\" placeholder=\\\"Name on card\\\" aria-required=\\\"true\\\">\\n\\n<label for=\\\"pay-card\\\" class=\\\"sr-only\\\">Card number</label>\\n<input type=\\\"text\\\" id=\\\"pay-card\\\" placeholder=\\\"Card number\\\" aria-required=\\\"true\\\">\"}],\"alert\":true,\"alertMessage\":\"A11Y ALERT: 4 critical accessibility bug(s) on file://C:\\\\Users\\\\sharvari.warudkar\\\\a11y-auto-triage\\\\fixtures\\\\holdout\\\\checkout-payment.html\"}"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "exitCode": 0,
+                      "stderr": "",
+                      "stdout": "{\"url\":\"file://C:\\\\Users\\\\sharvari.warudkar\\\\a11y-auto-triage\\\\fixtures\\\\holdout\\\\home.html\",\"scannedAt\":\"2026-11-26T14:21:20.651Z\",\"total\":5,\"newBugLogs\":5,\"counts\":{\"critical\":0,\"major\":5,\"minor\":0,\"trivial\":0},\"parseErrors\":0,\"issues\":[{\"summary\":\"Insufficient color contrast on promotional text in .promo div\",\"priority\":\"High\",\"labels\":[\"a11y\",\"wcag-1.4.3\",\"color-contrast\"],\"description\":\"*WCAG 1.4.3* Contrast (Minimum)\\n*Element:* div.promo\\n*Affected users:* low vision users, users with color vision deficiency\\n*Steps:*\\n1. Open fixtures/holdout/home.html in a browser\\n2. Locate the promotional banner text \\\"Free shipping on orders over $50 this week only\\\"\\n3. Inspect the text color (#d9c27a) against its background (#ffe9a8)\\n*Expected:* Text must have a contrast ratio of at least 4.5:1 against its background per WCAG 2.1 Success Criterion 1.4.3.\\n*Actual:* The text contrast ratio is 1.46:1, which is far below the required 4.5:1.\\n*Suggested fix:* In the CSS rule for div, change color from #d9c27a to #756942 (4.53:1 on #ffe9a8; measured 1.46:1, required 4.5:1).\"},{\"summary\":\"Missing language attribute on <html> element\",\"priority\":\"High\",\"labels\":[\"a11y\",\"wcag-3.1.1\",\"html-has-lang\"],\"description\":\"*WCAG 3.1.1* Language of Page\\n*Element:* html\\n*Affected users:* blind users, screen reader users, users of braille displays, cognitive disability users\\n*Steps:*\\n1. Open fixtures/holdout/home.html in a browser\\n2. Inspect the <html> element\\n3. Observe that there is no lang attribute\\n*Expected:* The <html> element must have a valid BCP 47 language code in a lang attribute (e.g., <html lang=\\\"en\\\">) so assistive technologies can determine the page language.\\n*Actual:* The <html> element is rendered as <html> without a lang attribute.\\n*Suggested fix:* Add a lang attribute with the appropriate language code to the root element, e.g., change <html> to <html lang=\\\"en\\\">.\"},{\"summary\":\"Missing alt text on hero image on home page\",\"priority\":\"High\",\"labels\":[\"a11y\",\"wcag-1.1.1\",\"image-alt\"],\"description\":\"*WCAG 1.1.1* Non-text Content\\n*Element:* img[src='hero-summer-sale.jpg']\\n*Affected users:* blind users, low vision users, cognitive disability users\\n*Steps:*\\n1. Open fixtures/holdout/home.html in a browser\\n2. Inspect the page source or use a screen reader\\n3. Locate the <img src=\\\"hero-summer-sale.jpg\\\"> element\\n*Expected:* The image must have a text alternative (alt attribute) that conveys its purpose, or be marked as decorative with role=\\\"presentation\\\" or alt=\\\"\\\".\\n*Actual:* The <img> element has no alt attribute, no aria-label, no aria-labelledby, no title, and no role override.\\n*Suggested fix:* Add a descriptive alt attribute, e.g., alt=\\\"Summer sale hero banner showing discounted products\\\", to img[src='hero-summer-sale.jpg']\"},{\"summary\":\"Icon-only cart link missing accessible name\",\"priority\":\"High\",\"labels\":[\"a11y\",\"wcag-4.1.2\",\"link-name\"],\"description\":\"*WCAG 4.1.2* Name, Role, Value\\n*Element:* a.icon-link[href=\\\"/cart\\\"]\\n*Affected users:* blind users, keyboard-only users\\n*Steps:*\\n1. Open fixtures/holdout/home.html in a browser\\n2. Tab through the page until the cart link is focused\\n3. Listen with a screen reader or observe that no link text is announced\\n*Expected:* The link should have a discernible accessible name that is announced by screen readers and visible to assistive technologies.\\n*Actual:* The <a href=\\\"/cart\\\" class=\\\"icon-link\\\"></a> element is focusable but has no visible text, aria-label, aria-labelledby, or title attribute, resulting in no accessible name.\\n*Suggested fix:* Add an accessible name, e.g., <a href=\\\"/cart\\\" class=\\\"icon-link\\\" aria-label=\\\"View cart\\\"></a>, or include visible text inside the link.\"},{\"summary\":\"Missing label for email newsletter signup input\",\"priority\":\"High\",\"labels\":[\"a11y\",\"wcag-3.3.2\",\"placeholder-only-label\"],\"description\":\"*WCAG 3.3.2* Labels or Instructions\\n*Element:* #news-email\\n*Affected users:* blind users, low vision users, users with cognitive disabilities\\n*Steps:*\\n1. Open fixtures/holdout/home.html\\n2. Locate the newsletter signup form\\n3. Focus on the email input field\\n*Expected:* The email input should have a persistent visible label (or aria-label/title) that is announced by screen readers and remains visible when the field receives focus.\\n*Actual:* The input has only a placeholder text \\\"Your email address\\\" with no associated <label>, aria-label, aria-labelledby, or title.\\n*Suggested fix:* Add a visible label element and associate it with the input: <label for=\\\"news-email\\\">Email address</label> placed before the <input id=\\\"news-email\\\" ...>. Alternatively, add aria-label=\\\"Email address\\\" to the input if a visible label cannot be used.\"}],\"alert\":false,\"alertMessage\":\"\"}"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Parse summary": [
+          {
+            "startTime": 1795702960362,
+            "executionIndex": 6,
+            "source": [
+              {
+                "previousNode": "Summarise result",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 6,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\checkout-payment.html",
+                      "scannedAt": "2026-11-26T14:20:51.649Z",
+                      "total": 4,
+                      "newBugLogs": 4,
+                      "counts": {
+                        "critical": 4,
+                        "major": 0,
+                        "minor": 0,
+                        "trivial": 0
+                      },
+                      "parseErrors": 0,
+                      "issues": [
+                        {
+                          "summary": "Insufficient color contrast for hint text on checkout payment page",
+                          "priority": "Highest",
+                          "labels": [
+                            "a11y",
+                            "wcag-1.4.3",
+                            "color-contrast"
+                          ],
+                          "description": "*WCAG 1.4.3* Contrast (Minimum)\n*Element:* p.hint\n*Affected users:* low vision users, users with color vision deficiency\n*Steps:*\n1. Open fixtures/holdout/checkout-payment.html\n2. Locate the paragraph with class \"hint\" that reads \"We never store your card details\"\n*Expected:* The text must have a contrast ratio of at least 4.5:1 against its background.\n*Actual:* The paragraph uses color #c4c4c4 on a white background (#ffffff), resulting in a contrast ratio of 1.74:1, which fails WCAG 1.4.3.\n*Suggested fix:* In the CSS rule for p, change color from #c4c4c4 to #767676 (4.54:1 on #ffffff; measured 1.74:1, required 4.5:1)."
+                        },
+                        {
+                          "summary": "Pay Now image button missing accessible name",
+                          "priority": "Highest",
+                          "labels": [
+                            "a11y",
+                            "wcag-1.1.1",
+                            "input-image-alt"
+                          ],
+                          "description": "*WCAG 1.1.1* Non-text Content\n*Element:* input[type=\"image\"][src=\"pay-now.png\"]\n*Affected users:* blind users, low vision users, keyboard-only users\n*Steps:*\n1. Open fixtures/holdout/checkout-payment.html\n2. Navigate to the payment section\n3. Locate the Pay Now button rendered as <input type=\"image\" src=\"pay-now.png\">\n*Expected:* The image button must have a text alternative that conveys its purpose (e.g., \"Pay now\") via alt, aria-label, title, or an associated label.\n*Actual:* The <input type=\"image\"> element has no alt attribute, no aria-label, no aria-labelledby, no title, and no associated label, providing no accessible name.\n*Suggested fix:* Add an accessible name, for example: <input type=\"image\" src=\"pay-now.png\" alt=\"Pay now\" width=\"120\" height=\"40\"> or add aria-label=\"Pay now\" if alt cannot be used."
+                        },
+                        {
+                          "summary": "Select element #promo lacks an accessible name",
+                          "priority": "Highest",
+                          "labels": [
+                            "a11y",
+                            "wcag-4.1.2",
+                            "select-name"
+                          ],
+                          "description": "*WCAG 4.1.2* Name, Role, Value\n*Element:* #promo\n*Affected users:* blind users, screen reader users, voice control users, motor-impaired keyboard-only users\n*Steps:*\n1. Open fixtures/holdout/checkout-payment.html\n2. Navigate to the payment section\n3. Locate the promo code dropdown\n*Expected:* The select control must have a programmatically determinable name so that assistive technologies can announce its purpose (e.g., \"Promo code\").\n*Actual:* The <select id=\"promo\"> element has no associated <label>, no aria-label, no aria-labelledby, and no title attribute, resulting in no accessible name.\n*Suggested fix:* Add a visible label and associate it with the select, e.g., <label for=\"promo\">Promo code</label> before the <select>, or add aria-label=\"Promo code\" to the select element."
+                        },
+                        {
+                          "summary": "Missing persistent labels for payment form fields",
+                          "priority": "Highest",
+                          "labels": [
+                            "a11y",
+                            "wcag-3.3.2",
+                            "placeholder-only-label"
+                          ],
+                          "description": "*WCAG 3.3.2* Labels or Instructions\n*Element:* #pay-name\n*Affected users:* blind users, screen reader users, low vision users, cognitive disability users\n*Steps:*\n1. Open fixtures/holdout/checkout-payment.html\n2. Navigate to the payment section\n3. Focus on the input with id=\"pay-name\"\n4. Observe that only placeholder text \"Name on card\" is announced\n5. Repeat for the input with id=\"pay-card\"\n*Expected:* Each form input must have a persistent visible label (or an accessible name via aria-label, aria-labelledby, or title) that is announced by screen readers and remains visible when the user types.\n*Actual:* The inputs #pay-name and #pay-card rely solely on placeholder text for identification; no <label>, aria-label, aria-labelledby, or title is provided.\n*Suggested fix:* Add a <label> element associated with each input and remove reliance on placeholder as the sole label. Example:\n\n<label for=\"pay-name\" class=\"sr-only\">Name on card</label>\n<input type=\"text\" id=\"pay-name\" placeholder=\"Name on card\" aria-required=\"true\">\n\n<label for=\"pay-card\" class=\"sr-only\">Card number</label>\n<input type=\"text\" id=\"pay-card\" placeholder=\"Card number\" aria-required=\"true\">"
+                        }
+                      ],
+                      "alert": true,
+                      "alertMessage": "A11Y ALERT: 4 critical accessibility bug(s) on file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\checkout-payment.html"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\home.html",
+                      "scannedAt": "2026-11-26T14:21:20.651Z",
+                      "total": 5,
+                      "newBugLogs": 5,
+                      "counts": {
+                        "critical": 0,
+                        "major": 5,
+                        "minor": 0,
+                        "trivial": 0
+                      },
+                      "parseErrors": 0,
+                      "issues": [
+                        {
+                          "summary": "Insufficient color contrast on promotional text in .promo div",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-1.4.3",
+                            "color-contrast"
+                          ],
+                          "description": "*WCAG 1.4.3* Contrast (Minimum)\n*Element:* div.promo\n*Affected users:* low vision users, users with color vision deficiency\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Locate the promotional banner text \"Free shipping on orders over $50 this week only\"\n3. Inspect the text color (#d9c27a) against its background (#ffe9a8)\n*Expected:* Text must have a contrast ratio of at least 4.5:1 against its background per WCAG 2.1 Success Criterion 1.4.3.\n*Actual:* The text contrast ratio is 1.46:1, which is far below the required 4.5:1.\n*Suggested fix:* In the CSS rule for div, change color from #d9c27a to #756942 (4.53:1 on #ffe9a8; measured 1.46:1, required 4.5:1)."
+                        },
+                        {
+                          "summary": "Missing language attribute on <html> element",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-3.1.1",
+                            "html-has-lang"
+                          ],
+                          "description": "*WCAG 3.1.1* Language of Page\n*Element:* html\n*Affected users:* blind users, screen reader users, users of braille displays, cognitive disability users\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Inspect the <html> element\n3. Observe that there is no lang attribute\n*Expected:* The <html> element must have a valid BCP 47 language code in a lang attribute (e.g., <html lang=\"en\">) so assistive technologies can determine the page language.\n*Actual:* The <html> element is rendered as <html> without a lang attribute.\n*Suggested fix:* Add a lang attribute with the appropriate language code to the root element, e.g., change <html> to <html lang=\"en\">."
+                        },
+                        {
+                          "summary": "Missing alt text on hero image on home page",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-1.1.1",
+                            "image-alt"
+                          ],
+                          "description": "*WCAG 1.1.1* Non-text Content\n*Element:* img[src='hero-summer-sale.jpg']\n*Affected users:* blind users, low vision users, cognitive disability users\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Inspect the page source or use a screen reader\n3. Locate the <img src=\"hero-summer-sale.jpg\"> element\n*Expected:* The image must have a text alternative (alt attribute) that conveys its purpose, or be marked as decorative with role=\"presentation\" or alt=\"\".\n*Actual:* The <img> element has no alt attribute, no aria-label, no aria-labelledby, no title, and no role override.\n*Suggested fix:* Add a descriptive alt attribute, e.g., alt=\"Summer sale hero banner showing discounted products\", to img[src='hero-summer-sale.jpg']"
+                        },
+                        {
+                          "summary": "Icon-only cart link missing accessible name",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-4.1.2",
+                            "link-name"
+                          ],
+                          "description": "*WCAG 4.1.2* Name, Role, Value\n*Element:* a.icon-link[href=\"/cart\"]\n*Affected users:* blind users, keyboard-only users\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Tab through the page until the cart link is focused\n3. Listen with a screen reader or observe that no link text is announced\n*Expected:* The link should have a discernible accessible name that is announced by screen readers and visible to assistive technologies.\n*Actual:* The <a href=\"/cart\" class=\"icon-link\"></a> element is focusable but has no visible text, aria-label, aria-labelledby, or title attribute, resulting in no accessible name.\n*Suggested fix:* Add an accessible name, e.g., <a href=\"/cart\" class=\"icon-link\" aria-label=\"View cart\"></a>, or include visible text inside the link."
+                        },
+                        {
+                          "summary": "Missing label for email newsletter signup input",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-3.3.2",
+                            "placeholder-only-label"
+                          ],
+                          "description": "*WCAG 3.3.2* Labels or Instructions\n*Element:* #news-email\n*Affected users:* blind users, low vision users, users with cognitive disabilities\n*Steps:*\n1. Open fixtures/holdout/home.html\n2. Locate the newsletter signup form\n3. Focus on the email input field\n*Expected:* The email input should have a persistent visible label (or aria-label/title) that is announced by screen readers and remains visible when the field receives focus.\n*Actual:* The input has only a placeholder text \"Your email address\" with no associated <label>, aria-label, aria-labelledby, or title.\n*Suggested fix:* Add a visible label element and associate it with the input: <label for=\"news-email\">Email address</label> placed before the <input id=\"news-email\" ...>. Alternatively, add aria-label=\"Email address\" to the input if a visible label cannot be used."
+                        }
+                      ],
+                      "alert": false,
+                      "alertMessage": ""
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Critical bugs": [
+          {
+            "startTime": 1795702960368,
+            "executionIndex": 7,
+            "source": [
+              {
+                "previousNode": "Parse summary",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 4,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\checkout-payment.html",
+                      "scannedAt": "2026-11-26T14:20:51.649Z",
+                      "total": 4,
+                      "newBugLogs": 4,
+                      "counts": {
+                        "critical": 4,
+                        "major": 0,
+                        "minor": 0,
+                        "trivial": 0
+                      },
+                      "parseErrors": 0,
+                      "issues": [
+                        {
+                          "summary": "Insufficient color contrast for hint text on checkout payment page",
+                          "priority": "Highest",
+                          "labels": [
+                            "a11y",
+                            "wcag-1.4.3",
+                            "color-contrast"
+                          ],
+                          "description": "*WCAG 1.4.3* Contrast (Minimum)\n*Element:* p.hint\n*Affected users:* low vision users, users with color vision deficiency\n*Steps:*\n1. Open fixtures/holdout/checkout-payment.html\n2. Locate the paragraph with class \"hint\" that reads \"We never store your card details\"\n*Expected:* The text must have a contrast ratio of at least 4.5:1 against its background.\n*Actual:* The paragraph uses color #c4c4c4 on a white background (#ffffff), resulting in a contrast ratio of 1.74:1, which fails WCAG 1.4.3.\n*Suggested fix:* In the CSS rule for p, change color from #c4c4c4 to #767676 (4.54:1 on #ffffff; measured 1.74:1, required 4.5:1)."
+                        },
+                        {
+                          "summary": "Pay Now image button missing accessible name",
+                          "priority": "Highest",
+                          "labels": [
+                            "a11y",
+                            "wcag-1.1.1",
+                            "input-image-alt"
+                          ],
+                          "description": "*WCAG 1.1.1* Non-text Content\n*Element:* input[type=\"image\"][src=\"pay-now.png\"]\n*Affected users:* blind users, low vision users, keyboard-only users\n*Steps:*\n1. Open fixtures/holdout/checkout-payment.html\n2. Navigate to the payment section\n3. Locate the Pay Now button rendered as <input type=\"image\" src=\"pay-now.png\">\n*Expected:* The image button must have a text alternative that conveys its purpose (e.g., \"Pay now\") via alt, aria-label, title, or an associated label.\n*Actual:* The <input type=\"image\"> element has no alt attribute, no aria-label, no aria-labelledby, no title, and no associated label, providing no accessible name.\n*Suggested fix:* Add an accessible name, for example: <input type=\"image\" src=\"pay-now.png\" alt=\"Pay now\" width=\"120\" height=\"40\"> or add aria-label=\"Pay now\" if alt cannot be used."
+                        },
+                        {
+                          "summary": "Select element #promo lacks an accessible name",
+                          "priority": "Highest",
+                          "labels": [
+                            "a11y",
+                            "wcag-4.1.2",
+                            "select-name"
+                          ],
+                          "description": "*WCAG 4.1.2* Name, Role, Value\n*Element:* #promo\n*Affected users:* blind users, screen reader users, voice control users, motor-impaired keyboard-only users\n*Steps:*\n1. Open fixtures/holdout/checkout-payment.html\n2. Navigate to the payment section\n3. Locate the promo code dropdown\n*Expected:* The select control must have a programmatically determinable name so that assistive technologies can announce its purpose (e.g., \"Promo code\").\n*Actual:* The <select id=\"promo\"> element has no associated <label>, no aria-label, no aria-labelledby, and no title attribute, resulting in no accessible name.\n*Suggested fix:* Add a visible label and associate it with the select, e.g., <label for=\"promo\">Promo code</label> before the <select>, or add aria-label=\"Promo code\" to the select element."
+                        },
+                        {
+                          "summary": "Missing persistent labels for payment form fields",
+                          "priority": "Highest",
+                          "labels": [
+                            "a11y",
+                            "wcag-3.3.2",
+                            "placeholder-only-label"
+                          ],
+                          "description": "*WCAG 3.3.2* Labels or Instructions\n*Element:* #pay-name\n*Affected users:* blind users, screen reader users, low vision users, cognitive disability users\n*Steps:*\n1. Open fixtures/holdout/checkout-payment.html\n2. Navigate to the payment section\n3. Focus on the input with id=\"pay-name\"\n4. Observe that only placeholder text \"Name on card\" is announced\n5. Repeat for the input with id=\"pay-card\"\n*Expected:* Each form input must have a persistent visible label (or an accessible name via aria-label, aria-labelledby, or title) that is announced by screen readers and remains visible when the user types.\n*Actual:* The inputs #pay-name and #pay-card rely solely on placeholder text for identification; no <label>, aria-label, aria-labelledby, or title is provided.\n*Suggested fix:* Add a <label> element associated with each input and remove reliance on placeholder as the sole label. Example:\n\n<label for=\"pay-name\" class=\"sr-only\">Name on card</label>\n<input type=\"text\" id=\"pay-name\" placeholder=\"Name on card\" aria-required=\"true\">\n\n<label for=\"pay-card\" class=\"sr-only\">Card number</label>\n<input type=\"text\" id=\"pay-card\" placeholder=\"Card number\" aria-required=\"true\">"
+                        }
+                      ],
+                      "alert": true,
+                      "alertMessage": "A11Y ALERT: 4 critical accessibility bug(s) on file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\checkout-payment.html"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                [
+                  {
+                    "json": {
+                      "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\home.html",
+                      "scannedAt": "2026-11-26T14:21:20.651Z",
+                      "total": 5,
+                      "newBugLogs": 5,
+                      "counts": {
+                        "critical": 0,
+                        "major": 5,
+                        "minor": 0,
+                        "trivial": 0
+                      },
+                      "parseErrors": 0,
+                      "issues": [
+                        {
+                          "summary": "Insufficient color contrast on promotional text in .promo div",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-1.4.3",
+                            "color-contrast"
+                          ],
+                          "description": "*WCAG 1.4.3* Contrast (Minimum)\n*Element:* div.promo\n*Affected users:* low vision users, users with color vision deficiency\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Locate the promotional banner text \"Free shipping on orders over $50 this week only\"\n3. Inspect the text color (#d9c27a) against its background (#ffe9a8)\n*Expected:* Text must have a contrast ratio of at least 4.5:1 against its background per WCAG 2.1 Success Criterion 1.4.3.\n*Actual:* The text contrast ratio is 1.46:1, which is far below the required 4.5:1.\n*Suggested fix:* In the CSS rule for div, change color from #d9c27a to #756942 (4.53:1 on #ffe9a8; measured 1.46:1, required 4.5:1)."
+                        },
+                        {
+                          "summary": "Missing language attribute on <html> element",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-3.1.1",
+                            "html-has-lang"
+                          ],
+                          "description": "*WCAG 3.1.1* Language of Page\n*Element:* html\n*Affected users:* blind users, screen reader users, users of braille displays, cognitive disability users\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Inspect the <html> element\n3. Observe that there is no lang attribute\n*Expected:* The <html> element must have a valid BCP 47 language code in a lang attribute (e.g., <html lang=\"en\">) so assistive technologies can determine the page language.\n*Actual:* The <html> element is rendered as <html> without a lang attribute.\n*Suggested fix:* Add a lang attribute with the appropriate language code to the root element, e.g., change <html> to <html lang=\"en\">."
+                        },
+                        {
+                          "summary": "Missing alt text on hero image on home page",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-1.1.1",
+                            "image-alt"
+                          ],
+                          "description": "*WCAG 1.1.1* Non-text Content\n*Element:* img[src='hero-summer-sale.jpg']\n*Affected users:* blind users, low vision users, cognitive disability users\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Inspect the page source or use a screen reader\n3. Locate the <img src=\"hero-summer-sale.jpg\"> element\n*Expected:* The image must have a text alternative (alt attribute) that conveys its purpose, or be marked as decorative with role=\"presentation\" or alt=\"\".\n*Actual:* The <img> element has no alt attribute, no aria-label, no aria-labelledby, no title, and no role override.\n*Suggested fix:* Add a descriptive alt attribute, e.g., alt=\"Summer sale hero banner showing discounted products\", to img[src='hero-summer-sale.jpg']"
+                        },
+                        {
+                          "summary": "Icon-only cart link missing accessible name",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-4.1.2",
+                            "link-name"
+                          ],
+                          "description": "*WCAG 4.1.2* Name, Role, Value\n*Element:* a.icon-link[href=\"/cart\"]\n*Affected users:* blind users, keyboard-only users\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Tab through the page until the cart link is focused\n3. Listen with a screen reader or observe that no link text is announced\n*Expected:* The link should have a discernible accessible name that is announced by screen readers and visible to assistive technologies.\n*Actual:* The <a href=\"/cart\" class=\"icon-link\"></a> element is focusable but has no visible text, aria-label, aria-labelledby, or title attribute, resulting in no accessible name.\n*Suggested fix:* Add an accessible name, e.g., <a href=\"/cart\" class=\"icon-link\" aria-label=\"View cart\"></a>, or include visible text inside the link."
+                        },
+                        {
+                          "summary": "Missing label for email newsletter signup input",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-3.3.2",
+                            "placeholder-only-label"
+                          ],
+                          "description": "*WCAG 3.3.2* Labels or Instructions\n*Element:* #news-email\n*Affected users:* blind users, low vision users, users with cognitive disabilities\n*Steps:*\n1. Open fixtures/holdout/home.html\n2. Locate the newsletter signup form\n3. Focus on the email input field\n*Expected:* The email input should have a persistent visible label (or aria-label/title) that is announced by screen readers and remains visible when the field receives focus.\n*Actual:* The input has only a placeholder text \"Your email address\" with no associated <label>, aria-label, aria-labelledby, or title.\n*Suggested fix:* Add a visible label element and associate it with the input: <label for=\"news-email\">Email address</label> placed before the <input id=\"news-email\" ...>. Alternatively, add aria-label=\"Email address\" to the input if a visible label cannot be used."
+                        }
+                      ],
+                      "alert": false,
+                      "alertMessage": ""
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Build alert (mock)": [
+          {
+            "startTime": 1795702960373,
+            "executionIndex": 8,
+            "source": [
+              {
+                "previousNode": "Critical bugs",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 4,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "alert": "A11Y ALERT: 4 critical accessibility bug(s) on file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\checkout-payment.html",
+                      "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\checkout-payment.html",
+                      "counts": {
+                        "critical": 4,
+                        "major": 0,
+                        "minor": 0,
+                        "trivial": 0
+                      },
+                      "jiraIssuesToCreate": 4,
+                      "firstIssue": {
+                        "summary": "Insufficient color contrast for hint text on checkout payment page",
+                        "priority": "Highest",
+                        "labels": [
+                          "a11y",
+                          "wcag-1.4.3",
+                          "color-contrast"
+                        ],
+                        "description": "*WCAG 1.4.3* Contrast (Minimum)\n*Element:* p.hint\n*Affected users:* low vision users, users with color vision deficiency\n*Steps:*\n1. Open fixtures/holdout/checkout-payment.html\n2. Locate the paragraph with class \"hint\" that reads \"We never store your card details\"\n*Expected:* The text must have a contrast ratio of at least 4.5:1 against its background.\n*Actual:* The paragraph uses color #c4c4c4 on a white background (#ffffff), resulting in a contrast ratio of 1.74:1, which fails WCAG 1.4.3.\n*Suggested fix:* In the CSS rule for p, change color from #c4c4c4 to #767676 (4.54:1 on #ffffff; measured 1.74:1, required 4.5:1)."
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "No critical: end": [
+          {
+            "startTime": 1795702960378,
+            "executionIndex": 9,
+            "source": [
+              {
+                "previousNode": "Critical bugs",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "url": "file://C:\\Users\\sharvari.warudkar\\a11y-auto-triage\\fixtures\\holdout\\home.html",
+                      "scannedAt": "2026-11-26T14:21:20.651Z",
+                      "total": 5,
+                      "newBugLogs": 5,
+                      "counts": {
+                        "critical": 0,
+                        "major": 5,
+                        "minor": 0,
+                        "trivial": 0
+                      },
+                      "parseErrors": 0,
+                      "issues": [
+                        {
+                          "summary": "Insufficient color contrast on promotional text in .promo div",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-1.4.3",
+                            "color-contrast"
+                          ],
+                          "description": "*WCAG 1.4.3* Contrast (Minimum)\n*Element:* div.promo\n*Affected users:* low vision users, users with color vision deficiency\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Locate the promotional banner text \"Free shipping on orders over $50 this week only\"\n3. Inspect the text color (#d9c27a) against its background (#ffe9a8)\n*Expected:* Text must have a contrast ratio of at least 4.5:1 against its background per WCAG 2.1 Success Criterion 1.4.3.\n*Actual:* The text contrast ratio is 1.46:1, which is far below the required 4.5:1.\n*Suggested fix:* In the CSS rule for div, change color from #d9c27a to #756942 (4.53:1 on #ffe9a8; measured 1.46:1, required 4.5:1)."
+                        },
+                        {
+                          "summary": "Missing language attribute on <html> element",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-3.1.1",
+                            "html-has-lang"
+                          ],
+                          "description": "*WCAG 3.1.1* Language of Page\n*Element:* html\n*Affected users:* blind users, screen reader users, users of braille displays, cognitive disability users\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Inspect the <html> element\n3. Observe that there is no lang attribute\n*Expected:* The <html> element must have a valid BCP 47 language code in a lang attribute (e.g., <html lang=\"en\">) so assistive technologies can determine the page language.\n*Actual:* The <html> element is rendered as <html> without a lang attribute.\n*Suggested fix:* Add a lang attribute with the appropriate language code to the root element, e.g., change <html> to <html lang=\"en\">."
+                        },
+                        {
+                          "summary": "Missing alt text on hero image on home page",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-1.1.1",
+                            "image-alt"
+                          ],
+                          "description": "*WCAG 1.1.1* Non-text Content\n*Element:* img[src='hero-summer-sale.jpg']\n*Affected users:* blind users, low vision users, cognitive disability users\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Inspect the page source or use a screen reader\n3. Locate the <img src=\"hero-summer-sale.jpg\"> element\n*Expected:* The image must have a text alternative (alt attribute) that conveys its purpose, or be marked as decorative with role=\"presentation\" or alt=\"\".\n*Actual:* The <img> element has no alt attribute, no aria-label, no aria-labelledby, no title, and no role override.\n*Suggested fix:* Add a descriptive alt attribute, e.g., alt=\"Summer sale hero banner showing discounted products\", to img[src='hero-summer-sale.jpg']"
+                        },
+                        {
+                          "summary": "Icon-only cart link missing accessible name",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-4.1.2",
+                            "link-name"
+                          ],
+                          "description": "*WCAG 4.1.2* Name, Role, Value\n*Element:* a.icon-link[href=\"/cart\"]\n*Affected users:* blind users, keyboard-only users\n*Steps:*\n1. Open fixtures/holdout/home.html in a browser\n2. Tab through the page until the cart link is focused\n3. Listen with a screen reader or observe that no link text is announced\n*Expected:* The link should have a discernible accessible name that is announced by screen readers and visible to assistive technologies.\n*Actual:* The <a href=\"/cart\" class=\"icon-link\"></a> element is focusable but has no visible text, aria-label, aria-labelledby, or title attribute, resulting in no accessible name.\n*Suggested fix:* Add an accessible name, e.g., <a href=\"/cart\" class=\"icon-link\" aria-label=\"View cart\"></a>, or include visible text inside the link."
+                        },
+                        {
+                          "summary": "Missing label for email newsletter signup input",
+                          "priority": "High",
+                          "labels": [
+                            "a11y",
+                            "wcag-3.3.2",
+                            "placeholder-only-label"
+                          ],
+                          "description": "*WCAG 3.3.2* Labels or Instructions\n*Element:* #news-email\n*Affected users:* blind users, low vision users, users with cognitive disabilities\n*Steps:*\n1. Open fixtures/holdout/home.html\n2. Locate the newsletter signup form\n3. Focus on the email input field\n*Expected:* The email input should have a persistent visible label (or aria-label/title) that is announced by screen readers and remains visible when the field receives focus.\n*Actual:* The input has only a placeholder text \"Your email address\" with no associated <label>, aria-label, aria-labelledby, or title.\n*Suggested fix:* Add a visible label element and associate it with the input: <label for=\"news-email\">Email address</label> placed before the <input id=\"news-email\" ...>. Alternatively, add aria-label=\"Email address\" to the input if a visible label cannot be used."
+                        }
+                      ],
+                      "alert": false,
+                      "alertMessage": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "No critical: end"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1795702834438,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Manual Trigger",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "0bf8b71f19d4569bee1ce5b826622be9366286d94accaa2fee86942cf6ff27d4"
+  },
+  "mode": "cli",
+  "startedAt": "2026-11-26T14:20:34.435Z",
+  "stoppedAt": "2026-11-26T14:22:40.378Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}

@@ -53,3 +53,4 @@
 - [x] T8.5 — Held-out fixtures (fixtures/holdout) with ground truth fixed before the run; run on three models
 - [x] T8.6 — scripts/measure.js recomputes every metric from raw results
 - [x] T9.1-T9.6 — Retrieval evaluation and TF-IDF ranking, spec first (docs/specs/RETRIEVAL_EVAL.md, docs/RETRIEVAL_EVAL_RESULTS.md)
+- [x] T10.1-T10.4 — n8n scheduled workflow, spec first (docs/specs/N8N_WORKFLOW.md); executed locally twice (evidence/n8n/RUNS.md)

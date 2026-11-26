@@ -9,9 +9,10 @@
 | Rules from CLAUDE.md applied (context engineering) | T6.x, T8.2, T8.4 | `loadProjectContext()`, `applyProjectSeverityRules()` | `tests/generate.test.ts` | `docs/CONTEXT_ENGINEERING.md` |
 | Deduplicate violations already filed | T4.3 | `src/deduplicate.ts` | `tests/deduplicate.test.ts` (3) | `data/filed-violations.json` (gitignored) |
 | Jira-ready JSON output | T5.1 | `src/pipeline.ts` | end-to-end runs | `evidence/data/*.json` |
+| Scheduled scans (n8n) | T10.1-T10.4 | `n8n/workflow.json`, `scripts/triage-summary.js` | `tests/triage-summary.test.ts` (4) | `evidence/n8n/RUNS.md`, `evidence/n8n/run1.log`, `run2.log` |
 | Success metrics (85% citation, 75% actionable fix, <5 min) | T7.3, T8.5, T8.6 | `scripts/measure.js` | n/a (recomputed from raw files) | `evidence/runs/RUNS.md`, `evidence/data/METRICS.md` |
 
-Test total: 31 (`npm test`).
+Test total: 35 (`npm test`).
 
 ## How the spec evolved (from git history)
 
@@ -21,6 +22,7 @@ Test total: 31 (`npm test`).
 | 2026-08-10/11 | `f489242`, `bdd789b` | Build diverged from the spec: Puppeteer to Playwright, embeddings to keyword matching, Portkey/Claude to Groq. The spec was not updated at the time |
 | 2026-08-14 | `c12b856` | Spec, plan, CLAUDE.md and reports reconciled with what was built, after review feedback |
 | 2026-11-23/25 | `a08108d` onward | Metrics recounted from raw results; model note added (Llama 3.3 70B retired) |
+| 2026-11-26 | `a54e1fe` | n8n workflow spec written first (`docs/specs/N8N_WORKFLOW.md`), then built, imported and executed twice (`evidence/n8n/`) |
 | 2026-11-26 | `09954a9` | Retrieval evaluation spec written first (`docs/specs/RETRIEVAL_EVAL.md`), then implemented and measured against its acceptance criteria |
 
 The divergence on 2026-08-10/11 and its late reconciliation is a process lapse; it is recorded here rather than hidden. The retrieval work is the example of the intended order (spec, then tasks, then code, then measurement against pre-stated criteria).

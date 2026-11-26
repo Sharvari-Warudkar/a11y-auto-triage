@@ -51,3 +51,5 @@ The one qwen miss: `input-image-alt` on checkout-payment cited 4.1.2 instead of 
 - The model alone rated the checkout contrast bug major on all three models; critical comes from the code override.
 
 Note (2026-11-26): the retrieval top-1/top-3 figures in this file were produced by the earlier term-count ranking. The default ranking is now TF-IDF; see `docs/RETRIEVAL_EVAL_RESULTS.md`. LLM runs were not repeated for the ranking change.
+
+Note (2026-11-26): the n8n runs (evidence/n8n/) produced additional pipeline results for the two held-out checkout/home pages; they are not part of the accuracy tables above.

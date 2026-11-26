@@ -107,7 +107,7 @@ code { background: #f1f5f9; padding: 1px 4px; border-radius: 2px; font-size: 11p
 <p><strong>Trade-off:</strong> Keyword matching is fast and free but semantically shallow — common words cause irrelevant matches in position 2-3. A vector embedding approach would improve precision but adds API cost and infrastructure.</p>
 
 <h2>9. Test Suite</h2>
-<p><strong>31 tests passing</strong> via <code>npx playwright test</code>:</p>
+<p><strong>35 tests passing</strong> via <code>npx playwright test</code>:</p>
 <ul>
 <li><strong>scan.test.ts (5 tests):</strong> Verifies axe-core detects expected violations in each fixture</li>
 <li><strong>rag.test.ts (8 tests):</strong> Verifies ingestion, search relevance, similarity math, keyword extraction</li>
@@ -120,7 +120,7 @@ code { background: #f1f5f9; padding: 1px 4px; border-radius: 2px; font-size: 11p
 <tr><td>SPEC/PLAN/CLAUDE.md describe wrong toolchain</td><td>Rewritten to match actual: Playwright, Groq, keyword/TF-IDF</td></tr>
 <tr><td>Narrative docs written before code existed</td><td>Completely rewritten from actual 2026-08-14 runs; all examples cite real JSON output</td></tr>
 <tr><td>80%→93% claim with no backing data</td><td>Replaced with measured 9/11 (82%), recounted from results/*.json; below the 85% target</td></tr>
-<tr><td>npm test finds nothing</td><td>31 Playwright tests added and passing</td></tr>
+<tr><td>npm test finds nothing</td><td>35 Playwright tests added and passing</td></tr>
 <tr><td>Targets missed; no CLAUDE.md comparison; Llama 3.3 retired</td><td>Fixed 2026-11-25 (evidence/runs/RUNS.md): citation 11/11, actionable fix 11/11 on gpt-oss-120b after code fixes; controlled CLAUDE.md on/off run done (severity effect did not replicate; checkout rule now enforced in code); placeholder-only gap fixed with a custom check; held-out check on 4 new pages: 16/16 citations on gpt-oss-120b/20b, 15/16 on qwen3.8-27b</td></tr>
 </table>
 
@@ -136,7 +136,7 @@ code { background: #f1f5f9; padding: 1px 4px; border-radius: 2px; font-size: 11p
 <tr><td>Testing & failure analysis (from real output)</td><td>2.5</td></tr>
 <tr><td>Documentation & resubmission fixes</td><td>2</td></tr>
 </table>
-<p><strong>Cut:</strong> Live Jira integration, n8n automation, multi-page crawling, WCAG AAA, vector embeddings, Portkey gateway.</p>
+<p><strong>Cut:</strong> Live Jira integration, multi-page crawling, WCAG AAA, vector embeddings, Portkey gateway.</p>
 
 </body>
 </html>

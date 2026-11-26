@@ -20,7 +20,7 @@ Spec: `docs/specs/RETRIEVAL_EVAL.md` (committed before the implementation, `0995
 | A2 test hit@1 improves by at least 10 points | Met: 40.0% to 54.0% (+14.0) |
 | A3 test hit@3 and MRR do not drop | Met: hit@3 78% to 90%, MRR 0.603 to 0.707 |
 | A4 baseline stays default if A2/A3 fail | Not needed; TF-IDF is now the default `search()` |
-| A5 unit tests | Met: 8 tests in `tests/retrieval.test.ts` (one asserts A2/A3), 31 tests total |
+| A5 unit tests | Met: 8 tests in `tests/retrieval.test.ts` (one asserts A2/A3), 35 tests total |
 | A6 docs accurate | Met: the old code did not compute IDF; the shipped default now does |
 
 Parameters (IDF = ln(1 + N/df), fixed stopword list, title x2) were fixed in the spec and not changed after seeing results.

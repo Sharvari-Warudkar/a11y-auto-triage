@@ -111,7 +111,7 @@ pre { background: #172b4d; color: #b3d4ff; padding: 14px; border-radius: 4px; fo
 <tr><td>RAG Retrieval</td><td>Keyword/TF-IDF matching (cosine similarity)</td><td>Zero infrastructure; sufficient for 10-doc corpus</td></tr>
 <tr><td>LLM Generation</td><td>Groq — Llama 3.3 70B Versatile</td><td>Free tier, 30 req/min, fast structured output</td></tr>
 <tr><td>Language</td><td>TypeScript (strict mode)</td><td>Type safety, better maintainability</td></tr>
-<tr><td>Testing</td><td>Playwright Test (31 tests passing)</td><td>Same framework for scanner and test suite</td></tr>
+<tr><td>Testing</td><td>Playwright Test (35 tests passing)</td><td>Same framework for scanner and test suite</td></tr>
 </table>
 <h3>Rejected Alternatives</h3>
 <table>
@@ -225,7 +225,7 @@ pre { background: #172b4d; color: #b3d4ff; padding: 14px; border-radius: 4px; fo
 <p>CLAUDE.md says "specific attribute/property to change" — but contrast violations still get generic suggestions. The LLM can't calculate passing colors without a tool.</p>
 </div>
 <div>
-<h3>Test Suite (31 tests, all passing)</h3>
+<h3>Test Suite (35 tests, all passing)</h3>
 <table style="font-size: 12px;">
 <tr><th>Suite</th><th>Tests</th><th>Covers</th></tr>
 <tr><td>scan.test.ts</td><td>5</td><td>Detects expected violations in each fixture</td></tr>
@@ -234,7 +234,7 @@ pre { background: #172b4d; color: #b3d4ff; padding: 14px; border-radius: 4px; fo
 </table>
 <p style="margin-top: 12px; font-size: 12px;">Run with: <code>npx playwright test</code></p>
 <pre style="font-size: 10px;">
-Running 31 tests using 3 workers
+Running 35 tests using 3 workers
   ✓ Scanner › detects color-contrast
   ✓ Scanner › detects image-alt
   ✓ Scanner › detects html-has-lang
@@ -244,7 +244,7 @@ Running 31 tests using 3 workers
   ✓ RAG › search returns contrast docs
   ✓ RAG › search returns image-alt docs
   ...
-  31 passed
+  35 passed
 </pre>
 </div>
 </div>
@@ -259,14 +259,14 @@ Running 31 tests using 3 workers
 <tr><td>Docs describe Puppeteer/Portkey/OpenAI/Claude</td><td>SPEC.md, PLAN.md, CLAUDE.md rewritten to match actual stack (Playwright/Groq/keyword-matching)</td></tr>
 <tr><td>Failure analysis written before code existed</td><td>Completely rewritten from actual 2026-08-14 pipeline runs — all examples cite real output files</td></tr>
 <tr><td>80%→93% claim with no backing data</td><td>Replaced with measured 9/11 (82%) recounted from results/*.json; methodology stated (manual verification of each bug log)</td></tr>
-<tr><td>npm test finds nothing</td><td>31 Playwright tests added and passing (scan, RAG, deduplication, generator)</td></tr>
+<tr><td>npm test finds nothing</td><td>35 Playwright tests added and passing (scan, RAG, deduplication, generator)</td></tr>
 <tr><td>Targets missed; no CLAUDE.md comparison; Llama 3.3 retired</td><td>Fixed 2026-11-25 (evidence/runs/RUNS.md): citation 11/11, actionable fix 11/11 on gpt-oss-120b after code fixes; controlled CLAUDE.md on/off run done (severity effect did not replicate; checkout rule now enforced in code); placeholder-only gap fixed with a custom check; held-out check on 4 new pages: 16/16 citations on gpt-oss-120b/20b, 15/16 on qwen3.8-27b</td></tr>
 </table>
 <div class="highlight">
 <strong>Recommendation for client pilot:</strong> Run on 3 real e-commerce pages next sprint. Measure: tickets closed without developer follow-up (target: 70%+). Current measured rate on fixtures: 55% actionable (6/11).
 </div>
 <h3>Declared Effort</h3>
-<p>~15 hours total (including resubmission fixes). Cut: live Jira integration, n8n automation, multi-page crawling, WCAG AAA.</p>
+<p>~15 hours total (including resubmission fixes). Cut: live Jira integration, multi-page crawling, WCAG AAA.</p>
 <div style="margin-top: 20px; text-align: center; padding: 12px; background: #f4f5f7; border-radius: 4px;">
 <strong>Sharvari Warudkar</strong> · QA Engineer · Perficient<br>
 <span style="font-size: 12px; color: #6b778c;">GitHub: github.com/Sharvari-Warudkar/a11y-auto-triage</span>

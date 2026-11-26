@@ -8,6 +8,7 @@ WCAG 2.1 AA violation auto-triage tool for e-commerce QA. Scans pages with axe-c
 - RAG: keyword/TF-IDF matching over 10 WCAG markdown docs → local JSON store
 - Generator: Groq (Llama 3.3 70B) → structured JSON bug logs. Model note: the 2026-08-14 results used llama-3.3-70b-versatile, which Groq no longer serves on this account (404). Set GROQ_MODEL in .env to override (re-run on openai/gpt-oss-120b: evidence/rerun/RERUN.md)
 - Pipeline: src/pipeline.ts orchestrates scan → dedup → retrieve → generate → output
+- Automation: n8n workflow (n8n/workflow.json) runs the pipeline CLI on a schedule, summarises results (scripts/triage-summary.js) and routes critical bugs to a mock alert; executed locally, not deployed
 
 ## Code Conventions
 - TypeScript with strict mode

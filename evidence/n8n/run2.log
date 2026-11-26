@@ -1,0 +1,304 @@
+n8n Task Broker ready on 127.0.0.1, port 5679
+Failed to start Python task runner in internal mode. because its virtual environment is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (18XPLdh3R4qOv33jfN4WP) 
+Execution was successful:
+====================================
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Manual Trigger": [
+          {
+            "startTime": 1795703010769,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Targets": [
+          {
+            "startTime": 1795703010770,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 3693,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/checkout-payment.html",
+                      "skipDedup": false
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/home.html",
+                      "skipDedup": false
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Run pipeline": [
+          {
+            "startTime": 1795703014463,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Targets",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 22467,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "exitCode": 0,
+                      "stderr": "",
+                      "stdout": "=== A11Y AUTO-TRIAGE PIPELINE ===\n\n[1/5] Scanning: fixtures/holdout/checkout-payment.html\n      Found 4 violations\n[2/5] Deduplication: 5 already filed, 0 new\n\nAll violations already filed. Nothing new to report."
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "exitCode": 0,
+                      "stderr": "",
+                      "stdout": "=== A11Y AUTO-TRIAGE PIPELINE ===\n\n[1/5] Scanning: fixtures/holdout/home.html\n      Found 5 violations\n[2/5] Deduplication: 5 already filed, 0 new\n\nAll violations already filed. Nothing new to report."
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Parse run": [
+          {
+            "startTime": 1795703036930,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Run pipeline",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 13,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/checkout-payment.html",
+                      "exitCode": 0,
+                      "failed": false,
+                      "outputFile": "",
+                      "newBugLogs": 0,
+                      "note": "nothing new (all violations already filed)",
+                      "stderr": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/home.html",
+                      "exitCode": 0,
+                      "failed": false,
+                      "outputFile": "",
+                      "newBugLogs": 0,
+                      "note": "nothing new (all violations already filed)",
+                      "stderr": ""
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Has result file": [
+          {
+            "startTime": 1795703036943,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Parse run",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 8,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/checkout-payment.html",
+                      "exitCode": 0,
+                      "failed": false,
+                      "outputFile": "",
+                      "newBugLogs": 0,
+                      "note": "nothing new (all violations already filed)",
+                      "stderr": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/home.html",
+                      "exitCode": 0,
+                      "failed": false,
+                      "outputFile": "",
+                      "newBugLogs": 0,
+                      "note": "nothing new (all violations already filed)",
+                      "stderr": ""
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Nothing new or failed: end": [
+          {
+            "startTime": 1795703036951,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Has result file",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/checkout-payment.html",
+                      "exitCode": 0,
+                      "failed": false,
+                      "outputFile": "",
+                      "newBugLogs": 0,
+                      "note": "nothing new (all violations already filed)",
+                      "stderr": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "projectDir": "C:/Users/sharvari.warudkar/a11y-auto-triage",
+                      "target": "fixtures/holdout/home.html",
+                      "exitCode": 0,
+                      "failed": false,
+                      "outputFile": "",
+                      "newBugLogs": 0,
+                      "note": "nothing new (all violations already filed)",
+                      "stderr": ""
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Nothing new or failed: end"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1795703010767,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Manual Trigger",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "af0fb999bebda1ee133654eaaf9e7114e9ee978f39f459b31b7941a5f1b1f6e5"
+  },
+  "mode": "cli",
+  "startedAt": "2026-11-26T14:23:30.764Z",
+  "stoppedAt": "2026-11-26T14:23:56.953Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}
